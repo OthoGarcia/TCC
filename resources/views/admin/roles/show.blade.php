@@ -36,6 +36,41 @@
                                     <tr><th> Nome </th><td> {{ $role->nome }} </td></tr><tr><th> Descricao </th><td> {{ $role->descricao }} </td></tr>
                                 </tbody>
                             </table>
+                            <div class="panel panel-default">
+                               <div class="panel-heading">Permissões
+
+                               </div>
+                               <div class="panel-body">
+                                  <div class="col-md-6">
+                                     <ul>
+                                        @foreach ($permissions as $permission)
+                                        <li>
+                                          {{ $permission->nome }}
+                                        </li>
+                                        @endforeach
+                                     </ul>
+                                     {!! $errors->first('permission', '<p class="help-block">:message</p>') !!}
+                                  </div>
+                               </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                               <div class="panel-heading">Usuarios
+
+                               </div>
+                               <div class="panel-body">
+                                  <div class="col-md-6">
+                                     <ul>
+                                        @foreach ($users as $user)
+                                        <li>
+                                           {{ $user->name }}
+                                        </li>
+                                        @endforeach
+                                     </ul>
+                                     {!! $errors->first('user', '<p class="help-block">:message</p>') !!}
+                                  </div>
+                               </div>
+                            </div>
                         </div>
 
                     </div>
