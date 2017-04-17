@@ -32,4 +32,9 @@ class Role extends Model
         return $this->belongsToMany('App\Permission', 'permission_role');
     }
 
+    public function users()
+    {
+        return $this->hasMany('App\User', 'role_id');
+    }
+
 }

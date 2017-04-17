@@ -31,6 +31,25 @@
    </div>
 </div>
 
+<div class="panel panel-default">
+   <div class="panel-heading">Usuarios
+
+   </div>
+   <div class="panel-body">
+      <div class="col-md-6">
+         <ul>
+            @foreach ($users as $user)
+            <li>
+               {!! Form::checkbox('users[]', $user->id) !!}
+               {{ Form::label('users', $user->name) }}
+            </li>
+            @endforeach
+         </ul>
+         {!! $errors->first('user', '<p class="help-block">:message</p>') !!}
+      </div>
+   </div>
+</div>
+
 <div class="form-group">
    <div class="col-md-offset-4 col-md-4">
       {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}
