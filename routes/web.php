@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::resource('permission/permissions', 'Permission\\PermissionsController');
+Route::resource('role/roles', 'Role\\RolesController');
