@@ -41,7 +41,8 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create');
+      $permissions = \App\Permission::all();
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -54,13 +55,14 @@ class RolesController extends Controller
     public function store(Request $request)
     {
 
-        $requestData = $request->all();
+      $requestData = $request->all();
 
-        Role::create($requestData);
+      $role = Role::create($requestData);
+      $role->permissions()->sync($request->input('permissions'));
 
-        Session::flash('flash_message', 'Role added!');
+      Session::flash('flash_message', 'Role added!');
 
-        return redirect('role/roles');
+      return redirect('role/roles');
     }
 
     /**
@@ -87,8 +89,9 @@ class RolesController extends Controller
     public function edit($id)
     {
         $role = Role::findOrFail($id);
-
-        return view('admin.roles.edit', compact('role'));
+        $permissions = \App\Permission::all();
+        $role_permissions = $role->permissions();
+        return view('admin.roles.edit', compact('role','permissions','role_permissions'));
     }
 
     /**
@@ -106,7 +109,7 @@ class RolesController extends Controller
 
         $role = Role::findOrFail($id);
         $role->update($requestData);
-
+        $role->permissions()->sync($request->input('permissions'));
         Session::flash('flash_message', 'Role updated!');
 
         return redirect('role/roles');

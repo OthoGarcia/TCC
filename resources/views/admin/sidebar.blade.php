@@ -7,8 +7,11 @@
         <div class="panel-body">
             <ul class="nav" role="tablist">
                 <li role="presentation">
-                    <a href="{{ url('/admin') }}">
-                        Dashboard
+                    <a href="{{ url('/permission/permissions') }}">
+                        Permissions
+                    </a>
+                    <a href="{{ url('/role/roles') }}">
+                        Roles
                     </a>
                 </li>
             </ul>
