@@ -52,7 +52,10 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
-
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+      ]);
         $requestData = $request->all();
 
         Permission::create($requestData);
@@ -100,6 +103,10 @@ class PermissionsController extends Controller
      */
     public function update($id, Request $request)
     {
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+      ]);
 
         $requestData = $request->all();
 

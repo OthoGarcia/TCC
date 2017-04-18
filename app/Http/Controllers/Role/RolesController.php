@@ -55,7 +55,10 @@ class RolesController extends Controller
    */
    public function store(Request $request)
    {
-
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+      ]);
       $requestData = $request->all();
 
       $role = Role::create($requestData);
@@ -97,6 +100,10 @@ class RolesController extends Controller
    */
    public function edit($id)
    {
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+      ]);
       $role = Role::findOrFail($id);
       $permissions = \App\Permission::all();
       $users = \App\User::all();

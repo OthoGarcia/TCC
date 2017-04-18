@@ -11,119 +11,127 @@ use Session;
 
 class CategoriasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index(Request $request)
-    {
-        $keyword = $request->get('search');
-        $perPage = 25;
+   /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\View\View
+   */
+   public function index(Request $request)
+   {
+      $keyword = $request->get('search');
+      $perPage = 25;
 
-        if (!empty($keyword)) {
-            $categorias = Categoria::where('nome', 'LIKE', "%$keyword%")
-				->orWhere('descricao', 'LIKE', "%$keyword%")
-				
-                ->paginate($perPage);
-        } else {
-            $categorias = Categoria::paginate($perPage);
-        }
+      if (!empty($keyword)) {
+         $categorias = Categoria::where('nome', 'LIKE', "%$keyword%")
+         ->orWhere('descricao', 'LIKE', "%$keyword%")
 
-        return view('categoria.categorias.index', compact('categorias'));
-    }
+         ->paginate($perPage);
+      } else {
+         $categorias = Categoria::paginate($perPage);
+      }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('categoria.categorias.create');
-    }
+      return view('categoria.categorias.index', compact('categorias'));
+   }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function store(Request $request)
-    {
-        
-        $requestData = $request->all();
-        
-        Categoria::create($requestData);
+   /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\View\View
+   */
+   public function create()
+   {
+      return view('categoria.categorias.create');
+   }
 
-        Session::flash('flash_message', 'Categoria added!');
+   /**
+   * Store a newly created resource in storage.
+   *
+   * @param \Illuminate\Http\Request $request
+   *
+   * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+   */
+   public function store(Request $request)
+   {
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+      ]);
 
-        return redirect('categoria/categorias');
-    }
+      $requestData = $request->all();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\View\View
-     */
-    public function show($id)
-    {
-        $categoria = Categoria::findOrFail($id);
+      Categoria::create($requestData);
 
-        return view('categoria.categorias.show', compact('categoria'));
-    }
+      Session::flash('flash_message', 'Categoria added!');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\View\View
-     */
-    public function edit($id)
-    {
-        $categoria = Categoria::findOrFail($id);
+      return redirect('categoria/categorias');
+   }
 
-        return view('categoria.categorias.edit', compact('categoria'));
-    }
+   /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   *
+   * @return \Illuminate\View\View
+   */
+   public function show($id)
+   {
+      $categoria = Categoria::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function update($id, Request $request)
-    {
-        
-        $requestData = $request->all();
-        
-        $categoria = Categoria::findOrFail($id);
-        $categoria->update($requestData);
+      return view('categoria.categorias.show', compact('categoria'));
+   }
 
-        Session::flash('flash_message', 'Categoria updated!');
+   /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   *
+   * @return \Illuminate\View\View
+   */
+   public function edit($id)
+   {
+      $categoria = Categoria::findOrFail($id);
 
-        return redirect('categoria/categorias');
-    }
+      return view('categoria.categorias.edit', compact('categoria'));
+   }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function destroy($id)
-    {
-        Categoria::destroy($id);
+   /**
+   * Update the specified resource in storage.
+   *
+   * @param  int  $id
+   * @param \Illuminate\Http\Request $request
+   *
+   * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+   */
+   public function update($id, Request $request)
+   {
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+      ]);
 
-        Session::flash('flash_message', 'Categoria deleted!');
+      $requestData = $request->all();
 
-        return redirect('categoria/categorias');
-    }
+      $categoria = Categoria::findOrFail($id);
+      $categoria->update($requestData);
+
+      Session::flash('flash_message', 'Categoria updated!');
+
+      return redirect('categoria/categorias');
+   }
+
+   /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   *
+   * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+   */
+   public function destroy($id)
+   {
+      Categoria::destroy($id);
+
+      Session::flash('flash_message', 'Categoria deleted!');
+
+      return redirect('categoria/categorias');
+   }
 }

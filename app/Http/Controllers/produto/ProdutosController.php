@@ -47,7 +47,8 @@ class ProdutosController extends Controller
       foreach ($cats as $cat) {
          $categorias[$cat->id] = $cat->nome;
       }
-        return view('produto.produtos.create',compact('categorias'));
+      $categoria_selecionada = 1;
+        return view('produto.produtos.create',compact('categorias','categoria_selecionada'));
     }
 
     /**
@@ -59,7 +60,12 @@ class ProdutosController extends Controller
      */
     public function store(Request $request)
     {
-
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+         'preco' => 'required',
+         'estoque_min' => 'required',
+      ]);
         $requestData = $request->all();
 
         $produto = Produto::create($requestData);
@@ -94,7 +100,12 @@ class ProdutosController extends Controller
      */
     public function edit($id)
     {
-
+      $this->validate($request, [
+         'nome' => 'required|max:255',
+         'descricao' => 'required',
+         'preco' => 'required',
+         'estoque_min' => 'required',
+      ]);
         $produto = Produto::findOrFail($id);
         $cats = \App\Categoria::all();
        $categorias = array();
