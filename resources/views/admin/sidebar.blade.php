@@ -13,6 +13,9 @@
                     <a href="{{ url('/role/roles') }}">
                         Roles
                     </a>
+                    <a href="{{ url('/categoria/categorias') }}">
+                        Categorias
+                    </a>
                 </li>
             </ul>
         </div>
