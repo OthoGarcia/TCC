@@ -16,6 +16,9 @@
                     <a href="{{ url('/categoria/categorias') }}">
                         Categorias
                     </a>
+                    <a href="{{ url('/produto/produtos') }}">
+                        Produtos
+                    </a>
                 </li>
             </ul>
         </div>
