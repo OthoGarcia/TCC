@@ -17,6 +17,9 @@ class CreateProdutosTable extends Migration
             $table->integer('categoria_id')->unsigned()->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('fornecedor_id')->unsigned()->nullable();
+               $table->foreign('fornecedor_id')->references('id')->on('fornecedors')
+                   ->onUpdate('cascade')->onDelete('cascade');    
             $table->string('nome');
             $table->text('descricao');
             $table->float('preco');

@@ -31,5 +31,8 @@ class Produto extends Model
     {
         return $this->belongsTo('App\Categoria');
     }
-
+   public function fornecedor()
+   {
+      return $this->belongsTo('App\Fornecedor');
+   }
 }

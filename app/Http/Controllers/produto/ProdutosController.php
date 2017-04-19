@@ -48,7 +48,13 @@ class ProdutosController extends Controller
          $categorias[$cat->id] = $cat->nome;
       }
       $categoria_selecionada = 1;
-        return view('produto.produtos.create',compact('categorias','categoria_selecionada'));
+      $forns = \App\Fornecedor::all();
+      $fornecedores = array();
+      foreach ($forns as $forn) {
+         $fornecedores[$forn->id] = $forn->nome;
+      }
+      $Fornecedor_selecionada = 1;
+        return view('produto.produtos.create',compact('categorias','categoria_selecionada','fornecedores','Fornecedor_selecionada'));
     }
 
     /**

@@ -27,5 +27,8 @@ class Fornecedor extends Model
      */
     protected $fillable = ['nome', 'descricao', 'telefone', 'email'];
 
-    
+   public function produtos()
+   {
+      return $this->belongsToMany('App\Produto');
+   }
 }

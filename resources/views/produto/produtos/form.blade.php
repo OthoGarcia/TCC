@@ -18,6 +18,13 @@
         {!! $errors->first('categoria', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('fornecedor') ? 'has-error' : ''}}">
+    {!! Form::label('fornecedor', 'Fornecedor', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::select('fornecedor', $fornecedores, $categoria_selecionada); !!}
+        {!! $errors->first('fornecedor', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
     {!! Form::label('preco', 'Preco', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
