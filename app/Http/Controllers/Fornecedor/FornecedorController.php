@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\produto;
+namespace App\Http\Controllers\Fornecedor;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Produto;
+use App\Fornecedor;
 use Illuminate\Http\Request;
 use Session;
 
-class ProdutosController extends Controller
+class FornecedorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,17 +22,17 @@ class ProdutosController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $produtos = Produto::where('nome', 'LIKE', "%$keyword%")
+            $fornecedor = Fornecedor::where('nome', 'LIKE', "%$keyword%")
 				->orWhere('descricao', 'LIKE', "%$keyword%")
-				->orWhere('preco', 'LIKE', "%$keyword%")
-				->orWhere('estoque_min', 'LIKE', "%$keyword%")
+				->orWhere('telefone', 'LIKE', "%$keyword%")
+				->orWhere('email', 'LIKE', "%$keyword%")
 
                 ->paginate($perPage);
         } else {
-            $produtos = Produto::paginate($perPage);
+            $fornecedor = Fornecedor::paginate($perPage);
         }
 
-        return view('produto.produtos.index', compact('produtos'));
+        return view('fornecedor.fornecedor.index', compact('fornecedor'));
     }
 
     /**
@@ -42,13 +42,7 @@ class ProdutosController extends Controller
      */
     public function create()
     {
-      $cats = \App\Categoria::all();
-      $categorias = array();
-      foreach ($cats as $cat) {
-         $categorias[$cat->id] = $cat->nome;
-      }
-      $categoria_selecionada = 1;
-        return view('produto.produtos.create',compact('categorias','categoria_selecionada'));
+        return view('fornecedor.fornecedor.create');
     }
 
     /**
@@ -63,18 +57,16 @@ class ProdutosController extends Controller
       $this->validate($request, [
          'nome' => 'required|max:255',
          'descricao' => 'required',
-         'preco' => 'required',
-         'estoque_min' => 'required',
+         'telefone' => 'required',
+         'email' => 'required',
       ]);
         $requestData = $request->all();
 
-        $produto = Produto::create($requestData);
-        $categoria = $request->input('categoria');
-        $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
-        $produto->save();
-        Session::flash('flash_message', 'Produto added!');
+        Fornecedor::create($requestData);
 
-        return redirect('produto/produtos');
+        Session::flash('flash_message', 'Fornecedor added!');
+
+        return redirect('fornecedor/fornecedor');
     }
 
     /**
@@ -86,9 +78,9 @@ class ProdutosController extends Controller
      */
     public function show($id)
     {
-        $produto = Produto::findOrFail($id);
+        $fornecedor = Fornecedor::findOrFail($id);
 
-        return view('produto.produtos.show', compact('produto'));
+        return view('fornecedor.fornecedor.show', compact('fornecedor'));
     }
 
     /**
@@ -100,15 +92,9 @@ class ProdutosController extends Controller
      */
     public function edit($id)
     {
+        $fornecedor = Fornecedor::findOrFail($id);
 
-        $produto = Produto::findOrFail($id);
-        $cats = \App\Categoria::all();
-       $categorias = array();
-       foreach ($cats as $cat) {
-          $categorias[$cat->id] = $cat->nome;
-       }
-       $categoria_selecionada = $produto->categoria->id;
-        return view('produto.produtos.edit', compact('produto','categorias','categoria_selecionada'));
+        return view('fornecedor.fornecedor.edit', compact('fornecedor'));
     }
 
     /**
@@ -124,19 +110,17 @@ class ProdutosController extends Controller
       $this->validate($request, [
          'nome' => 'required|max:255',
          'descricao' => 'required',
-         'preco' => 'required',
-         'estoque_min' => 'required',
+         'telefone' => 'required',
+         'email' => 'required',
       ]);
         $requestData = $request->all();
 
-        $produto = Produto::findOrFail($id);
-        $produto->update($requestData);
-        $categoria = $request->input('categoria');
-        $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
-        $produto->save();
-        Session::flash('flash_message', 'Produto updated!');
+        $fornecedor = Fornecedor::findOrFail($id);
+        $fornecedor->update($requestData);
 
-        return redirect('produto/produtos');
+        Session::flash('flash_message', 'Fornecedor updated!');
+
+        return redirect('fornecedor/fornecedor');
     }
 
     /**
@@ -148,10 +132,10 @@ class ProdutosController extends Controller
      */
     public function destroy($id)
     {
-        Produto::destroy($id);
+        Fornecedor::destroy($id);
 
-        Session::flash('flash_message', 'Produto deleted!');
+        Session::flash('flash_message', 'Fornecedor deleted!');
 
-        return redirect('produto/produtos');
+        return redirect('fornecedor/fornecedor');
     }
 }

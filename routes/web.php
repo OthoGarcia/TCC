@@ -24,3 +24,4 @@ Route::resource('role/roles', 'Role\\RolesController');
 
 Route::resource('categoria/categorias', 'categoria\\CategoriasController');
 Route::resource('produto/produtos', 'produto\\ProdutosController');
+Route::resource('fornecedor/fornecedor', 'Fornecedor\\FornecedorController');
