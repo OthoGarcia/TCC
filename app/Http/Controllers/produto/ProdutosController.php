@@ -53,8 +53,10 @@ class ProdutosController extends Controller
       foreach ($forns as $forn) {
          $fornecedores[$forn->id] = $forn->nome;
       }
-      $Fornecedor_selecionada = 1;
-        return view('produto.produtos.create',compact('categorias','categoria_selecionada','fornecedores','Fornecedor_selecionada'));
+      $fornecedor_selecionada = '0';
+      $tipo_selecionado = '1';
+        return view('produto.produtos.create',compact('categorias','categoria_selecionada',
+        'fornecedores','fornecedor_selecionada','tipo_selecionado'));
     }
 
     /**
@@ -67,16 +69,19 @@ class ProdutosController extends Controller
     public function store(Request $request)
     {
       $this->validate($request, [
-         'nome' => 'required|max:255',
-         'descricao' => 'required',
-         'preco' => 'required',
-         'estoque_min' => 'required',
+          'nome' => 'required|max:255',
+          'descricao' => 'required',
+          'preco' => 'required',
+          'estoque_min' => 'required',
+          'peso'=>'required_if:tipo,==,1'
       ]);
         $requestData = $request->all();
 
         $produto = Produto::create($requestData);
         $categoria = $request->input('categoria');
         $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
+        $fornecedor = $request->input('fornecedor');
+        $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));
         $produto->save();
         Session::flash('flash_message', 'Produto added!');
 
@@ -114,7 +119,20 @@ class ProdutosController extends Controller
           $categorias[$cat->id] = $cat->nome;
        }
        $categoria_selecionada = $produto->categoria->id;
-        return view('produto.produtos.edit', compact('produto','categorias','categoria_selecionada'));
+       $forns = \App\Fornecedor::all();
+       $fornecedores = array();
+       foreach ($forns as $forn) {
+          $fornecedores[$forn->id] = $forn->nome;
+       }
+       $fornecedor_selecionada = $produto->fornecedor->id ;
+       if ($produto->peso == null) {
+         $tipo_selecionado = '0';
+       }else{
+          $tipo_selecionado = '1';
+       }
+
+        return view('produto.produtos.edit', compact('produto','categorias','categoria_selecionada',
+        'fornecedores','fornecedor_selecionada','tipo_selecionado'));
     }
 
     /**
@@ -128,17 +146,22 @@ class ProdutosController extends Controller
     public function update($id, Request $request)
     {
       $this->validate($request, [
-         'nome' => 'required|max:255',
-         'descricao' => 'required',
-         'preco' => 'required',
-         'estoque_min' => 'required',
+          'nome' => 'required|max:255',
+          'descricao' => 'required',
+          'preco' => 'required',
+          'estoque_min' => 'required',
+          'peso'=>'required_if:tipo,==,1'
       ]);
         $requestData = $request->all();
-
         $produto = Produto::findOrFail($id);
         $produto->update($requestData);
+        if ($request->input('tipo') == '0'){
+          $produto->peso = null;
+        }
         $categoria = $request->input('categoria');
         $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
+        $fornecedor = $request->input('fornecedor');
+        $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));
         $produto->save();
         Session::flash('flash_message', 'Produto updated!');
 

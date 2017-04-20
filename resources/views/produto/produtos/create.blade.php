@@ -21,7 +21,7 @@
                             </ul>
                         @endif
 
-                        {!! Form::open(['url' => '/produto/produtos', 'class' => 'form-horizontal', 'files' => true]) !!}
+                        {!! Form::open(['url' => '/produto/produtos', 'class' => 'form-horizontal', 'files' => true, 'id'=>'form']) !!}
 
                         @include ('produto.produtos.form')
 
@@ -32,4 +32,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('js')
+  <script src="{{ asset('js/produto.js') }}"></script>
 @endsection

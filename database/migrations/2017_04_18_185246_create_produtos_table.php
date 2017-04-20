@@ -19,11 +19,13 @@ class CreateProdutosTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->integer('fornecedor_id')->unsigned()->nullable();
                $table->foreign('fornecedor_id')->references('id')->on('fornecedors')
-                   ->onUpdate('cascade')->onDelete('cascade');    
+                   ->onUpdate('cascade')->onDelete('cascade');
             $table->string('nome');
             $table->text('descricao');
             $table->float('preco');
             $table->integer('estoque_min');
+            $table->integer('quantidade')->nullable();
+            $table->integer('peso')->nullable();
             $table->timestamps();
         });
     }

@@ -38,3 +38,6 @@
         </div>
     </div>
 @endsection
+@section('js')
+  <script src="{{ asset('js/produto.js') }}"></script>
+@endsection
