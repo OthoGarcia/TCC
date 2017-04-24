@@ -22,6 +22,9 @@
                     <a href="{{ url('/fornecedor/fornecedor') }}">
                         Fornecedores
                     </a>
+                    <a href="{{ url('/pedido/pedidos') }}">
+                        Pedidos
+                    </a>
                 </li>
             </ul>
         </div>
