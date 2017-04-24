@@ -91,9 +91,9 @@ class pedido_produtoController extends Controller
      */
     public function show($id)
     {
-        $pedido_produto = pedido_produto::findOrFail($id);
-
-        return view('pedido.pedido_produto.show', compact('pedido_produto'));
+        $pedido = Pedido::findOrFail($id);
+         $produtos = $pedido->produtos();
+        return view('pedido.pedido_produto.show', compact('pedido','produtos'));
     }
 
     /**
@@ -110,6 +110,7 @@ class pedido_produtoController extends Controller
         return view('pedido.pedido_produto.edit', compact('pedido_produto'));
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -123,12 +124,25 @@ class pedido_produtoController extends Controller
 
         $requestData = $request->all();
 
-        $pedido_produto = pedido_produto::findOrFail($id);
-        $pedido_produto->update($requestData);
+        $pedido = \App\Pedido::findOrFail($id);
+        $pedido_produto = $pedido->pivot;
+        $produtos = $request->input('produtos');
+        //dd($requestData['quantidade'][0]);
+        $i = 0;
+        foreach ($requestData['quantidade'] as $rd) {
+          $pedido->produtos()->updateExistingPivot($requestData['produtos'][$i],
+            [
+               'quantidade'=> $requestData['quantidade'][$i],
+               'preco' => $requestData['preco'][$i],
+               'sub_total' => $requestData['sub_total'][$i]
+            ]
+         );
 
-        Session::flash('flash_message', 'pedido_produto updated!');
+        }
 
-        return redirect('pedido_produto/pedido_produto');
+        return redirect()->action(
+          'Pedido\\PedidosController@show', ['id' => $pedido->id]
+         );
     }
 
     /**

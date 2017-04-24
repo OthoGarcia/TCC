@@ -28,5 +28,6 @@ Route::resource('fornecedor/fornecedor', 'Fornecedor\\FornecedorController');
 Route::resource('pedido/pedidos', 'Pedido\\PedidosController');
 Route::resource('pedido_produto/pedido_produto', 'Pedido_Produto\\pedido_produtoController');
 
-route::get('pedido_produto/{id}','Pedido_Produto\\pedido_produtoController@create');
+route::get('pedido_produto/{id}',['as'=>'add_pedido_produto','uses'=> 'Pedido_Produto\\pedido_produtoController@create']);
 route::post('pedido_produto/store/{id}','Pedido_Produto\\pedido_produtoController@store');
+route::post('pedido_produto/update/{id}','Pedido_Produto\\pedido_produtoController@update');

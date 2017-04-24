@@ -28,19 +28,51 @@
                         <br/>
 
                         <div class="table-responsive">
-                            <table class="table table-borderless">
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $pedido->id }}</td>
-                                    </tr>
-                                    <tr><th> Descricao </th><td> {{ $pedido->descricao }} </td></tr><tr><th> Quantidade </th>
-                                </tbody>
-                            </table>
-                        </div>
+                         <table class="table table-borderless">
+                             <tbody>
+                                 <tr>
+                                     <th>ID</th><td>{{ $pedido->id }}</td>
+                                 </tr>
+                                 <tr>
+                                    <th> Descricao </th>
+                                    <td> {{ $pedido->descricao }} </td>
+                                 </tr>
+                             </tbody>
+                         </table>
+                     </div>
+                     <div class="panel panel-default">
+                        <div class="panel-heading">Produtos
 
+                        </div>
+                        <div class="panel-body">
+                           {!! Form::open(['url' => '/pedido_produto/update/'.$pedido->id, 'class' => 'form-horizontal', 'files' => true]) !!}
+                              <table class="table-bordered">
+                                 <tr>
+                                    <th>Produto</th>
+                                    <th>Quantidade</th>
+                                    <th>Preço</th>
+                                    <th>Sub Total</th>
+                                 </tr>
+                                 @foreach ($produtos as $produto)
+                                    <tr>
+                                       <td>{{ $produto->nome}}</td>
+                                       <input type="hidden" name="produtos[]" value="{{ $produto->id }}">
+                                       <td>{!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade']) !!}</td>
+                                       <td>{!! Form::number('preco[]'.$produto->id, $produto->pivot->preco, ['class' => 'form-control','id'=>'preco']) !!}</td>
+                                       <td> {!! Form::number('sub_total[]'.$produto->id, $produto->pivot->sub_total, ['class' => 'form-control','id'=>'sub_total','readonly']) !!}</td>
+                                    </tr>
+                                 @endforeach
+                              </table>
+                              <button type="submit" name="button">Atualizar</button>
+                              {!! Form::close() !!}
+                           </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('css')
+   <link href="{{ asset('css/pedido.css') }}" rel="stylesheet">
 @endsection

@@ -81,8 +81,9 @@ class PedidosController extends Controller
     public function show($id)
     {
         $pedido = Pedido::findOrFail($id);
-
-        return view('pedido.pedidos.show', compact('pedido'));
+       $produtos = $pedido->produtos;
+       $pedido_produtos = $pedido->pivot;
+        return view('pedido.pedidos.show', compact('pedido','produtos','pedido_produtos'));
     }
 
     /**
