@@ -57,13 +57,21 @@
                                     <tr>
                                        <td>{{ $produto->nome}}</td>
                                        <input type="hidden" name="produtos[]" value="{{ $produto->id }}">
-                                       <td>{!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade']) !!}</td>
-                                       <td>{!! Form::number('preco[]'.$produto->id, $produto->pivot->preco, ['class' => 'form-control','id'=>'preco']) !!}</td>
-                                       <td> {!! Form::number('sub_total[]'.$produto->id, $produto->pivot->sub_total, ['class' => 'form-control','id'=>'sub_total','readonly']) !!}</td>
+                                       <td>{!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,
+                                          'onkeyup'=>'sub_total('.$loop->iteration.');', 'onmouseup'=>'sub_total('.$loop->iteration.');' ]) !!}</td>
+                                       <td>{!! Form::number('preco[]'.$produto->id, $produto->pivot->preco, ['class' => 'form-control','id'=>'preco'.$loop->iteration,
+                                          'onkeyup'=>'sub_total('.$loop->iteration.');', 'onmouseup'=>'sub_total('.$loop->iteration.');' ]) !!}</td>
+                                       <td> {!! Form::number('sub_total[]'.$produto->id, $produto->pivot->sub_total, ['class' => 'form-control','id'=>'sub_total'.$loop->iteration,'readonly']) !!}</td>
                                     </tr>
+                                    <input type="hidden" name="" value="{{$loop->count}}" id='i'>
                                  @endforeach
                               </table>
-                              <button type="submit" name="button">Atualizar</button>
+                              {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Atualizar', array(
+                                      'type' => 'submit',
+                                      'class' => 'btn btn-primary btn-xs',
+                                      'title' => 'Atualizar Valores Produtos',
+                                      'onclick'=>'return confirm("Realmente Deseja Atualizar os Valores?")'
+                              )) !!}
                               {!! Form::close() !!}
                            </div>
                         </div>
@@ -75,4 +83,7 @@
 @endsection
 @section('css')
    <link href="{{ asset('css/pedido.css') }}" rel="stylesheet">
+@endsection
+@section('js')
+  <script src="{{ asset('js/pedido.js') }}"></script>
 @endsection
