@@ -16,7 +16,7 @@
     {!! Form::label('preco', 'Preco', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::number('preco', null, ['class' => 'form-control','id'=>'preco1',
-         'onkeyup'=>'Gerar_sub_total(1);', 'onmouseup'=>'Gerar_sub_total(1);' ]) !!}
+         'onkeyup'=>'Gerar_sub_total(1);', 'onmouseup'=>'Gerar_sub_total(1);', 'step'=>"any" ]) !!}
         {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('sub_total') ? 'has-error' : ''}}">

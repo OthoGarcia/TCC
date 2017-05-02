@@ -25,6 +25,9 @@
                     <a href="{{ url('/pedido/pedidos') }}">
                         Pedidos
                     </a>
+                    <a href="{{ url('/pedido/lista') }}">
+                        Lista de Compras
+                    </a>
                 </li>
             </ul>
         </div>

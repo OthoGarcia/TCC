@@ -7,7 +7,13 @@
 
             <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Pedido {{ $pedido->id }}</div>
+                    <div class="panel-heading">
+                      @if ($pedido->estado == 'Lista')
+                          Lista de Compra {{ $pedido->id }}
+                      @else
+                          Pedido {{ $pedido->id }}
+                      @endif
+                     </div>
                     <div class="panel-body">
 
                         <a href="{{ url('/pedido/pedidos') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -49,6 +55,7 @@
                               <table class="table-bordered">
                                  <tr>
                                     <th>Produto</th>
+                                    <th>Fornecedor</th>
                                     <th>Quantidade</th>
                                     <th>Preço</th>
                                     <th>Sub Total</th>
@@ -56,6 +63,7 @@
                                  @foreach ($produtos as $produto)
                                     <tr>
                                        <td>{{ $produto->nome}}</td>
+                                       <td>{{ $produto->fornecedor->nome}}</td>
                                        <input type="hidden" name="produtos[]" value="{{ $produto->id }}">
                                        <td>{!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,
                                           'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');' ]) !!}</td>

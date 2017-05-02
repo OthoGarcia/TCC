@@ -27,12 +27,36 @@ class PedidosController extends Controller
 				->orWhere('preco', 'LIKE', "%$keyword%")
 				->orWhere('sub_total', 'LIKE', "%$keyword%")
 				->orWhere('estado', 'LIKE', "%$keyword%")
+        ->where('estado','<>','Lista')
 
                 ->paginate($perPage);
         } else {
-            $pedidos = Pedido::paginate($perPage);
+            $pedidos = Pedido::where('estado','<>','Lista')
+            ->paginate($perPage);
         }
+        $request->session()->put('lista_pedido', '1');
+        return view('pedido.pedidos.index', compact('pedidos'));
+    }
 
+    public function index_lista(Request $request)
+    {
+        $keyword = $request->get('search');
+        $perPage = 25;
+
+        if (!empty($keyword)) {
+            $pedidos = Pedido::where('descricao', 'LIKE', "%$keyword%")
+				->orWhere('quantidade', 'LIKE', "%$keyword%")
+				->orWhere('preco', 'LIKE', "%$keyword%")
+				->orWhere('sub_total', 'LIKE', "%$keyword%")
+				->orWhere('estado', 'LIKE', "%$keyword%")
+        ->where('estado','=','Lista')
+
+                ->paginate($perPage);
+        } else {
+            $pedidos = Pedido::where('estado','=','Lista')
+            ->paginate($perPage);
+        }
+        $request->session()->put('lista_pedido', '0');
         return view('pedido.pedidos.index', compact('pedidos'));
     }
 
@@ -63,12 +87,22 @@ class PedidosController extends Controller
     {
 
         $requestData = $request->all();
-        $requestData += ["estado"=>'Lista'];
+        if ($request->session()->get('lista_pedido') == 0) {
+          $requestData += ["estado"=>'Lista'];
+        }else{
+          $requestData += ["estado"=>'Aberto'];
+        }
+
         Pedido::create($requestData);
 
         Session::flash('flash_message', 'Pedido added!');
 
-        return redirect('pedido/pedidos');
+        if ($request->session()->get('lista_pedido') == 0) {
+          return redirect('/pedido/lista');
+        }else {
+          return redirect('pedido/pedidos');
+        }
+
     }
 
     /**
