@@ -63,7 +63,7 @@ class PedidosController extends Controller
     {
 
         $requestData = $request->all();
-        $requestData += ["estado"=>'Aberto'];
+        $requestData += ["estado"=>'Lista'];
         Pedido::create($requestData);
 
         Session::flash('flash_message', 'Pedido added!');

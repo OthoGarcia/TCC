@@ -58,9 +58,9 @@
                                        <td>{{ $produto->nome}}</td>
                                        <input type="hidden" name="produtos[]" value="{{ $produto->id }}">
                                        <td>{!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,
-                                          'onkeyup'=>'sub_total('.$loop->iteration.');', 'onmouseup'=>'sub_total('.$loop->iteration.');' ]) !!}</td>
+                                          'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');' ]) !!}</td>
                                        <td>{!! Form::number('preco[]'.$produto->id, $produto->pivot->preco, ['class' => 'form-control','id'=>'preco'.$loop->iteration,
-                                          'onkeyup'=>'sub_total('.$loop->iteration.');', 'onmouseup'=>'sub_total('.$loop->iteration.');' ]) !!}</td>
+                                          'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');' ]) !!}</td>
                                        <td> {!! Form::number('sub_total[]'.$produto->id, $produto->pivot->sub_total, ['class' => 'form-control','id'=>'sub_total'.$loop->iteration,'readonly']) !!}</td>
                                     </tr>
                                     <input type="hidden" name="" value="{{$loop->count}}" id='i'>

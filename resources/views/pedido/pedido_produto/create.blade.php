@@ -9,7 +9,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Create New pedido_produto</div>
                     <div class="panel-body">
-                        <a href="{{ url('/pedido_produto/pedido_produto') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/pedido/pedidos') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 

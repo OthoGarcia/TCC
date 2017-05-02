@@ -16,6 +16,9 @@ class CreatePedidosTable extends Migration
             $table->increments('id');
             $table->text('descricao');
             $table->string('estado');
+            $table->integer('fornecedor_id')->unsigned()->nullable();
+            $table->foreign('fornecedor_id')->references('id')->on('fornecedors')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
         Schema::create('pedido_produto', function (Blueprint $table) {
