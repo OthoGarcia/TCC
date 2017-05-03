@@ -81,6 +81,11 @@
                                       'onclick'=>'return confirm("Realmente Deseja Atualizar os Valores?")'
                               )) !!}
                               {!! Form::close() !!}
+                              @if ($pedido->estado == 'Lista')
+                                <a href="{{ url('/pedido/gerar/'.$pedido->id) }}" class="btn btn-success btn-sm" title="Add New Pedido">
+                                    <i class="fa fa-plus" aria-hidden="true"></i> Gerar Pedido
+                                </a>
+                              @endif
                            </div>
                         </div>
                     </div>

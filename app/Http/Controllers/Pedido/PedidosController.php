@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Pedido;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
 use App\Pedido;
 use Illuminate\Http\Request;
 use Session;
@@ -118,6 +118,31 @@ class PedidosController extends Controller
        $produtos = $pedido->produtos;
        $pedido_produtos = $pedido->pivot;
         return view('pedido.pedidos.show', compact('pedido','produtos','pedido_produtos'));
+    }
+    public function gerar_pedido($id)
+    {
+
+      $produtos = Pedido::findOrFail($id)->produtos->groupBy('fornecedor_id');
+
+      //$produtos = \App\Produto::all();
+
+      foreach ($produtos as $produto) {
+        $pedido = new Pedido;
+        $pedido->descricao = "Pedido referente ao fornecedor: ".$produto->first->fornecedor->nome;
+        $pedido->estado = "Aberto";
+        $pedido->save();
+        $produtos = Pedido::findOrFail($id)->produtos()->where('fornecedor_id','=',$produto->first->fornecedor->id);
+        foreach ($produto as $item) {
+          $pedido->produtos()->save($item, [
+             'quantidade'=>$item->pivot->quantidade,
+             'preco'=> $item->pivot->preco,
+             'sub_total'=>$item->pivot->sub_total
+          ]);
+        }
+      }
+      Pedido::destroy($id);
+      return redirect()->action('Pedido\\PedidosController@index');
+
     }
 
     /**

@@ -35,3 +35,5 @@ route::post('pedido_produto/update/{id}','Pedido_Produto\\pedido_produtoControll
 
 //lista de compras
 route::get('pedido/lista',['as'=>'pedido_lista','uses'=> 'Pedido\\PedidosController@index_lista']);
+//GERAR PEDIDOS
+route::get('pedido/gerar/{id}',['as'=>'gerar_pedido','uses'=> 'Pedido\\PedidosController@gerar_pedido']);
