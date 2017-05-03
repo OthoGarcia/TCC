@@ -41,13 +41,24 @@ class pedido_produtoController extends Controller
      */
     public function create($id)
     {
-      $prods = \App\Produto::all();
-      $produtos = array();
-      foreach ($prods as $prod) {
-         $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
-      }
-      $produto_selecionado = 0;
       $pedido = \App\Pedido::findOrFail($id);
+      //lista pedido é para verificar se é pedido ou lista de compras
+      if (session()->get('lista_pedido') == 1) {
+         $produto = $pedido->produtos->first();
+         $prods = \App\Produto::where('fornecedor_id','=',$produto->fornecedor->id)->get();
+
+         $produtos = array();
+         foreach ($prods as $prod) {
+            $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
+         }
+      }else{
+         $prods = \App\Produto::all();
+         $produtos = array();
+         foreach ($prods as $prod) {
+            $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
+         }
+      }
+         $produto_selecionado = 0;
         return view('pedido.pedido_produto.create',compact('pedido','produtos','produto_selecionado'));
     }
 

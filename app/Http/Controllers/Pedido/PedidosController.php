@@ -34,7 +34,7 @@ class PedidosController extends Controller
             $pedidos = Pedido::where('estado','<>','Lista')
             ->paginate($perPage);
         }
-        $request->session()->put('lista_pedido', '1');
+        session()->put('lista_pedido', '1');
         return view('pedido.pedidos.index', compact('pedidos'));
     }
 
@@ -56,7 +56,7 @@ class PedidosController extends Controller
             $pedidos = Pedido::where('estado','=','Lista')
             ->paginate($perPage);
         }
-        $request->session()->put('lista_pedido', '0');
+        session()->put('lista_pedido', '0');
         return view('pedido.pedidos.index', compact('pedidos'));
     }
 
@@ -87,7 +87,7 @@ class PedidosController extends Controller
     {
 
         $requestData = $request->all();
-        if ($request->session()->get('lista_pedido') == 0) {
+        if (session()->get('lista_pedido') == 0) {
           $requestData += ["estado"=>'Lista'];
         }else{
           $requestData += ["estado"=>'Aberto'];
@@ -97,7 +97,7 @@ class PedidosController extends Controller
 
         Session::flash('flash_message', 'Pedido added!');
 
-        if ($request->session()->get('lista_pedido') == 0) {
+        if (session()->get('lista_pedido') == 0) {
           return redirect('/pedido/lista');
         }else {
           return redirect('pedido/pedidos');
@@ -128,10 +128,10 @@ class PedidosController extends Controller
 
       foreach ($produtos as $produto) {
         $pedido = new Pedido;
-        $pedido->descricao = "Pedido referente ao fornecedor: ".$produto->first->fornecedor->nome;
+        $pedido->descricao = "Pedido referente ao fornecedor: ".$produto->first()->fornecedor->nome;
         $pedido->estado = "Aberto";
         $pedido->save();
-        $produtos = Pedido::findOrFail($id)->produtos()->where('fornecedor_id','=',$produto->first->fornecedor->id);
+        $produtos = Pedido::findOrFail($id)->produtos()->where('fornecedor_id','=',$produto->first()->fornecedor->id);
         foreach ($produto as $item) {
           $pedido->produtos()->save($item, [
              'quantidade'=>$item->pivot->quantidade,
