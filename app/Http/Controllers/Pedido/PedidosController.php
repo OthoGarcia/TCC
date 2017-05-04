@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Pedido;
 use Illuminate\Http\Request;
 use Session;
-
+use PDF;
 class PedidosController extends Controller
 {
    /**
@@ -85,7 +85,7 @@ class PedidosController extends Controller
          $requestData += ["estado"=>'Aberto'];
       }
 
-      Pedido::create($requestData);      
+      Pedido::create($requestData);
 
       Session::flash('flash_message', 'Pedido added!');
 
@@ -102,6 +102,11 @@ class PedidosController extends Controller
    public function efetuar_pedido($id)
    {
       $pedido = Pedido::findOrFail($id);
+      $pedido->estado = 'Efetuado';
+      $pedido->save();
+      $produtos = $pedido->produtos;
+      $pdf = PDF::loadView('pedido.pedidos.pedido',compact('pedido','produtos'));
+      return $pdf->stream();
    }
    /**
    * Display the specified resource.
