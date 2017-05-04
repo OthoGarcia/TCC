@@ -32,7 +32,27 @@
             </div>
         </div>
     </div>
+     @if (Session::get('popup') == 1)
+       <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Este Produto já se encontra cadastrado, você deseja:</h2>
+          </div>
+          <div class="modal-body">
+            <a href="{{ url('/pedido/duplicidade/'.$pedido->id.'/acrescentar') }}" title="Back"><button class="btn btn-primary btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Acrescentar</button></a>
+            <p>ou</p>
+            <a href="{{ url('/pedido/duplicidade/'.$pedido->id.'/substituir') }}" title="Back"><button class="btn btn-primary btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Substituir</button></a>
+          </div>
+        </div>
+      </div>
+   @endif
 @endsection
 @section('js')
   <script src="{{ asset('js/pedido.js') }}"></script>
+@endsection
+@section('css')
+   <link href="{{ asset('css/pedido.css') }}" rel="stylesheet">
 @endsection

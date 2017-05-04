@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\pedido_produto;
 use Illuminate\Http\Request;
 use Session;
+use App\Produto;
+use App\Fornecedor;
 
 class pedido_produtoController extends Controller
 {
@@ -42,14 +44,23 @@ class pedido_produtoController extends Controller
     public function create($id)
     {
       $pedido = \App\Pedido::findOrFail($id);
-      //lista pedido é para verificar se é pedido ou lista de compras
-      if (session()->get('lista_pedido') == 1) {
-         $produto = $pedido->produtos->first();
-         $prods = \App\Produto::where('fornecedor_id','=',$produto->fornecedor->id)->get();
+      //lista_pedido é para verificar se é pedido ou lista de compras
+      // 1 = pedido | 0 = lista
+      if (!$pedido->produtos->isEmpty()) {
+         if (session()->get('lista_pedido') == 1) {
+            $produto = $pedido->produtos->first();
+            $prods = \App\Produto::where('fornecedor_id','=',$produto->fornecedor->id)->get();
 
-         $produtos = array();
-         foreach ($prods as $prod) {
-            $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
+            $produtos = array();
+            foreach ($prods as $prod) {
+               $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
+            }
+         }else{
+            $prods = \App\Produto::all();
+            $produtos = array();
+            foreach ($prods as $prod) {
+               $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
+            }
          }
       }else{
          $prods = \App\Produto::all();
@@ -57,6 +68,9 @@ class pedido_produtoController extends Controller
          foreach ($prods as $prod) {
             $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
          }
+      }
+      if (session()->get('popup') == '1') {
+         Session::flash('popup', '1');
       }
          $produto_selecionado = 0;
         return view('pedido.pedido_produto.create',compact('pedido','produtos','produto_selecionado'));
@@ -83,16 +97,51 @@ class pedido_produtoController extends Controller
       $pedido = \App\Pedido::findOrFail($id);
 
       $produto = \App\Produto::findOrFail($request->input('produto'));
-      $pedido->produtos()->save($produto, [
-         'quantidade'=>$quantidade,
-         'preco'=> $preco,
-         'sub_total'=>$sub_total
-      ]);
+      if ($pedido->fornecedor == null) {
+         $fornecedor = \App\Fornecedor::findOrFail($produto->fornecedor->id);
+         $pedido->fornecedor()->associate($fornecedor);
+         $pedido->save();
+      }
+      if (!$pedido->produtos->contains($produto->id)) {
+         $pedido->produtos()->save($produto, [
+            'quantidade'=>$quantidade,
+            'preco'=> $preco,
+            'sub_total'=>$sub_total
+         ]);
+      }else{
+         Session::flash('popup', '1');
+         Session::put([
+            'id'=>$produto->id,
+            'quantidade'=>$quantidade,
+            'preco'=> $preco,
+            'sub_total'=>$sub_total
+         ]);
+         return redirect()->action(
+           'Pedido_Produto\\pedido_produtoController@create', ['id' => $pedido->id]
+          );
+      }
         Session::flash('flash_message', 'pedido_produto added!');
 
         return redirect('pedido/pedidos');
     }
+   public function duplicidade($id,$acao){
+      $pedido_produto = [
+         'quantidade'=>session()->get('quantidade'),
+         'preco'=>session()->get('preco'),
+         'sub_total'=>session()->get('sub_total')
+      ];
 
+      $pedido = \App\Pedido::findOrFail($id);
+      if ($acao == 'substituir') {
+         $pedido->produtos()->updateExistingPivot(session()->get('id'), $pedido_produto);
+      }else{
+         $produto = $pedido->produtos->find(session()->get('id'));
+         $pedido_produto['quantidade'] = $pedido_produto['quantidade'] + $produto->pivot->quantidade;
+         $pedido_produto['sub_total'] = $pedido_produto['quantidade'] * $pedido_produto['preco'];
+         $pedido->produtos()->updateExistingPivot(session()->get('id'), $pedido_produto);
+      }
+      return redirect('pedido/pedidos');
+   }
     /**
      * Display the specified resource.
      *

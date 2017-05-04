@@ -31,4 +31,9 @@ class Fornecedor extends Model
    {
       return $this->belongsToMany('App\Produto');
    }
+
+   public function pedidos()
+   {
+      return $this->belongsToMany('App\Pedido');
+   }
 }
