@@ -17,6 +17,8 @@ class CreatePedidosTable extends Migration
             $table->text('descricao');
             $table->string('estado');
             $table->string('arquivo')->nullable();
+            $table->date('data_efetuado')->nullable();
+            $table->date('data_entregue')->nullable();
             $table->integer('fornecedor_id')->unsigned()->nullable();
             $table->foreign('fornecedor_id')->references('id')->on('fornecedors')
                 ->onUpdate('cascade')->onDelete('cascade');

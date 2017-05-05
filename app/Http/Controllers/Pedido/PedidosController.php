@@ -103,6 +103,7 @@ class PedidosController extends Controller
    {
       $pedido = Pedido::findOrFail($id);
       $pedido->estado = 'Efetuado';
+      $pedido->data_efetuado =  date('Y-m-d');
       $pedido->save();
       $produtos = $pedido->produtos;
       $data = date("d-m-Y", strtotime($pedido->updated_at));
@@ -116,6 +117,15 @@ class PedidosController extends Controller
    {
       $pedido = Pedido::findOrFail($id);
       return response()->file(public_path().'/pedidos/'.$pedido->arquivo);
+   }
+
+   public function entregue($id)
+   {
+      $pedido = Pedido::findOrFail($id);
+      $pedido->estado = 'Entregue';
+      $pedido->data_entregue =  date('Y-m-d');
+      $pedido->save();      
+      return redirect('pedido/pedidos');
    }
    /**
    * Display the specified resource.
