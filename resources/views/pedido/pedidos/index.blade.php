@@ -51,7 +51,9 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->descricao }}</td>
                                         @if (Session::get('lista_pedido') == 1)
-                                          <td>{{ $item->fornecedor->nome }}</td>
+                                          @if ($item->fornecedor)
+                                                <td>{{ $item->fornecedor->nome }}</td>
+                                          @endif
                                         @endif
                                         <td>{{ $item->estado }}</td>
                                         <td>

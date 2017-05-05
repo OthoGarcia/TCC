@@ -136,7 +136,7 @@ class PedidosController extends Controller
          $pedido->save();
          $produtos = Pedido::findOrFail($id)->produtos()->where('fornecedor_id','=',$produto->first()->fornecedor->id);
          foreach ($produto as $item) {
-            $pedido->fornecedor()->attach($item->fornecedor->id);
+            $pedido->fornecedor()->associate($item->fornecedor->id);
             $pedido->produtos()->save($item, [
                'quantidade'=>$item->pivot->quantidade,
                'preco'=> $item->pivot->preco,
