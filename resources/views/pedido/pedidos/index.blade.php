@@ -57,7 +57,11 @@
                                         @endif
                                         <td>{{ $item->estado }}</td>
                                         <td>
-                                            <a href="{{ url('/pedido/pedidos/' . $item->id) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                           @if(($item->estado == 'Efetuado') or ($item->estado == 'Entregue') )
+                                             <a  href="{{ route('visualizar_pedido', $item->id ) }}" target="_blank" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Visualizar</button></a>
+                                           @else
+                                             <a href="{{ url('/pedido/pedidos/' . $item->id) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                           @endif
                                             @if(($item->estado == 'Aberto') or ($item->estado == 'Lista') )
                                                <a href="{{ url('/pedido/pedidos/' . $item->id . '/edit') }}" title="Edit Pedido"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                                <a href="{{ url('/pedido_produto/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add</button></a>

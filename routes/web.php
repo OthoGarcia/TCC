@@ -39,3 +39,5 @@ route::get('pedido/lista',['as'=>'pedido_lista','uses'=> 'Pedido\\PedidosControl
 route::get('pedido/gerar/{id}',['as'=>'gerar_pedido','uses'=> 'Pedido\\PedidosController@gerar_pedido']);
 //EFETUAR PEDIDO
 route::get('pedido/efetuar/{id}',['as'=>'efetuar_pedido','uses'=> 'Pedido\\PedidosController@efetuar_pedido']);
+//exibir pedido PDF
+route::get('pedido/visualizar/{id}',['as'=>'visualizar_pedido','uses'=> 'Pedido\\PedidosController@visualizar_pedido']);

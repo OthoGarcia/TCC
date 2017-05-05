@@ -105,8 +105,17 @@ class PedidosController extends Controller
       $pedido->estado = 'Efetuado';
       $pedido->save();
       $produtos = $pedido->produtos;
-      $pdf = PDF::loadView('pedido.pedidos.pedido',compact('pedido','produtos'));
-      return $pdf->stream();
+      $data = date("d-m-Y", strtotime($pedido->updated_at));
+      $pdf = PDF::loadView('pedido.pedidos.pedido',compact('pedido','produtos'))
+       ->save(public_path().'/pedidos/pedido'.$pedido->id.'_'.$data.'.pdf');
+      $pedido->arquivo = 'pedido'.$pedido->id.'_'.$data.'.pdf';
+      $pedido->save();
+      return redirect('pedido/pedidos');
+   }
+   public function visualizar_pedido($id)
+   {
+      $pedido = Pedido::findOrFail($id);
+      return response()->file(public_path().'/pedidos/'.$pedido->arquivo);
    }
    /**
    * Display the specified resource.
