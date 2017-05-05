@@ -49,21 +49,24 @@ class pedido_produtoController extends Controller
       if (!$pedido->produtos->isEmpty()) {
          if (session()->get('lista_pedido') == 1) {
             $produto = $pedido->produtos->first();
-            $prods = \App\Produto::where('fornecedor_id','=',$produto->fornecedor->id)->get();
+            $prods = \App\Produto::where('fornecedor_id','=',$produto->fornecedor->id)
+            ->orderBy('nome')
+            ->get();
 
             $produtos = array();
             foreach ($prods as $prod) {
                $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
             }
          }else{
-            $prods = \App\Produto::all();
+            $prods = \App\Produto::
+            orderBy('nome')->get();
             $produtos = array();
             foreach ($prods as $prod) {
                $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
             }
          }
       }else{
-         $prods = \App\Produto::all();
+         $prods = \App\Produto::orderBy('nome')->get();
          $produtos = array();
          foreach ($prods as $prod) {
             $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;

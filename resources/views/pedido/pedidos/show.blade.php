@@ -51,9 +51,16 @@
 
                         </div>
                         <div class="panel-body">
-                           {!! Form::open(['url' => '/pedido_produto/update/'.$pedido->id, 'class' => 'form-horizontal', 'files' => true]) !!}
+                           @if($pedido->estado != 'Entregue')
+                              {!! Form::open(['url' => '/pedido_produto/update/'.$pedido->id, 'class' => 'form-horizontal', 'files' => true]) !!}
+                           @else
+                              {!! Form::open(['url' => '/pedido/estoque/gravar'.$pedido->id, 'class' => 'form-horizontal', 'files' => true]) !!}
+                           @endif
                               <table class="table-bordered">
                                  <tr>
+                                    @if($pedido->estado == 'Entregue')
+                                       <th>Entregue</th>
+                                    @endif
                                     <th>Produto</th>
                                     <th>Fornecedor</th>
                                     <th>Quantidade</th>
@@ -62,6 +69,11 @@
                                  </tr>
                                  @foreach ($produtos as $produto)
                                     <tr>
+                                       @if($pedido->estado == 'Entregue')
+                                          <td>
+                                             {!! Form::checkbox('produtos[]', $produto->id) !!}
+                                          </td>
+                                       @endif
                                        <td>{{ $produto->nome}}</td>
                                        <td>{{ $produto->fornecedor->nome}}</td>
                                        <input type="hidden" name="produtos[]" value="{{ $produto->id }}">

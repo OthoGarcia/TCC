@@ -124,8 +124,29 @@ class PedidosController extends Controller
       $pedido = Pedido::findOrFail($id);
       $pedido->estado = 'Entregue';
       $pedido->data_entregue =  date('Y-m-d');
-      $pedido->save();      
+      $pedido->save();
       return redirect('pedido/pedidos');
+   }
+   public function estoque_view($id){
+      $pedido = Pedido::findOrFail($id);
+      $produtos = $pedido->produtos;
+      $pedido_produtos = $pedido->pivot;
+      return view('pedido.pedidos.show', compact('pedido','produtos','pedido_produtos'));
+   }
+   public function estoque($id)
+   {
+      $pedido = Pedido::findOrFail($id);
+      $produtos = $pedido->produtos;
+      foreach ($produtos as $produto) {
+         $produto->quantidade =$produto->quantidade + $produto->pivot->quantidade;
+         $produto->preco = $produto->pivot->preco;
+         $produto->save();
+      }
+      $pedido->estado = 'Finalizado';
+      $pedido->save();
+      return redirect('pedido/pedidos');
+
+
    }
    /**
    * Display the specified resource.

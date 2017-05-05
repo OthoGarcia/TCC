@@ -42,13 +42,13 @@ class ProdutosController extends Controller
      */
     public function create()
     {
-      $cats = \App\Categoria::all();
+      $cats = \App\Categoria::orderBy('nome')->get();;
       $categorias = array();
       foreach ($cats as $cat) {
          $categorias[$cat->id] = $cat->nome;
       }
       $categoria_selecionada = 1;
-      $forns = \App\Fornecedor::all();
+      $forns = \App\Fornecedor::orderBy('nome')->get();
       $fornecedores = array();
       foreach ($forns as $forn) {
          $fornecedores[$forn->id] = $forn->nome;
