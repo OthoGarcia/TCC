@@ -34,8 +34,7 @@ class CreatePedidosTable extends Migration
             $table->integer('quantidade');
             $table->float('preco');
             $table->float('sub_total');
-            $table->integer('quant_faltando')->nullable();
-            $table->integer('quant_sobrando')->nullable();
+            $table->integer('entregue')->nullable();            
             $table->timestamps();
            $table->primary(['pedido_id', 'produto_id']);
       });

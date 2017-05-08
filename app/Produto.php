@@ -39,6 +39,6 @@ class Produto extends Model
    public function pedidos()
    {
       return $this->belongsToMany('App\Pedido', 'pedido_produto')
-         ->withPivot('quantidade','preco','sub_total');
+         ->withPivot('quantidade','preco','sub_total','entregue');
    }
 }

@@ -109,7 +109,8 @@ class pedido_produtoController extends Controller
          $pedido->produtos()->save($produto, [
             'quantidade'=>$quantidade,
             'preco'=> $preco,
-            'sub_total'=>$sub_total
+            'sub_total'=>$sub_total,
+            'entregue'=>false
          ]);
       }else{
          Session::flash('popup', '1');
@@ -200,7 +201,7 @@ class pedido_produtoController extends Controller
                'sub_total' => $requestData['sub_total'][$i]
             ]
          );
-
+         $i++;
         }
 
         return redirect()->action(

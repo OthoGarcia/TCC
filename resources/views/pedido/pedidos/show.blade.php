@@ -3,9 +3,8 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                       @if ($pedido->estado == 'Lista')
@@ -18,11 +17,13 @@
 
                         <a href="{{ url('/pedido/pedidos') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/pedido/pedidos/' . $pedido->id . '/edit') }}" title="Edit Pedido"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <!-- Não poder deletar o pedido
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['pedido/pedidos', $pedido->id],
                             'style' => 'display:inline'
                         ]) !!}
+                     -->
                             {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
@@ -54,7 +55,7 @@
                            @if($pedido->estado != 'Entregue')
                               {!! Form::open(['url' => '/pedido_produto/update/'.$pedido->id, 'class' => 'form-horizontal', 'files' => true]) !!}
                            @else
-                              {!! Form::open(['url' => '/pedido/estoque/gravar'.$pedido->id, 'class' => 'form-horizontal', 'files' => true]) !!}
+                              {!! Form::open(['url' => '/pedido/estoque/gravar/'.$pedido->id, 'class' => 'form-horizontal', 'files' => true]) !!}
                            @endif
                               <table class="table-bordered">
                                  <tr>
@@ -69,19 +70,32 @@
                                  </tr>
                                  @foreach ($produtos as $produto)
                                     <tr>
-                                       @if($pedido->estado == 'Entregue')
+                                       @if($pedido->estado == 'Entregue' and (!$produto->pivot->entregue))
                                           <td>
                                              {!! Form::checkbox('produtos[]', $produto->id) !!}
+                                          </td>
+                                       @elseif($pedido->estado == 'Entregue')
+                                          <td>
+                                             OK!
                                           </td>
                                        @endif
                                        <td>{{ $produto->nome}}</td>
                                        <td>{{ $produto->fornecedor->nome}}</td>
-                                       <input type="hidden" name="produtos[]" value="{{ $produto->id }}">
-                                       <td>{!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,
-                                          'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');',($pedido->estado == 'Efetuado' ? 'readonly' : 'focus') ]) !!}</td>
-                                       <td>{!! Form::number('preco[]'.$produto->id, $produto->pivot->preco, ['class' => 'form-control','id'=>'preco'.$loop->iteration,
-                                          'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');',($pedido->estado == 'Efetuado' ? 'readonly' : 'focus') ]) !!}</td>
-                                       <td> {!! Form::number('sub_total[]'.$produto->id, $produto->pivot->sub_total, ['class' => 'form-control','id'=>'sub_total'.$loop->iteration,'readonly']) !!}</td>
+                                       <!--<input type="hidden" name="produtos[]" value="{{ $produto->id }}"> -->
+                                       <!-- Se ja foi feita a contagem no estoque não pode haver mais mudanças-->
+                                          <td>
+                                             {!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,
+                                             'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');'
+                                             ,($pedido->estado == 'Efetuado' || $produto->pivot->entregue ? 'readonly' : 'focus') ]) !!}
+                                          </td>
+                                          <td>
+                                             {!! Form::number('preco[]'.$produto->id, $produto->pivot->preco, ['class' => 'form-control','id'=>'preco'.$loop->iteration,
+                                             'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');'
+                                             ,($pedido->estado == 'Efetuado' || $produto->pivot->entregue ? 'readonly' : 'focus') ]) !!}
+                                          </td>
+                                          <td>
+                                             {!! Form::number('sub_total[]'.$produto->id, $produto->pivot->sub_total, ['class' => 'form-control','id'=>'sub_total'.$loop->iteration,'readonly']) !!}
+                                          </td>
                                     </tr>
                                     <input type="hidden" name="" value="{{$loop->count}}" id='i'>
                                  @endforeach

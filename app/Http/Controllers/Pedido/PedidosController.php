@@ -9,6 +9,7 @@ use App\Pedido;
 use Illuminate\Http\Request;
 use Session;
 use PDF;
+use Illuminate\Support\Facades\Input;
 class PedidosController extends Controller
 {
    /**
@@ -133,20 +134,43 @@ class PedidosController extends Controller
       $pedido_produtos = $pedido->pivot;
       return view('pedido.pedidos.show', compact('pedido','produtos','pedido_produtos'));
    }
-   public function estoque($id)
+   public function estoque(Request $request,$id)
    {
+      $requestData = $request->all();
       $pedido = Pedido::findOrFail($id);
       $produtos = $pedido->produtos;
+      $produtos_entregues = Input::get('produtos');
+      $finalizado = false;
+      $i= 0;
       foreach ($produtos as $produto) {
-         $produto->quantidade =$produto->quantidade + $produto->pivot->quantidade;
-         $produto->preco = $produto->pivot->preco;
-         $produto->save();
+         if (!empty($produtos_entregues)) {
+            if (in_array($produto->id,$produtos_entregues)) {
+               //alterando a quantidade no pedido efetuado para gerar um novo total
+               $pedido_produto = [
+                  'quantidade'=>$requestData['quantidade'][$i],
+                  'preco'=> $requestData['preco'][$i],
+                  'sub_total'=>$requestData['sub_total'][$i],
+                  'entregue'=>true
+               ];
+               $pedido->produtos()->updateExistingPivot($produto->id, $pedido_produto);
+               //adicionando a quantidade do pedido no estoque e alterando o preço de compra
+               $produto->quantidade =$produto->quantidade + $produto->pivot->quantidade;
+               $produto->preco = $produto->pivot->preco;
+               $produto->save();
+
+            }
+            //verificar ser todos os produtos estão corretos
+            if ($produto->pivot->entregue) {
+               $finalizado = true;
+            }
+            $i++;
+         }
       }
-      $pedido->estado = 'Finalizado';
-      $pedido->save();
+      if ($finalizado) {
+         $pedido->estado = 'Finalizado';
+         $pedido->save();
+      }
       return redirect('pedido/pedidos');
-
-
    }
    /**
    * Display the specified resource.
