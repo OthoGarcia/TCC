@@ -48,28 +48,30 @@ Scripts -->
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="{{ url('/') }}">Home</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Segurança <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="{{ url('/permission/permissions') }}">Permissões</a></li>
-                    <li><a href="{{ url('/role/roles') }}">Função</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastro<span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="{{ url('/categoria/categorias') }}">Tipo Produto</a></li>
-                    <li><a href="{{ url('/produto/produtos') }}">Produto</a></li>
-                    <li><a href="{{ url('/fornecedor/fornecedor') }}">Fornecedores</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Efetuar<span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="{{ url('/pedido/pedidos') }}">Pedido</a></li>
-                    <li><a href="{{ url('/pedido/lista') }}">Lista de Compra</a></li>
-                  </ul>
-                </li>
+                @if(!Auth::check())
+                   <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Segurança <span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+                       <li><a href="{{ url('/permission/permissions') }}">Permissões</a></li>
+                       <li><a href="{{ url('/role/roles') }}">Função</a></li>
+                     </ul>
+                   </li>
+                   <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastro<span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+                       <li><a href="{{ url('/categoria/categorias') }}">Tipo Produto</a></li>
+                       <li><a href="{{ url('/produto/produtos') }}">Produto</a></li>
+                       <li><a href="{{ url('/fornecedor/fornecedor') }}">Fornecedores</a></li>
+                     </ul>
+                   </li>
+                   <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Efetuar<span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+                       <li><a href="{{ url('/pedido/pedidos') }}">Pedido</a></li>
+                       <li><a href="{{ url('/pedido/lista') }}">Lista de Compra</a></li>
+                     </ul>
+                   </li>
+                  @endif
               </ul>
 
               <!-- Left Side Of Navbar -->
