@@ -1,0 +1,33 @@
+body{
+  background: #636b6f;
+  color: black;
+}
+
+.caixa{
+  width: 80%;
+    height: 80%;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+   border: 3px solid black;
+
+}
+
+.produtos{
+  width: 50%;
+    height: 100%;
+  border-left: 3px solid black;
+  overflow: auto;
+  background-color: white;
+}
+.col-md-12.caixa{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+.pesquisa{
+  width: 50%;
+    height: 100%;
+    float: left;
+    
+}

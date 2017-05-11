@@ -8,7 +8,7 @@
   <!-- CSRF Token -->
   <meta nome="csrf-token" content="{{ csrf_token() }}">
 
-  <title>Conta Soluções</title>
+  <title>Essential Technologies</title>
 
   <!-- Styles2 -->
 
@@ -47,8 +47,8 @@ Scripts -->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li><a href="{{ url('/') }}">Home</a></li>
-                @if(!Auth::check())
+                <li><a href="{{ url('/pdv') }}">PDV</a></li>
+                @if(Auth::check())
                    <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Segurança <span class="caret"></span></a>
                      <ul class="dropdown-menu">

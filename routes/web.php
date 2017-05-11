@@ -47,3 +47,5 @@ route::get('pedido/entregue/{id}',['as'=>'pedido_entregue','uses'=> 'Pedido\\Ped
 //Colocar os produtos do pedido no estoque
 route::get('pedido/estoque/{id}',['as'=>'pedido_estoque_view','uses'=> 'Pedido\\PedidosController@estoque_view']);
 route::POST('pedido/estoque/gravar/{id}',['as'=>'pedido_estoque','uses'=> 'Pedido\\PedidosController@estoque']);
+//PDV
+route::get('pdv',['as'=>'pdv','uses'=> 'PDVController@index']);
