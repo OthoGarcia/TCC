@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+pr<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -14,6 +14,7 @@
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/pdv.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('css/hover-min.css') }}" rel="stylesheet">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
   <!--
@@ -48,12 +49,14 @@ Scripts -->
                        {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
+                @if(isset($produtos))
+                  <input type="hidden" name="pedido" value="{{$pedido->id}}">
+                @endif
             {!! Form::close() !!}
           </div>
           <div class="col-md-6 produtos">
              @if(isset($produtos))
-               <input type="hidden" name="pedido" value="{{$pedido->id}}">
-               @foreach($produtos as $produto)
+               @foreach ($produtos as $produto)                 
                   <span>{{ $produto->nome }}</span>
                @endforeach
              @endif
@@ -65,6 +68,7 @@ Scripts -->
 </div>
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('js/pdv.js') }}"></script>
 
 
 </body>

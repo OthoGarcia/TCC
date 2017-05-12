@@ -80,7 +80,7 @@
                                        @endif
                                        <td>{{ $produto->nome}}</td>
                                        <td>{{ $produto->fornecedor->nome}}</td>
-                                       <!--<input type="hidden" name="produtos[]" value="{{ $produto->id }}"> -->
+                                       <input type="hidden" name="produtos[]" value="{{ $produto->id }}">
                                        <!-- Se ja foi feita a contagem no estoque não pode haver mais mudanças-->
                                           <td>
                                              {!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,

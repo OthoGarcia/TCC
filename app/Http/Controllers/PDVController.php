@@ -33,29 +33,28 @@ class PDVController extends Controller
             $pedido->estado = "PDV_Aberto";
             $pedido->save();
          }
-         //error aqui
-         dd($produto->id);
          if ($pedido->total == null) {
-            $pedido->total = $produto->preco * $request->input('quantidade');
+            $pedido->total = $produto[0]->preco * $request->input('quantidade');
          }else {
-            $pedido->total += $produto->preco * $request->input('quantidade');
+            $pedido->total += $produto[0]->preco * $request->input('quantidade');
          }
          //salvando novo produto no pedido ou acresentando quantidade
-         if (!$pedido->produtos->contains($produto->id)) {
-            $pedido->produtos()->save($produto, [
+         if (!$pedido->produtos->contains($produto[0]->id)) {
+            $pedido->produtos()->save($produto[0], [
                'quantidade'=>$request->input('quantidade'),
-               'preco'=> $produto->preco,
-               'sub_total'=>$produto->preco * $request->input('quantidade'),
+               'preco'=> $produto[0]->preco,
+               'sub_total'=>$produto[0]->preco * $request->input('quantidade')
             ]);
          }else{
-            $pedido->produtos()->updateExistingPivot($produto->id, [
+            $pedido->produtos()->updateExistingPivot($produto[0]->id, [
                'quantidade'=>$request->input('quantidade') +
-                  $produto->quantidade,
+                  $produto[0]->quantidade,
                'sub_total'=> ($request->input('quantidade') +
-                  $produto->quantidade) * $produto->preco
+                  $produto[0]->quantidade) * $produto[0]->preco,
+                  'preco'=> $produto[0]->preco
             ]);
          }
-         $produtos = $pedido->produtos();
+         $produtos = $pedido->produtos;         
          return view('pedido.pdv.pdv',compact('produtos','pedido'));
       }else{
          //error caso n ache o produto (Falta Fazer)
