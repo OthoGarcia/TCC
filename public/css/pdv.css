@@ -3,6 +3,14 @@ body{
   color: black;
 }
 
+.ui-helper-hidden-accessible { display:none; }
+ul.ui-autocomplete.ui-menu{
+   background-color: white;
+   list-style-type: none;
+   width: 37%;
+}
+
+
 .caixa{
   width: 80%;
     height: 80%;
@@ -29,5 +37,5 @@ body{
   width: 50%;
     height: 100%;
     float: left;
-    
+
 }

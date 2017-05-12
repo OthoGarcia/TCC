@@ -109,6 +109,7 @@ class pedido_produtoController extends Controller
          $pedido->fornecedor()->associate($fornecedor);
          $pedido->save();
       }
+      //se o pedido ainda n possui o produto, o mesmo é adicionado
       if (!$pedido->produtos->contains($produto->id)) {
          $pedido->produtos()->save($produto, [
             'quantidade'=>$quantidade,

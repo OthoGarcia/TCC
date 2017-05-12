@@ -16,7 +16,6 @@
   <link href="{{ asset('css/pdv.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('css/hover-min.css') }}" rel="stylesheet">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
-
   <!--
   <script>
 
@@ -33,21 +32,39 @@ Scripts -->
       <div class="row">
         <div class="col-md-12 caixa">
           <div class="col-md-6 pesquisa">
-            <h1>teste</h1>
+            {!! Form::open(['url' => 'pdv/salvar', 'class' => 'form-horizontal', 'files' => true,'id'=>'pdv_form']) !!}
+               {!! Form::text('produto', null, ['class' => 'form-control autocomplete', 'id'=>'autocomplete','placeholder'=>'Buscar Produto']) !!}
+               <div class="form-group {{ $errors->has('quantidade') ? 'has-error' : ''}}">
+                   {!! Form::label('quantidade', 'Quantidade', ['class' => 'col-md-4 control-label']) !!}
+                   <div class="col-md-6">
+                       {!! Form::number('quantidade', null, ['class' => 'form-control','id'=>'quantidade1']) !!}
+                       {!! $errors->first('quantidade', '<p class="help-block">:message</p>') !!}
+                   </div>
+               </div>
+               <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
+                   {!! Form::label('preco', 'Preco', ['class' => 'col-md-4 control-label']) !!}
+                   <div class="col-md-6">
+                       {!! Form::number('preco', null, ['class' => 'form-control','id'=>'preco1','step'=>"any" ]) !!}
+                       {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}
+                   </div>
+               </div>
+            {!! Form::close() !!}
           </div>
           <div class="col-md-6 produtos">
-            <h1>teste</h1>
+             @if(isset($produtos))
+               <input type="hidden" name="pedido" value="{{$pedido->id}}">
+               @foreach($produtos as $produto)
+                  <span>{{ $produto->nome }}</span>
+               @endforeach
+             @endif
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 
 
 </body>

@@ -17,6 +17,7 @@ class CreatePedidosTable extends Migration
             $table->text('descricao');
             $table->string('estado');
             $table->string('arquivo')->nullable();
+            $table->float('total')->nullable();
             $table->date('data_efetuado')->nullable();
             $table->date('data_entregue')->nullable();
             $table->integer('fornecedor_id')->unsigned()->nullable();
@@ -34,7 +35,7 @@ class CreatePedidosTable extends Migration
             $table->integer('quantidade');
             $table->float('preco');
             $table->float('sub_total');
-            $table->integer('entregue')->nullable();            
+            $table->integer('entregue')->nullable();
             $table->timestamps();
            $table->primary(['pedido_id', 'produto_id']);
       });
