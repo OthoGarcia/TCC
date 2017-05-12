@@ -102,15 +102,7 @@ Scripts -->
                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                       {{ csrf_field() }}
                     </form>
-                  </li>
-                  <li>
-                     <a href="{{ url('/dados') }}">Meus Dados</a>
-                  </li>
-                  @if(Auth::user()->tipo != 'cliente')
-                     <li>
-                        <a href="https://eua-4.srvhost.com.br:2096/">WebEmail</a>
-                     </li>
-                  @endif
+                  </li>                  
                 </ul>
               </li>
               @endif

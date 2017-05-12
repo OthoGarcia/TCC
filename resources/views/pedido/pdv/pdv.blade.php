@@ -1,4 +1,4 @@
-pr<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -38,15 +38,22 @@ Scripts -->
                <div class="form-group {{ $errors->has('quantidade') ? 'has-error' : ''}}">
                    {!! Form::label('quantidade', 'Quantidade', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
-                       {!! Form::number('quantidade', null, ['class' => 'form-control','id'=>'quantidade1']) !!}
+                       {!! Form::number('quantidade', 1, ['class' => 'form-control','id'=>'quantidade1']) !!}
                        {!! $errors->first('quantidade', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
                    {!! Form::label('preco', 'Preco', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
-                       {!! Form::number('preco', null, ['class' => 'form-control','id'=>'preco1','step'=>"any" ]) !!}
+                       {!! Form::number('preco', null, ['class' => 'form-control','id'=>'preco','step'=>"any", 'readonly' ]) !!}
                        {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}
+                   </div>
+               </div>
+               <div id="div_peso" class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
+                   {!! Form::label('peso', 'Peso', ['class' => 'col-md-4 control-label']) !!}
+                   <div class="col-md-6">
+                       {!! Form::number('peso', null, ['class' => 'form-control','id'=>'peso','step'=>"any" ]) !!}
+                       {!! $errors->first('peso', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                 @if(isset($produtos))
@@ -56,7 +63,7 @@ Scripts -->
           </div>
           <div class="col-md-6 produtos">
              @if(isset($produtos))
-               @foreach ($produtos as $produto)                 
+               @foreach ($produtos as $produto)
                   <span>{{ $produto->nome }}</span>
                @endforeach
              @endif

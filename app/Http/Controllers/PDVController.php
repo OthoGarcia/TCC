@@ -14,7 +14,13 @@ class PDVController extends Controller
   }
 
   public function index(){
-    return view('pedido.pdv.pdv');
+        return view('pedido.pdv.pdv');
+  }
+  public function index_produtos($id){
+      $pedido = \App\Pedido::findOrFail($request->input('pedido'));
+      $produtos = $pedido->produtos;
+      return view('pedido.pdv.pdv',compact('produtos','pedido'));
+        return view('pedido.pdv.pdv');
   }
 
   public function salvar(Request $request){
@@ -54,7 +60,7 @@ class PDVController extends Controller
                   'preco'=> $produto[0]->preco
             ]);
          }
-         $produtos = $pedido->produtos;         
+         $produtos = $pedido->produtos;
          return view('pedido.pdv.pdv',compact('produtos','pedido'));
       }else{
          //error caso n ache o produto (Falta Fazer)
