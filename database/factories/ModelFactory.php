@@ -29,7 +29,7 @@ $factory->define(App\Produto::class, function (Faker\Generator $faker) {
     return [
         'nome' => $faker->name,
         'descricao' => $faker->text,
-        'preco' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 10000),
+        'preco' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 100),
         'estoque_min' => $faker->numberBetween($min = 10, $max = 500),
         'quantidade' => $faker->numberBetween($min = 10, $max = 500),
         'fornecedor_id' => $faker->randomElement($fornecedores),

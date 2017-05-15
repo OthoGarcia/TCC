@@ -56,6 +56,13 @@ Scripts -->
                        {!! $errors->first('peso', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
+               <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
+                   {!! Form::label('total', 'Total', ['class' => 'col-md-4 control-label']) !!}
+                   <div class="col-md-6">
+                       {!! Form::number('total', (isset($pedido)? $pedido->total : null), ['class' => 'form-control','id'=>'preco','step'=>"any", 'readonly' ]) !!}
+                       {!! $errors->first('Total', '<p class="help-block">:message</p>') !!}
+                   </div>
+               </div>
                 @if(isset($produtos))
                   <input type="hidden" name="pedido" value="{{$pedido->id}}">
                 @endif
@@ -64,7 +71,10 @@ Scripts -->
           <div class="col-md-6 produtos">
              @if(isset($produtos))
                @foreach ($produtos as $produto)
+                  <span>{{ $produto->pivot->quantidade }}</span>
                   <span>{{ $produto->nome }}</span>
+                  <span>    R$: {{ $produto->preco }}</span>
+                  <br>
                @endforeach
              @endif
           </div>

@@ -1,3 +1,7 @@
+$(document).ready(function() {
+    $("#div_peso").hide();
+});
+
 $.ui.autocomplete.prototype.options.autoSelect = true;
 $( "#autocomplete" ).autocomplete({
     source: function( request, response ) {
@@ -10,7 +14,8 @@ $( "#autocomplete" ).autocomplete({
                return {
                    label: value.nome,
                    value: value.id,
-                   preco: value.preco
+                   preco: value.preco,
+                   peso: value.peso
                }
               }));
            },error: function(data) {
@@ -24,9 +29,22 @@ $( "#autocomplete" ).autocomplete({
         $(this).val(ui.item.label);
      },select: function(event, ui) {
         $("#preco").val(ui.item.preco);
+        if (ui.item.peso == null) {
+            $("#div_peso").hide();            
+            $('#pdv_form').submit();
+        }else{
+           $("#div_peso").show();
+           $('#peso').focus();
+        }
      }
 });
 $('#autocomplete').keypress(function (e) {
+  if (e.which == 13) {
+    $('#pdv_form').submit();
+    return false;    //<---- Add this line
+  }
+});
+$('#peso').keypress(function (e) {
   if (e.which == 13) {
     $('#pdv_form').submit();
     return false;    //<---- Add this line

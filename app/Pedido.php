@@ -37,4 +37,9 @@ class Pedido extends Model
       return $this->belongsTo('App\Fornecedor');
    }
 
+   public function user()
+   {
+      return $this->belongsTo('App\User');
+   }
+
 }
