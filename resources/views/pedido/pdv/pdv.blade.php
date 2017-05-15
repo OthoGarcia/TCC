@@ -67,6 +67,11 @@ Scripts -->
                   <input type="hidden" name="pedido" value="{{$pedido->id}}">
                 @endif
             {!! Form::close() !!}
+            @if(isset($pedido))
+               <a href="{{ url('/finalizar/'.$pedido->id) }}" class="btn btn-success btn-sm" title="Finalizar Pedido">
+                   <i class="fa fa-plus" aria-hidden="true"></i> Finalizar
+               </a>
+            @endif
           </div>
           <div class="col-md-6 produtos">
              @if(isset($produtos))

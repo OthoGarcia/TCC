@@ -10,6 +10,9 @@ $( "#autocomplete" ).autocomplete({
             type : 'Get',
             url: '/autocomplete/' + $('#autocomplete').val(),
             success: function(data) {
+              if (data.length == 1) {
+                 $('#pdv_form').submit();
+              }
               response($.map(data, function (value, key) {
                return {
                    label: value.nome,
@@ -30,7 +33,7 @@ $( "#autocomplete" ).autocomplete({
      },select: function(event, ui) {
         $("#preco").val(ui.item.preco);
         if (ui.item.peso == null) {
-            $("#div_peso").hide();            
+            $("#div_peso").hide();
             $('#pdv_form').submit();
         }else{
            $("#div_peso").show();

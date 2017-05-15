@@ -51,4 +51,5 @@ route::POST('pedido/estoque/gravar/{id}',['as'=>'pedido_estoque','uses'=> 'Pedid
 route::get('pdv',['as'=>'pdv','uses'=> 'PDVController@index']);
 route::get('pdv/{id}',['as'=>'pdv_produtos','uses'=> 'PDVController@index_produtos']);
 route::get('autocomplete/{query}',['as'=>'autocomplete','uses'=> 'PDVController@autoComplete']);
+route::get('finalizar/{id}',['as'=>'autocomplete','uses'=> 'PDVController@finalizar']);
 route::post('pdv/salvar',['as'=>'pdv_salvar','uses'=> 'PDVController@salvar']);

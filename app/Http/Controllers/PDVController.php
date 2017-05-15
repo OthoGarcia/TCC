@@ -75,20 +75,28 @@ class PDVController extends Controller
                   'preco'=> $produto->preco
             ]);
          }
-         $produtos = \App\Pedido::findOrFail($pedido->id)->produtos;
-         return view('pedido.pdv.pdv',compact('produtos','pedido'));
       }else{
          //error caso n ache o produto (Falta Fazer)
-         $pedido = \App\Pedido::findOrFail($request->input('pedido'));
-         $produtos = $pedido->produtos;
          Session::flash('flash_message', 'Pedido added!');
-         return view('pedido.pdv.pdv',compact('produtos','pedido'));
       }
+      return redirect()->action('PDVController@index');
  }
+   public function finalizar($id){
+      $pedido = \App\Pedido::findOrFail($id);
+      $produtos = $pedido->produtos;
+      foreach ($produtos as $produto) {
+         $produto->quantidade = $produto->quantidade - $produto->pivot->quantidade;
+         $produto->save();
+      }
+      $pedido->estado = 'PDV_Finalizado';
+      $pedido->save();
+      return redirect()->action('PDVController@index');
+   }
   public function autoComplete($query) {
      $produtos = \App\Produto::where('nome','like','%'.$query.'%')
      ->orwhere('id','like','%'.$query.'%')
      ->get();
       return $produtos->toJson();
    }
+
 }
