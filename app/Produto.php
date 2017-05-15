@@ -25,7 +25,8 @@ class Produto extends Model
      *
      * @var array
      */
-    protected $fillable = ['nome', 'descricao', 'preco', 'estoque_min','peso','quantidade','total'];
+    protected $fillable = ['nome', 'descricao', 'preco', 'estoque_min','peso',
+    'quantidade','peso_quantidade','total'];
 
     public function categoria()
     {

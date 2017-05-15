@@ -85,7 +85,7 @@ class ProdutosController extends Controller
         $categoria = $request->input('categoria');
         $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
         $fornecedor = $request->input('fornecedor');
-        $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));
+        $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));        
         $produto->save();
         Session::flash('flash_message', 'Produto added!');
 

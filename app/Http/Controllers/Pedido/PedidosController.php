@@ -159,6 +159,9 @@ class PedidosController extends Controller
                $pedido->produtos()->updateExistingPivot($produto->id, $pedido_produto);
                //adicionando a quantidade do pedido no estoque e alterando o preço de compra
                $produto->quantidade =$produto->quantidade + $produto->pivot->quantidade;
+               if ($produto->peso != null) {
+                  $produto->peso_quantidade = $produto->peso * ($produto->quantidade + $produto->pivot->quantidade);
+               }
                $produto->preco = $produto->pivot->preco;
                $produto->save();
 

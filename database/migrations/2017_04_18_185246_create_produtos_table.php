@@ -26,6 +26,7 @@ class CreateProdutosTable extends Migration
             $table->integer('estoque_min');
             $table->integer('quantidade')->nullable();
             $table->integer('peso')->nullable();
+            $table->bigInteger('peso_quantidade')->nullable();
             $table->timestamps();
         });
     }
