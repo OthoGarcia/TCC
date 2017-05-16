@@ -33,7 +33,7 @@ Scripts -->
       <div class="row">
         <div class="col-md-12 caixa">
           <div class="col-md-6 pesquisa">
-            {!! Form::open(['url' => 'pdv/salvar', 'class' => 'form-horizontal', 'files' => true,'id'=>'pdv_form']) !!}
+            {!! Form::open(['url' => 'pdv/salvar', 'class' => 'form-horizontal', 'files' => true,'id'=>'pdv_form', "onSubmit"=>"return submit();"]) !!}
                {!! Form::text('produto', null, ['class' => 'form-control autocomplete', 'id'=>'autocomplete','placeholder'=>'Buscar Produto']) !!}
                <div class="form-group {{ $errors->has('quantidade') ? 'has-error' : ''}}">
                    {!! Form::label('quantidade', 'Quantidade', ['class' => 'col-md-4 control-label']) !!}

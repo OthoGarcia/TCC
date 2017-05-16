@@ -1,5 +1,15 @@
 $(document).ready(function() {
-    $("#div_peso").hide();
+   $('#autocomplete').focus();
+   if($('#autocomplete').val() != ""){
+      if (!submit()) {
+         $("#div_peso").hide();
+         $('#peso').focus();
+      }else{
+         $('#autocomplete').focus();
+      }
+   }else{
+      $("#div_peso").hide();
+   }
 });
 var myvar;
 $.ui.autocomplete.prototype.options.autoSelect = true;
@@ -34,8 +44,8 @@ $( "#autocomplete" ).autocomplete({
         $("#autocomplete").val(ui.item.id);
         $('#peso').focus();
         if (ui.item.peso == null) {
-            $("#div_peso").hide();
-            $('#pdv_form').submit();
+            //$("#div_peso").hide();
+            //$('#pdv_form').submit();
         }else{
            $("#div_peso").show();
            $('#peso').focus();
@@ -54,9 +64,8 @@ $('#peso').keypress(function (e) {
     return false;    //<---- Add this line
   }
 });
-$( "#pdv_form" ).submit(function( event ) {
+function submit(){
   var submter      = false;
-  event.preventDefault();
   $.ajax({
       dataType: "json",
       type : 'Get',
@@ -64,8 +73,6 @@ $( "#pdv_form" ).submit(function( event ) {
       success: function(data) {
         if(data.peso != null){
           if ($("#peso").val().length == 0) {
-           console.log("teste");
-           alert("Deve se preeencher o Peso");
            $("#div_peso").show();
            $("#preco").val(data.preco);
            $('#peso').focus();
@@ -77,5 +84,5 @@ $( "#pdv_form" ).submit(function( event ) {
           console.log("2");
         }
      }
-   });   
-});
+   });
+}
