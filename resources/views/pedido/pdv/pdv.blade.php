@@ -71,6 +71,9 @@ Scripts -->
                <a href="{{ url('/finalizar/'.$pedido->id) }}" class="btn btn-success btn-sm" title="Finalizar Pedido">
                    <i class="fa fa-plus" aria-hidden="true"></i> Finalizar
                </a>
+               <a href="{{ url('/deletar/'.$pedido->id) }}" class="btn btn-success btn-sm" title="Finalizar Pedido">
+                   <i class="fa fa-plus" aria-hidden="true"></i> Deletar
+               </a>
             @endif
           </div>
           <div class="col-md-6 produtos">

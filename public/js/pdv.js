@@ -44,8 +44,8 @@ $( "#autocomplete" ).autocomplete({
         $("#autocomplete").val(ui.item.id);
         $('#peso').focus();
         if (ui.item.peso == null) {
-            //$("#div_peso").hide();
-            //$('#pdv_form').submit();
+            $("#div_peso").hide();
+            $('#pdv_form').submit();
         }else{
            $("#div_peso").show();
            $('#peso').focus();

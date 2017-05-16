@@ -30,7 +30,9 @@ class Pedido extends Model
     public function produtos()
    {
       return $this->belongsToMany('App\Produto', 'pedido_produto')
-         ->withPivot('quantidade','preco','peso','sub_total','entregue');
+         ->withPivot('quantidade','preco','peso','sub_total','entregue')
+         ->withTimestamps()
+         ->orderBy('pedido_produto.updated_at','desc');
    }
    public function fornecedor()
    {
