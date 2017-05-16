@@ -26,6 +26,9 @@ class CreatePedidosTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
                $table->foreign('user_id')->references('id')->on('users')
                    ->onUpdate('cascade')->onDelete('cascade');
+             $table->integer('pagamento_id')->unsigned()->nullable();
+               $table->foreign('pagamento_id')->references('id')->on('pagamentos')
+                   ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
         Schema::create('pedido_produto', function (Blueprint $table) {

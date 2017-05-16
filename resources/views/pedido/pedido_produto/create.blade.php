@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
      @if (Session::get('popup') == 1)
        <div id="myModal" class="modal">
 

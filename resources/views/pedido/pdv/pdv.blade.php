@@ -68,9 +68,7 @@ Scripts -->
                 @endif
             {!! Form::close() !!}
             @if(isset($pedido))
-               <a href="{{ url('/finalizar/'.$pedido->id) }}" class="btn btn-success btn-sm" title="Finalizar Pedido">
-                   <i class="fa fa-plus" aria-hidden="true"></i> Finalizar
-               </a>
+               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Finalizar</button>
                <a href="{{ url('/deletar/'.$pedido->id) }}" class="btn btn-success btn-sm" title="Finalizar Pedido">
                    <i class="fa fa-plus" aria-hidden="true"></i> Deletar
                </a>
@@ -81,7 +79,7 @@ Scripts -->
                @foreach ($produtos as $produto)
                   <span>{{ $produto->pivot->quantidade }}</span>
                   <span>{{ $produto->nome }}</span>
-                  <span>    R$: {{ $produto->preco }}</span>
+                  <span>R$: {{ $produto->preco }}</span>
                   <br>
                @endforeach
              @endif
@@ -94,7 +92,32 @@ Scripts -->
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('js/pdv.js') }}"></script>
+<script src="{{ asset('js/bootstrap-3-3-7.min.js') }}"></script>
+<div class="modal fade" id="myModal" role="dialog">
+@if(isset($pedido))
+    <div class="modal-dialog">
 
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Forma de Pagamento</h4>
+        </div>
+        <div class="modal-body">
+           <a href="{{ url('/finalizar/'.$pedido->id.'/0') }}" class="btn btn-success btn-sm" title="Finalizar Pedido">
+               <i class="fa fa-plus" aria-hidden="true"></i> Dinheiro
+           </a>
+           <a href="{{ url('/finalizar/'.$pedido->id.'/1') }}" class="btn btn-success btn-sm" title="Finalizar Pedido">
+               <i class="fa fa-plus" aria-hidden="true"></i> Cartão
+           </a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
 
+    </div>
+  </div>
+@endif
 </body>
 </html>

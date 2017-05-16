@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Produto;
 use Session;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+
 class PDVController extends Controller
 {
    public function __construct()
@@ -92,7 +94,7 @@ class PDVController extends Controller
       }
       return redirect()->action('PDVController@index');
    }
-   public function finalizar($id){
+   public function finalizar($id, $forma){
       $pedido = \App\Pedido::findOrFail($id);
       $produtos = $pedido->produtos;
       foreach ($produtos as $produto) {
@@ -105,6 +107,19 @@ class PDVController extends Controller
          $produto->save();
       }
       $pedido->estado = 'PDV_Finalizado';
+      $pedido->save();
+      $pagamento = new \App\Pagamento;
+      $pagamento->tipo = "Entrada";
+      $pagamento->descricao = "Pagamendo efetuado no PDV";
+      $pagamento->valor = $pedido->total;
+      $pagamento->data = Carbon::now();
+      if ($forma == 0 ) {
+         $pagamento->forma = "Dinheiro";
+      }else {
+         $pagamento->forma = "Cartão";
+      }
+      $pagamento->save();
+      $pedido->pagamento()->associate($pagamento);
       $pedido->save();
       return redirect()->action('PDVController@index');
    }

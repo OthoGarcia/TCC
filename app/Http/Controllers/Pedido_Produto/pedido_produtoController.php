@@ -76,7 +76,8 @@ class pedido_produtoController extends Controller
             $produtos[$prod->id] = $prod->nome . '  |  ' . $prod->fornecedor->nome;
          }
       }
-      if (session()->get('popup') == '1') {
+
+      if (session()->get('popup') == '1') {         
          Session::flash('popup', '1');
       }
          $produto_selecionado = 0;
@@ -129,8 +130,6 @@ class pedido_produtoController extends Controller
            'Pedido_Produto\\pedido_produtoController@create', ['id' => $pedido->id]
           );
       }
-        Session::flash('flash_message', 'pedido_produto added!');
-
         return redirect('pedido/pedidos');
     }
    public function duplicidade($id,$acao){
