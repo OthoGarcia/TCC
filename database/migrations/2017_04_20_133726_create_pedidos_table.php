@@ -36,6 +36,7 @@ class CreatePedidosTable extends Migration
            $table->foreign('produto_id')->references('id')->on('produtos')
                ->onUpdate('cascade')->onDelete('cascade');
             $table->integer('quantidade');
+            $table->integer('peso')->nullable();
             $table->double('preco',20,2);
             $table->double('sub_total',20,2);
             $table->integer('entregue')->nullable();

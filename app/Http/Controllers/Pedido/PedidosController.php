@@ -158,22 +158,22 @@ class PedidosController extends Controller
                ];
                $pedido->produtos()->updateExistingPivot($produto->id, $pedido_produto);
                //adicionando a quantidade do pedido no estoque e alterando o preço de compra
-               $produto->quantidade =$produto->quantidade + $produto->pivot->quantidade;
+               $produto->quantidade = $produto->quantidade + $produto->pivot->quantidade;
                if ($produto->peso != null) {
-                  $produto->peso_quantidade = $produto->peso * ($produto->quantidade + $produto->pivot->quantidade);
+                  $produto->peso_quantidade = $produto->peso * $produto->quantidade;
                }
                $produto->preco = $produto->pivot->preco;
                $produto->save();
 
             }
-            //verificar ser todos os produtos estão corretos
-            if ($produto->pivot->entregue) {
-               $finalizado = true;
-            }
+
             $i++;
          }
       }
-      if ($finalizado) {
+      //verificar ser todos os produtos estão corretos
+      $produtos = Pedido::findOrFail($id)->produtos()->where('entregue','=','0')->get();
+
+      if ($produtos) {
          $pedido->estado = 'Finalizado';
          $pedido->save();
       }

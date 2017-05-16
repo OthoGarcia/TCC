@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $("#div_peso").hide();
 });
-
+var myvar;
 $.ui.autocomplete.prototype.options.autoSelect = true;
 $( "#autocomplete" ).autocomplete({
     source: function( request, response ) {
@@ -10,6 +10,7 @@ $( "#autocomplete" ).autocomplete({
             type : 'Get',
             url: '/autocomplete/' + $('#autocomplete').val(),
             success: function(data) {
+              myvar = data;
               if (data.length == 1) {
                  $('#pdv_form').submit();
               }
@@ -21,9 +22,7 @@ $( "#autocomplete" ).autocomplete({
                    peso: value.peso
                }
               }));
-           },error: function(data) {
-                alert('error');
-            }
+           }
          });
     },focus: function(event, ui) {
         // prevent autocomplete from updating the textbox
@@ -32,6 +31,8 @@ $( "#autocomplete" ).autocomplete({
         $(this).val(ui.item.label);
      },select: function(event, ui) {
         $("#preco").val(ui.item.preco);
+        $("#autocomplete").val(ui.item.id);
+        $('#peso').focus();
         if (ui.item.peso == null) {
             $("#div_peso").hide();
             $('#pdv_form').submit();
@@ -52,4 +53,29 @@ $('#peso').keypress(function (e) {
     $('#pdv_form').submit();
     return false;    //<---- Add this line
   }
+});
+$( "#pdv_form" ).submit(function( event ) {
+  var submter      = false;
+  event.preventDefault();
+  $.ajax({
+      dataType: "json",
+      type : 'Get',
+      url: '/peso/' + $('#autocomplete').val(),
+      success: function(data) {
+        if(data.peso != null){
+          if ($("#peso").val().length == 0) {
+           console.log("teste");
+           alert("Deve se preeencher o Peso");
+           $("#div_peso").show();
+           $("#preco").val(data.preco);
+           $('#peso').focus();
+           console.log("1");
+          }
+          return false;
+        }else {
+          return true;
+          console.log("2");
+        }
+     }
+   });   
 });

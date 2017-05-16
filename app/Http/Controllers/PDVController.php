@@ -31,13 +31,18 @@ class PDVController extends Controller
       return view('pedido.pdv.pdv');
   }
 
-  public function salvar(Request $request){
 
+  public function salvar(Request $request){
       $produto = \App\Produto::where('nome','=',$request->input('produto'))
       ->orwhere('id','=',$request->input('produto'))
       ->first();
       //criando um novo pedido ou buscando o ja criado
       if ($produto) {
+        if ($produto->peso != null) {
+          $this->validate($request, [
+              'peso' => 'required',
+          ]);
+        }
          if ($request->exists('pedido')) {
             $pedido = \App\Pedido::findOrFail($request->input('pedido'));
          }else {
@@ -62,7 +67,8 @@ class PDVController extends Controller
             $pedido->produtos()->save($produto, [
                'quantidade'=>$request->input('quantidade'),
                'preco'=> $produto->preco,
-               'sub_total'=>$produto->preco * $request->input('quantidade')
+               'sub_total'=>$produto->preco * $request->input('quantidade'),
+               'peso'=>$request->input('peso')
             ]);
          }else{
             //dd($produto);
@@ -72,7 +78,8 @@ class PDVController extends Controller
                   $produto->pivot->quantidade,
                'sub_total'=> ($request->input('quantidade') +
                   $produto->pivot->quantidade) * $produto->preco,
-                  'preco'=> $produto->preco
+                  'preco'=> $produto->preco,
+                  'peso'=>$request->input('peso')+ $produto->pivot->quantidade
             ]);
          }
       }else{
@@ -85,7 +92,12 @@ class PDVController extends Controller
       $pedido = \App\Pedido::findOrFail($id);
       $produtos = $pedido->produtos;
       foreach ($produtos as $produto) {
-         $produto->quantidade = $produto->quantidade - $produto->pivot->quantidade;
+        if ($produto->peso == null) {
+            $produto->quantidade = $produto->quantidade - $produto->pivot->quantidade;
+        }else{
+          $produto->peso_quantidade = $produto->peso_quantidade - $produto->pivot->peso;
+           $produto->quantidade = round($produto->peso_quantidade/$produto->peso);
+        }
          $produto->save();
       }
       $pedido->estado = 'PDV_Finalizado';
@@ -97,6 +109,11 @@ class PDVController extends Controller
      ->orwhere('id','like','%'.$query.'%')
      ->get();
       return $produtos->toJson();
+   }
+   public function peso($id)
+   {
+     $produto = \App\Produto::findOrFail($id);
+     return $produto->toJson();
    }
 
 }
