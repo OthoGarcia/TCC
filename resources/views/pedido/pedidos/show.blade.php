@@ -80,7 +80,7 @@
                                        @endif
                                        <td>{{ $produto->nome}}</td>
                                        <td>{{ $produto->fornecedor->nome}}</td>
-                                       <input type="hidden" name="produtos[]" value="{{ $produto->id }}">
+                                       <!-- vetor q contem os produtos <input type="hidden" name="produtos[]" value="{{ $produto->id }}">-->
                                        <!-- Se ja foi feita a contagem no estoque não pode haver mais mudanças-->
                                           <td>
                                              {!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,
@@ -99,12 +99,14 @@
                                     <input type="hidden" name="" value="{{$loop->count}}" id='i'>
                                  @endforeach
                               </table>
-                              {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Atualizar', array(
-                                      'type' => 'submit',
-                                      'class' => 'btn btn-primary btn-xs',
-                                      'title' => 'Atualizar Valores Produtos',
-                                      'onclick'=>'return confirm("Realmente Deseja Atualizar os Valores?")'
-                              )) !!}
+                              @if ($pedido->estado == 'Entregue')
+                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Atualizar', array(
+                                        'type' => 'submit',
+                                        'class' => 'btn btn-primary btn-xs',
+                                        'title' => 'Atualizar Valores Produtos',
+                                        'onclick'=>'return confirm("Realmente Deseja Atualizar os Valores?")'
+                                )) !!}
+                              @endif
                               {!! Form::close() !!}
                               @if ($pedido->estado == 'Lista')
                                 <a href="{{ url('/pedido/gerar/'.$pedido->id) }}" class="btn btn-success btn-sm" title="Add New Pedido">

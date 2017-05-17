@@ -164,6 +164,8 @@ class PedidosController extends Controller
                }
                $produto->preco = $produto->pivot->preco;
                $produto->save();
+               $pedido->total = $pedido->total + $requestData['sub_total'][$i];
+               $pedido->save();
 
             }
 
@@ -171,9 +173,8 @@ class PedidosController extends Controller
          }
       }
       //verificar ser todos os produtos estão corretos
-      $produtos = Pedido::findOrFail($id)->produtos()->where('entregue','=','0')->get();
-
-      if ($produtos) {
+      $produtos = Pedido::findOrFail($id)->produtos()->where('pedido_produto.entregue','=','0')->get();      
+      if ($produtos->count() == 0) {
          $pedido->estado = 'Finalizado';
          $pedido->save();
       }
