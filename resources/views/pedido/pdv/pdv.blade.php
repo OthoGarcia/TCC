@@ -62,10 +62,7 @@ Scripts -->
                        {!! Form::number('total', (isset($pedido)? $pedido->total : null), ['class' => 'form-control','id'=>'preco','step'=>"any", 'readonly' ]) !!}
                        {!! $errors->first('Total', '<p class="help-block">:message</p>') !!}
                    </div>
-               </div>
-                @if(isset($produtos))
-                  <input type="hidden" name="pedido" value="{{$pedido->id}}">
-                @endif
+               </div>                
             {!! Form::close() !!}
             @if(isset($pedido))
                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Finalizar</button>

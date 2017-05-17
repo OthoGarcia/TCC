@@ -45,8 +45,8 @@ class PDVController extends Controller
                'peso' => 'required',
             ]);
          }
-         if ($request->exists('pedido')) {
-            $pedido = \App\Pedido::findOrFail($request->input('pedido'));
+         if (\App\Pedido::where('estado','=','PDV_Aberto')->first()) {
+            $pedido = \App\Pedido::where('estado','=','PDV_Aberto')->first();            
          }else {
             $pedido = new \App\Pedido;
             $pedido->descricao =
@@ -54,7 +54,6 @@ class PDVController extends Controller
             $pedido->estado = "PDV_Aberto";
             $pedido->user()->associate(Auth::user());
             $pedido->save();
-
          }
          if ($pedido->total == null) {
             $pedido->total = $produto->preco * $request->input('quantidade');
@@ -128,7 +127,10 @@ class PDVController extends Controller
       $produto = \App\Pedido::findOrFail($id)->produtos()
       ->orderBy('pedido_produto.updated_at','desc')
       ->first();
-      \App\Pedido::findOrFail($id)->produtos()->detach($produto->id);
+      $pedido= \App\Pedido::findOrFail($id);
+      $pedido->total -= $produto->pivot->quantidade * $produto->pivot->preco;
+      $pedido->produtos()->detach($produto->id);
+      $pedido->save();
       return redirect()->action('PDVController@index');
    }
    public function autoComplete($query) {
