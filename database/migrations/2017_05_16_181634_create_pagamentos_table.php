@@ -21,6 +21,9 @@ class CreatePagamentosTable extends Migration
             $table->integer('parcela')->nullable();
             $table->date('data');
             $table->string('forma');
+            $table->integer('pedido_id')->unsigned()->nullable();
+            $table->foreign('pedido_id')->references('id')->on('pedidos')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
          });
     }

@@ -31,7 +31,11 @@ margin-left: 15px;
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    max-height: 100%;  /* Change this value according to your needs */
+     overflow: auto;
+
+
 }
 
 /* Add Animation */

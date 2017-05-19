@@ -46,7 +46,7 @@ class PDVController extends Controller
             ]);
          }
          if (\App\Pedido::where('estado','=','PDV_Aberto')->first()) {
-            $pedido = \App\Pedido::where('estado','=','PDV_Aberto')->first();            
+            $pedido = \App\Pedido::where('estado','=','PDV_Aberto')->first();
          }else {
             $pedido = new \App\Pedido;
             $pedido->descricao =
@@ -117,9 +117,9 @@ class PDVController extends Controller
       }else {
          $pagamento->forma = "Cartão";
       }
+      $pagamento->pedido()->associate($pedido);
       $pagamento->save();
-      $pedido->pagamento()->associate($pagamento);
-      $pedido->save();
+
       return redirect()->action('PDVController@index');
    }
    public function deletar($id)

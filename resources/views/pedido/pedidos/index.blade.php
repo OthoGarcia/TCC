@@ -96,8 +96,7 @@
             </div>
         </div>
     </div>
-    @if (Session::get('pagamento') != 1)
-      <h1>TESYE</h1>
+    @if (Session::get('pagamento') == 1)
       <div id="modalPagamento" class="modal">
 
       <!-- Modal content -->
@@ -108,13 +107,22 @@
          </div>
          <div class="modal-body">
 
-            {!! Form::open(['url' => '/pedido_produto/store/', 'class' => 'form-horizontal', 'files' => true, 'id'=>'form_pagamento']) !!}
+            {!! Form::open(['url' => '/pedido/pagamento/', 'class' => 'form-horizontal',
+            'files' => true, 'id'=>'form_pagamento', 'name'=>'form_pagamento']) !!}
+            <input type="hidden" name="pedido" value="{{Session::get('pedido')}}">
                   <div class="form-group">
                     <label  class="col-sm-2 control-label"
-                              for="inputEmail3">Vezes</label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control"
+                              for="">Vezes</label>
+                    <div class="col-sm-6">
+                        <input type="number" name="vezes" class="form-control"
                         id="vezes"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label"
+                              for="">Forma</label>
+                    <div class="col-sm-6">
+                        {!! Form::select('forma', array('Dinheiro', 'Cartão')); !!}
                     </div>
                   </div>
                   <div class="form-group">
