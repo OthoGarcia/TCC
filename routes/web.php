@@ -44,9 +44,10 @@ route::get('pedido/efetuar/{id}',['as'=>'efetuar_pedido','uses'=> 'Pedido\\Pedid
 route::get('pedido/visualizar/{id}',['as'=>'visualizar_pedido','uses'=> 'Pedido\\PedidosController@visualizar_pedido']);
 //PEDIDO ENTREGUE
 route::get('pedido/entregue/{id}',['as'=>'pedido_entregue','uses'=> 'Pedido\\PedidosController@entregue']);
-//Colocar os produtos do pedido no estoque
+//Colocar os produtos do pedido no estoque e colocar pagamento
 route::get('pedido/estoque/{id}',['as'=>'pedido_estoque_view','uses'=> 'Pedido\\PedidosController@estoque_view']);
 route::POST('pedido/estoque/gravar/{id}',['as'=>'pedido_estoque','uses'=> 'Pedido\\PedidosController@estoque']);
+route::get('pedido/pagamento/{id}/{tipo}',['as'=>'pedido_pagamento','uses'=> 'Pedido\\PedidosController@pagamento']);
 //PDV
 route::get('pdv',['as'=>'pdv','uses'=> 'PDVController@index']);
 route::get('pdv/{id}',['as'=>'pdv_produtos','uses'=> 'PDVController@index_produtos']);

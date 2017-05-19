@@ -91,10 +91,49 @@
                             </table>
                             <div class="pagination-wrapper"> {!! $pedidos->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @if (Session::get('pagamento') != 1)
+      <h1>TESYE</h1>
+      <div id="modalPagamento" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+         <div class="modal-header">
+           <span class="close">&times;</span>
+           <h2>Prazo para pagamento</h2>
+         </div>
+         <div class="modal-body">
+
+            {!! Form::open(['url' => '/pedido_produto/store/', 'class' => 'form-horizontal', 'files' => true, 'id'=>'form_pagamento']) !!}
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label"
+                              for="inputEmail3">Vezes</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control"
+                        id="vezes"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Salvar</button>
+                    </div>
+                  </div>
+                {!! Form::close() !!}
+            </div>
+      </div>
+     </div>
+     <style media="screen">
+
+     </style>
+  @endif
+@endsection
+@section('js')
+  <script src="{{ asset('js/pedido.js') }}"></script>
+@endsection
+@section('css')
+   <link href="{{ asset('css/pedido.css') }}" rel="stylesheet">
 @endsection

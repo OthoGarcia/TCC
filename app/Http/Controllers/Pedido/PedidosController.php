@@ -173,12 +173,24 @@ class PedidosController extends Controller
          }
       }
       //verificar ser todos os produtos estão corretos
-      $produtos = Pedido::findOrFail($id)->produtos()->where('pedido_produto.entregue','=','0')->get();      
+      $produtos = Pedido::findOrFail($id)->produtos()->where('pedido_produto.entregue','=','0')->get();
       if ($produtos->count() == 0) {
          $pedido->estado = 'Finalizado';
          $pedido->save();
+         Session::flash('pagamento', '1');
+         return redirect('pedido/pedidos');
+
+         /*
+         $pagamento = new \App\Pagamento;
+         $pagamento->descricao = "Pagamento Referente ao  pedido número: " . $pedido->id;
+         $pagamento->tipo = "Saída";
+         $pagamento->valor = $pedido->total;
+         */
       }
       return redirect('pedido/pedidos');
+   }
+   public function pagamento_compra($id,$tipo){
+
    }
    /**
    * Display the specified resource.
