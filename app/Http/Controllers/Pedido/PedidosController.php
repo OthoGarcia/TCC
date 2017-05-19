@@ -180,13 +180,6 @@ class PedidosController extends Controller
          Session::flash('pagamento', '1');
          Session::flash('pedido', $pedido->id);
          return redirect('pedido/pedidos');
-
-         /*
-         $pagamento = new \App\Pagamento;
-         $pagamento->descricao = "Pagamento Referente ao  pedido número: " . $pedido->id;
-         $pagamento->tipo = "Saída";
-         $pagamento->valor = $pedido->total;
-         */
       }
       return redirect('pedido/pedidos');
    }
@@ -194,6 +187,11 @@ class PedidosController extends Controller
       $pedido = \App\Pedido::findOrFail($request->input('pedido'));
       $datas = $request->input('data');
       $parcela = $pedido->total/$request->input('vezes');
+      if ($request->input('forma') == '0') {
+         $forma = "Dinheiro";
+      }else {
+         $forma = "Cartão";
+      }
       foreach ($datas as $i=>$data) {
          $pagamento = new \App\Pagamento;
          $pagamento->descricao = "Pagamento Referente ao  pedido número: " . $pedido->id .
@@ -202,7 +200,7 @@ class PedidosController extends Controller
          $pagamento->valor = $parcela;
          $pagamento->data = $data;
          $pagamento->parcela = $i+1;
-         $pagamento->forma = $request->input('forma');
+         $pagamento->forma = $forma;
          $pagamento->pedido()->associate($pedido);
          $pagamento->save();
       }

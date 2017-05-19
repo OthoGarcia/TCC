@@ -76,33 +76,34 @@
            $('<div class="form-group ">').attr('id',"div"+i).appendTo('#form_pagamento');
            $('<label id="label'+i+'" for="data[]" class="col-sm-2 control-label">Data Parcela '+i+'</label>').appendTo('#form_pagamento');
               $('<input />').attr('type', 'date')
-              .attr('name', "data[]")
+              .attr('name', "data["+i+"]")
               .attr('id',"data"+i)
+              .attr('class',"comment required")
               .appendTo('#form_pagamento');
            $('</div">').appendTo('#form_pagamento');
         }
-     }   
-     $(function() {
-  // Initialize form validation on the registration form.
-  // It has the name attribute "registration"
-  $("form[name='form_pagamento']").validate({
-    // Specify validation rules
-    rules: {
-      // The key name on the left side is the name attribute
-      // of an input field. Validation rules are defined
-      // on the right side
-      vezes: "required",
-      data: "required"
-    },
-    // Specify validation error messages
-    messages: {
-      vezes: "Please enter your firstname",
-      data: "Please enter your lastname"
-    },
-    // Make sure the form is submitted to the destination defined
-    // in the "action" attribute of the form when valid
-    submitHandler: function(form) {
-      form.submit();
-    }
-  });
-});
+        validar();
+     }
+     $( document ).ready(function() {
+        validar();
+      });
+     function validar(){
+        $("#form_pagamento").validate({
+           rules: {
+             "data[]": {
+               required: true,
+            },
+            vezes: {
+               required: true,
+            }
+           },
+           messages: {
+             "data[]": {
+               required: "É necessario o preenchimento da Data"
+            },
+            vezes: {
+               required: "É necessario o preenchimento das Vezes Divididas",
+            }
+           }
+         });
+     }

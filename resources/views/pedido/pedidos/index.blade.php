@@ -96,7 +96,7 @@
             </div>
         </div>
     </div>
-    @if (Session::get('pagamento') == 1)
+    @if (Session::get('pagamento') != 1)
       <div id="modalPagamento" class="modal">
 
       <!-- Modal content -->
@@ -141,6 +141,7 @@
 @endsection
 @section('js')
   <script src="{{ asset('js/pedido.js') }}"></script>
+  <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 @endsection
 @section('css')
    <link href="{{ asset('css/pedido.css') }}" rel="stylesheet">
