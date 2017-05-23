@@ -56,6 +56,9 @@
                                         <td>{{ $item->estado }}</td>
                                         <td>
                                            <!-- -->
+                                           @if(($item->estado == 'Finalizado') or ($item->estado == 'Pago'))
+                                             <a  href="{{ route('pedido_pagamento_view', $item->id ) }}"  title="Efetuar Pagamento"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Pagamento</button></a>
+                                          @endif
                                            @if(($item->estado == 'Efetuado') or ($item->estado == 'Entregue') )
                                              <a  href="{{ route('visualizar_pedido', $item->id ) }}" target="_blank" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Visualizar</button></a>
                                            @else
@@ -96,7 +99,7 @@
             </div>
         </div>
     </div>
-    @if (Session::get('pagamento') != 1)
+    @if (Session::get('pagamento') == 1)
       <div id="modalPagamento" class="modal">
 
       <!-- Modal content -->

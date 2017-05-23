@@ -43,9 +43,9 @@ class Pedido extends Model
    {
       return $this->belongsTo('App\User');
    }
-   public function pagamento()
+   public function pagamentos()
    {
-      return $this->belongsTo('App\Pagamento');
+      return $this->hasMany('App\Pagamento');
    }
 
 }

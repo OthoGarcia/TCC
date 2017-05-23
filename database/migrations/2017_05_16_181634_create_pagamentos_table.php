@@ -20,7 +20,8 @@ class CreatePagamentosTable extends Migration
             $table->double('valor',20,2);
             $table->integer('parcela')->nullable();
             $table->date('data');
-            $table->string('forma');
+            $table->boolean('pago');
+            $table->string('forma')->default(false);
             $table->integer('pedido_id')->unsigned()->nullable();
             $table->foreign('pedido_id')->references('id')->on('pedidos')
                 ->onUpdate('cascade')->onDelete('cascade');

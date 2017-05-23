@@ -201,11 +201,39 @@ class PedidosController extends Controller
          $pagamento->data = $data;
          $pagamento->parcela = $i+1;
          $pagamento->forma = $forma;
+         $pagamento->pago = false;
          $pagamento->pedido()->associate($pedido);
          $pagamento->save();
       }
       return redirect('pedido/pedidos');
    }
+   public function pagamento_view($id){
+      $pedido = Pedido::findOrFail($id);
+      $pagamentos = $pedido->pagamentos;
+      return view('pedido.pedidos.pagamento', compact('pedido','pagamentos'));
+   }
+   public function pagamento_parcela(Request $request, $id){
+      $pedido = Pedido::findOrFail($id);
+      $pagamentos = $pedido->pagamentos;
+      $parcelas_pagas = Input::get('pagamentos');
+      $finalizado = false;
+      $i= 0;
+      foreach ($pagamentos as $pagamento) {
+         if (!empty($parcelas_pagas)) {
+            if (in_array($pagamento->id,$parcelas_pagas)) {
+               $pagamento->pago = true;
+               $pagamento->save();
+            }
+         }
+      }
+      $pagamentos = $pedido->pagamentos()->where('pago','=',false)->get();
+      if ($pagamentos->count() == 0){
+         $pedido->estado = 'Pago';
+         $pedido->save();
+      }
+      return redirect('pedido/pedidos');
+   }
+
    /**
    * Display the specified resource.
    *
