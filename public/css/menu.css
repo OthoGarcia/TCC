@@ -104,14 +104,18 @@
   color: #fee547 !important;
 
 }
-
-
-
-
+@media (min-width: 1400px){
+	.table_descricao{
+		width: 62%;
+	}
+	.container {
+		width: 1350px;
+	}
+}
  .panel-heading{
-	 color: #4ebf2a !important;
  	 font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
 	 font-weight: bold;
+	 background-color: rgba(119, 119, 119, 0.24);;
  }
 
  .login-remember{

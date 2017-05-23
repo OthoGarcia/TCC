@@ -1,3 +1,11 @@
+.linha_ok{
+   background-color: #b2f7b2;
+}
+
+.linha>td, .linha_ok>td{
+   text-align: center;
+}
+
 .modal-body .form-horizontal .col-sm-2,
 .modal-body .form-horizontal .col-sm-10 {
 width: 100%

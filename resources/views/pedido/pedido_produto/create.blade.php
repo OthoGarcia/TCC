@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Create New pedido_produto</div>
                     <div class="panel-body">
-                        <a href="{{ url('/pedido/pedidos') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/pedido/pedidos') }}" title="Voltar"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</button></a>
                         <br />
                         <br />
 
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
      @if (Session::get('popup') == 1)
        <div id="myModal" class="modal">
 

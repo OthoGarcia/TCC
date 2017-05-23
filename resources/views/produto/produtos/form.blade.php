@@ -54,6 +54,6 @@
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">
-        {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary'],['id'=>'salvar']) !!}
+        {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Criar', ['class' => 'btn btn-primary'],['id'=>'salvar']) !!}
     </div>
 </div>

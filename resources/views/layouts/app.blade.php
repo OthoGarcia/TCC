@@ -102,7 +102,7 @@ Scripts -->
                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                       {{ csrf_field() }}
                     </form>
-                  </li>                  
+                  </li>
                 </ul>
               </li>
               @endif
@@ -114,9 +114,7 @@ Scripts -->
 
     </div>
   </div>
-  @yield('content')
-
-
+  @yield('content')  
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

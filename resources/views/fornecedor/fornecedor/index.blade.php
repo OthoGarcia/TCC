@@ -8,12 +8,12 @@
                     <div class="panel-heading">Fornecedor</div>
                     <div class="panel-body">
                         <a href="{{ url('/fornecedor/fornecedor/create') }}" class="btn btn-success btn-sm" title="Add New Fornecedor">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
                         </a>
 
                         {!! Form::open(['method' => 'GET', 'url' => '/fornecedor/fornecedor', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="Search...">
+                            <input type="text" class="form-control" name="search" placeholder="Pesquisar...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="fa fa-search"></i>
@@ -37,18 +37,18 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->nome }}</td><td>{{ $item->descricao }}</td><td>{{ $item->telefone }}</td>
                                         <td>
-                                            <a href="{{ url('/fornecedor/fornecedor/' . $item->id) }}" title="View Fornecedor"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/fornecedor/fornecedor/' . $item->id . '/edit') }}" title="Edit Fornecedor"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/fornecedor/fornecedor/' . $item->id) }}" title="Visualizar Fornecedor"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Visualizar</button></a>
+                                            <a href="{{ url('/fornecedor/fornecedor/' . $item->id . '/edit') }}" title="Editar Fornecedor"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
                                                 'url' => ['/fornecedor/fornecedor', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Deletar', array(
                                                         'type' => 'submit',
                                                         'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Delete Fornecedor',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
+                                                        'title' => 'Deletar Fornecedor',
+                                                        'onclick'=>'return confirm("Deseja realmente deletar?")'
                                                 )) !!}
                                             {!! Form::close() !!}
                                         </td>

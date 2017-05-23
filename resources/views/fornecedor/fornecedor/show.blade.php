@@ -7,11 +7,11 @@
 
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Fornecedor {{ $fornecedor->id }}</div>
+                    <div class="panel-heading">Fornecedor {{ $fornecedor->nome }}</div>
                     <div class="panel-body">
 
-                        <a href="{{ url('/fornecedor/fornecedor') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/fornecedor/fornecedor/' . $fornecedor->id . '/edit') }}" title="Edit Fornecedor"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('/fornecedor/fornecedor') }}" title="Voltar"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</button></a>
+                        <a href="{{ url('/fornecedor/fornecedor/' . $fornecedor->id . '/edit') }}" title="Edit Fornecedor"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Voltar</button></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['fornecedor/fornecedor', $fornecedor->id],
@@ -21,7 +21,7 @@
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
                                     'title' => 'Delete Fornecedor',
-                                    'onclick'=>'return confirm("Confirm delete?")'
+                                    'onclick'=>'return confirm("Deseja realmente deletar?")'
                             ))!!}
                         {!! Form::close() !!}
                         <br/>

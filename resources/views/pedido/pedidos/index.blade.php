@@ -14,12 +14,12 @@
 
                     </div>
                     <div class="panel-body">
-                        <a href="{{ url('/pedido/pedidos/create') }}" class="btn btn-success btn-sm" title="Add New Pedido">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                        <a href="{{ url('/pedido/pedidos/create') }}" class="btn btn-success btn-sm" title="Adicionar novo Pedido">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
                         </a>
                         {!! Form::open(['method' => 'GET', 'url' => '/pedido/pedidos', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="Search...">
+                            <input type="text" class="form-control" name="search" placeholder="Pesquisar...">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="fa fa-search"></i>
@@ -40,7 +40,7 @@
                                           <th>Fornecedor</th>
                                         @endif
                                         <th>Estado</th>
-                                        <th>Actions</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,30 +50,33 @@
                                         <td>{{ $item->descricao }}</td>
                                         @if (Session::get('lista_pedido') == 1)
                                           @if ($item->fornecedor)
-                                                <td>{{ $item->fornecedor->nome }}</td>
+                                             <td>{{ $item->fornecedor->nome }}</td>
+                                          @else
+                                             <td>Não Identificado</td>
                                           @endif
+
                                         @endif
                                         <td>{{ $item->estado }}</td>
                                         <td>
                                            <!-- -->
                                            @if(($item->estado == 'Finalizado') or ($item->estado == 'Pago'))
-                                             <a  href="{{ route('pedido_pagamento_view', $item->id ) }}"  title="Efetuar Pagamento"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Pagamento</button></a>
+                                             <a  href="{{ route('pedido_pagamento_view', $item->id ) }}"  title="Efetuar Pagamento"><button class="btn btn-success btn-sm"><i class="fa fa-money" aria-hidden="true"></i> Pagamento</button></a>
                                           @endif
                                            @if(($item->estado == 'Efetuado') or ($item->estado == 'Entregue') )
                                              <a  href="{{ route('visualizar_pedido', $item->id ) }}" target="_blank" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Visualizar</button></a>
                                            @else
-                                             <a href="{{ url('/pedido/pedidos/' . $item->id) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                             <a href="{{ url('/pedido/pedidos/' . $item->id) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Visualizar</button></a>
                                            @endif
                                            @if (($item->estado == 'Efetuado'))
-                                             <a href="{{ route('pedido_entregue', $item->id ) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Entregue</button></a>
+                                             <a href="{{ route('pedido_entregue', $item->id ) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-truck" aria-hidden="true"></i> Entregue</button></a>
                                           @endif
                                           @if (($item->estado == 'Entregue'))
-                                            <a href="{{ route('pedido_estoque_view', $item->id ) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Adicionar Estoque</button></a>
+                                            <a href="{{ route('pedido_estoque_view', $item->id ) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-exchange" aria-hidden="true"></i> Adicionar Estoque</button></a>
                                          @endif
                                             @if(($item->estado == 'Aberto') or ($item->estado == 'Lista') )
                                                <a href="{{ url('/pedido/pedidos/' . $item->id . '/edit') }}" title="Edit Pedido"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-                                               <a href="{{ url('/pedido_produto/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add</button></a>
-                                               <a href="{{ url('pedido/efetuar/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Efetuar</button></a>
+                                               <a href="{{ url('/pedido_produto/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Produto</button></a>
+                                               <a href="{{ url('pedido/efetuar/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-check" aria-hidden="true"></i> Efetuar</button></a>
                                              @endif
                                             {!! Form::open([
                                                 'method'=>'DELETE',

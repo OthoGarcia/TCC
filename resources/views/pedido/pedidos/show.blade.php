@@ -14,8 +14,8 @@
                      </div>
                     <div class="panel-body">
 
-                        <a href="{{ url('/pedido/pedidos') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/pedido/pedidos/' . $pedido->id . '/edit') }}" title="Edit Pedido"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a href="{{ url('/pedido/pedidos') }}" title="Voltar"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</button></a>
+                        <a href="{{ url('/pedido/pedidos/' . $pedido->id . '/edit') }}" title="Edit Pedido"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
                         <!-- Não poder deletar o pedido
                         {!! Form::open([
                             'method'=>'DELETE',
@@ -23,10 +23,10 @@
                             'style' => 'display:inline'
                         ]) !!}
                      -->
-                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                            {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Deletar', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete Pedido',
+                                    'title' => 'Deletar Pedido',
                                     'onclick'=>'return confirm("Confirm delete?")'
                             ))!!}
                         {!! Form::close() !!}
@@ -68,7 +68,11 @@
                                     <th>Sub Total</th>
                                  </tr>
                                  @foreach ($produtos as $produto)
-                                    <tr>
+                                 @if ($produto->pivot->entregue)
+                                    <tr class="linha_ok">
+                                 @else
+                                    <tr class="linha">
+                                 @endif
                                        @if($pedido->estado == 'Entregue' and (!$produto->pivot->entregue))
                                           <td>
                                              {!! Form::checkbox('produtos[]', $produto->id) !!}
@@ -80,26 +84,41 @@
                                        @endif
                                        <td>{{ $produto->nome}}</td>
                                        <td>{{ $produto->fornecedor->nome}}</td>
-                                       <!-- vetor q contem os produtos <input type="hidden" name="produtos[]" value="{{ $produto->id }}">-->
+                                       <!-- <input type="hidden" name="produtos[]" value="{{ $produto->id }}"> -->
                                        <!-- Se ja foi feita a contagem no estoque não pode haver mais mudanças-->
+                                       @if ($produto->pivot->entregue)
+                                          <td>{{ $produto->pivot->quantidade }}</td>
+                                          <input type="hidden" name="quantidade[]" value="">
+                                       @else
                                           <td>
                                              {!! Form::number('quantidade[]', $produto->pivot->quantidade, ['class' => 'form-control','id'=>'quantidade'.$loop->iteration,
                                              'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');'
                                              ,($pedido->estado == 'Efetuado' || $produto->pivot->entregue ? 'readonly' : 'focus') ]) !!}
                                           </td>
+                                       @endif
+                                       @if ($produto->pivot->entregue)
+                                          <td>{{ $produto->pivot->preco }}</td>
+                                          <input type="hidden" name="preco[]" value="">
+                                       @else
                                           <td>
                                              {!! Form::number('preco[]'.$produto->id, $produto->pivot->preco, ['class' => 'form-control','id'=>'preco'.$loop->iteration,
                                              'onkeyup'=>'Gerar_sub_total('.$loop->iteration.');', 'onmouseup'=>'Gerar_sub_total('.$loop->iteration.');'
                                              ,($pedido->estado == 'Efetuado' || $produto->pivot->entregue ? 'readonly' : 'focus') ]) !!}
                                           </td>
+                                       @endif
+                                       @if ($produto->pivot->entregue)
+                                          <td>{{ $produto->pivot->sub_total }}</td>
+                                          <input type="hidden" name="sub_total[]" value="">
+                                       @else
                                           <td>
                                              {!! Form::number('sub_total[]'.$produto->id, $produto->pivot->sub_total, ['class' => 'form-control','id'=>'sub_total'.$loop->iteration,'readonly']) !!}
                                           </td>
+                                       @endif
                                     </tr>
                                     <input type="hidden" name="" value="{{$loop->count}}" id='i'>
                                  @endforeach
                               </table>
-                              @if ($pedido->estado == 'Entregue')
+                              @if ($pedido->estado == 'Entregue' or $pedido->estado == 'Aberto')
                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Atualizar', array(
                                         'type' => 'submit',
                                         'class' => 'btn btn-primary btn-xs',

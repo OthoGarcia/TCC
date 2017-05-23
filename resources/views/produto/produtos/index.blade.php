@@ -37,8 +37,8 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->nome }}</td><td>{{ $item->descricao }}</td><td>{{ $item->preco }}</td>
                                         <td>
-                                            <a href="{{ url('/produto/produtos/' . $item->id) }}" title="View Produto"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/produto/produtos/' . $item->id . '/edit') }}" title="Edit Produto"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/produto/produtos/' . $item->id) }}" title="View Produto"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Visualizar</button></a>
+                                            <a href="{{ url('/produto/produtos/' . $item->id . '/edit') }}" title="Edit Produto"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
                                                 'url' => ['/produto/produtos', $item->id],
@@ -47,7 +47,7 @@
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
                                                         'type' => 'submit',
                                                         'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Delete Produto',
+                                                        'title' => 'Deletar Produto',
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}

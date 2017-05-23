@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Edit Categoria #{{ $categoria->id }}</div>
+                    <div class="panel-heading">Editar Categoria {{ $categoria->nome }}</div>
                     <div class="panel-body">
                         <a href="{{ url('/categoria/categorias') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />

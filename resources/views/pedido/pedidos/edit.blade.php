@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Edit Pedido #{{ $pedido->id }}</div>
+                    <div class="panel-heading">Edit Pedido Codigo:{{ $pedido->id }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/pedido/pedidos') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/pedido/pedidos') }}" title="voltar"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> voltar</button></a>
                         <br />
                         <br />
 

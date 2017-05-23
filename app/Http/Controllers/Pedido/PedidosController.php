@@ -32,6 +32,7 @@ class PedidosController extends Controller
          ->paginate($perPage);
       } else {
          $pedidos = Pedido::where('estado','<>','Lista')
+         ->orderBy('updated_at','desc')
          ->paginate($perPage);
       }
       session()->put('lista_pedido', '1');
@@ -51,6 +52,7 @@ class PedidosController extends Controller
          ->paginate($perPage);
       } else {
          $pedidos = Pedido::where('estado','=','Lista')
+         ->orderBy('updated_at','desc')
          ->paginate($perPage);
       }
       session()->put('lista_pedido', '0');
@@ -82,7 +84,9 @@ class PedidosController extends Controller
    */
    public function store(Request $request)
    {
-
+      $this->validate($request, [
+          'descricao' => 'required|max:255'
+      ]);
       $requestData = $request->all();
       if (session()->get('lista_pedido') == 0) {
          $requestData += ["estado"=>'Lista'];
@@ -145,7 +149,7 @@ class PedidosController extends Controller
       $produtos = $pedido->produtos;
       $produtos_entregues = Input::get('produtos');
       $finalizado = false;
-      $i= 0;
+      $i= 0;      
       foreach ($produtos as $produto) {
          if (!empty($produtos_entregues)) {
             if (in_array($produto->id,$produtos_entregues)) {
@@ -218,6 +222,7 @@ class PedidosController extends Controller
       $parcelas_pagas = Input::get('pagamentos');
       $finalizado = false;
       $i= 0;
+      //dd($parcelas_pagas);
       foreach ($pagamentos as $pagamento) {
          if (!empty($parcelas_pagas)) {
             if (in_array($pagamento->id,$parcelas_pagas)) {
