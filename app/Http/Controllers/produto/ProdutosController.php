@@ -53,7 +53,7 @@ class ProdutosController extends Controller
       }
       $categoria_selecionada = 1;
       $forns = \App\Fornecedor::orderBy('nome')->get();
-      $fornecedores = array();
+      $fornecedores = array();      
       foreach ($forns as $forn) {
          $fornecedores[$forn->id] = $forn->nome;
       }
@@ -85,7 +85,7 @@ class ProdutosController extends Controller
         $categoria = $request->input('categoria');
         $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
         $fornecedor = $request->input('fornecedor');
-        $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));        
+        $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));
         $produto->save();
         Session::flash('flash_message', 'Produto added!');
 

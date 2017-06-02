@@ -111,6 +111,7 @@ class PDVController extends Controller
       $pagamento->tipo = "Entrada";
       $pagamento->descricao = "Pagamendo efetuado no PDV";
       $pagamento->valor = $pedido->total;
+      $pagamento->pago = true;
       $pagamento->data = Carbon::now();
       if ($forma == 0 ) {
          $pagamento->forma = "Dinheiro";

@@ -43,6 +43,7 @@ $( "#autocomplete" ).autocomplete({
         $("#preco").val(ui.item.preco);
         $("#autocomplete").val(ui.item.id);
         $('#peso').focus();
+        console.log(ui.item.peso);
         if (ui.item.peso == null) {
             $("#div_peso").hide();
             $('#pdv_form').submit();

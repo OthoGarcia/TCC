@@ -59,3 +59,6 @@ route::get('peso/{id}',['as'=>'peso','uses'=> 'PDVController@peso']);
 route::get('finalizar/{id}/{forma}',['as'=>'finalizar','uses'=> 'PDVController@finalizar']);
 route::get('deletar/{id}',['as'=>'deletar','uses'=> 'PDVController@deletar']);
 route::post('pdv/salvar',['as'=>'pdv_salvar','uses'=> 'PDVController@salvar']);
+
+//relatorios
+route::get('relatorio/produto',['as'=>'relatorio_produto','uses'=> 'RelatorioController@index']);

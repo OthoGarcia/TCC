@@ -13,9 +13,11 @@
   <!-- Styles2 -->
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<link href="{{ URL::asset('css/menu.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('css/menu.css') }}" rel="stylesheet">
   <link href="{{ URL::asset('css/hover-min.css') }}" rel="stylesheet">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+  <link href="{{ URL::asset('css/multiple-select.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('css/relatorios.css') }}" rel="stylesheet">
 
   @yield('css')
 
@@ -71,6 +73,12 @@ Scripts -->
                        <li><a href="{{ url('/pedido/lista') }}">Lista de Compra</a></li>
                      </ul>
                    </li>
+                   <li class="dropdown">
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relátorios<span class="caret"></span></a>
+                     <ul class="dropdown-menu">
+                       <li><a href="{{ url('relatorio/produto') }}">Produto</a></li>
+                     </ul>
+                   </li>
                   @endif
               </ul>
 
@@ -114,7 +122,7 @@ Scripts -->
 
     </div>
   </div>
-  @yield('content')  
+  @yield('content')
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -122,6 +130,7 @@ Scripts -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/multiple-select.js') }}"></script>
 @yield('js')
 
 </body>
