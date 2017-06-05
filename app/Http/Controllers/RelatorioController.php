@@ -16,8 +16,8 @@ class RelatorioController extends Controller
    {
       $keyword = $request->get('search');
       $fornecedor = $request->get('fornecedor');
-      $categoria = $request->get('categoria');      
-
+      $categoria = $request->get('categoria');
+      $estoque_vermelho = $request->get('estoque_vermelho');
       $perPage = 25;
       //selecionando categorias
       $cats = \App\Categoria::orderBy('nome')->get();;
@@ -49,8 +49,8 @@ class RelatorioController extends Controller
       $escolha = $request->input('escolha');
       //igual a 1 == 'ou'
       if($escolha == 1){
-         $produtos = DB::table('produtos')
-         ->when($keyword, function($query) use ($keyword){
+         $produtos = Produto::
+         when($keyword, function($query) use ($keyword){
             return $query->where('nome', 'LIKE', "%$keyword%");
          })
          ->when($keyword, function($query) use ($keyword){
@@ -62,10 +62,13 @@ class RelatorioController extends Controller
          ->when($categoria, function($query) use($categoria){
             return $query->orWhereIn('categoria_id',$categoria);
          })
+         ->when($estoque_vermelho, function($query){
+            return $query->whereColumn('produtos.estoque_min','>','produtos.quantidade');
+         })
              ->paginate($perPage);
       }else{
-         $produtos = DB::table('produtos')
-         ->when($keyword, function($query) use ($keyword){
+         $produtos = Produto::
+         when($keyword, function($query) use ($keyword){
             return $query->where('nome', 'LIKE', "%$keyword%");
          })
          ->when($keyword, function($query) use ($keyword){
@@ -77,9 +80,12 @@ class RelatorioController extends Controller
          ->when($categoria, function($query) use($categoria){
             return $query->whereIn('categoria_id',$categoria);
          })
+         ->when($estoque_vermelho, function($query){
+            return $query->whereColumn('produtos.estoque_min','>','produtos.quantidade');
+         })
              ->paginate($perPage);
       }
       return view('relatorios.produtos', compact('produtos','fornecedores','categorias',
-         'categoria_selecionada','fornecedor_selecionado','escolha','escolhas'));
+         'categoria_selecionada','fornecedor_selecionado','escolha','escolhas','estoque_vermelho'));
    }
 }

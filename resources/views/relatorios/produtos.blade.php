@@ -8,9 +8,9 @@
                     <div class="panel-body">
                         {!! Form::open(['method' => 'GET', 'url' => '/relatorio/produto', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="col-md-12">
-                           <div class="col-md-12">
+                           <div class="col-md-12 pesquisa">
                               <div class="input-group">
-                                  <input type="text" class="form-control" name="search" placeholder="Search...">
+                                  <input type="text" class="form-control" name="search" placeholder="Pesquisar Produto">
                                   <span class="input-group-btn">
                                       <button class="btn btn-default" type="submit">
                                           <i class="fa fa-search"></i>
@@ -18,62 +18,60 @@
                                   </span>
                               </div>
                            </div>
-                           <div class="col-md-4">
-                               {!! Form::label('fornecedor', 'Fornecedor', ['class' => 'col-md-4 control-label']) !!}
+                           <div class="col-md-4 col-md-offset-1">
+                               {!! Form::label('fornecedor', 'Fornecedor', ['class' => 'col-md-4 control-label cabecalho_relatorio']) !!}
                                <div class="col-md-8">
                                    {!! Form::select('fornecedor[]', $fornecedores, $fornecedor_selecionado, ['id'=>'select_fornecedor','multiple' => 'multiple']); !!}
                                    {!! $errors->first('fornecedor', '<p class="help-block">:message</p>') !!}
                                </div>
                            </div>
-                           <div class="col-md-1">
+                           <div class="col-md-2">
                                    {!! Form::select( 'escolha', $escolhas,$escolha); !!}
                            </div>
                            <div class="col-md-4">
-                               {!! Form::label('categoria', 'Categoria', ['class' => 'col-md-5 control-label']) !!}
+                               {!! Form::label('categoria', 'Categoria', ['class' => 'col-md-6 control-label cabecalho_relatorio']) !!}
                                <div class="col-md-6">
                                    {!! Form::select( 'categoria[]', $categorias,$categoria_selecionada, ['id'=>'select_categoria','multiple' => 'multiple']); !!}
                                    {!! $errors->first('categoria', '<p class="help-block">:message</p>') !!}
                                </div>
                            </div>
+                           <div class="col-md-3">
+                               {!! Form::label('estoque_min', 'Estoque Vermelho', ['class' => 'col-md-11 control-label cabecalho_relatorio']) !!}
+                                 {!! Form::checkbox('estoque_vermelho', '1',$estoque_vermelho); !!}
+                           </div>
 
                         </div>
                         {!! Form::close() !!}
-
-                        <br/>
-                        <br/>
-                        <div class="table-responsive table_relatorio">
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th><th>Nome</th><th>Descricao</th><th>Preco</th><th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($produtos as $item)
-                                    <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td>{{ $item->nome }}</td><td>{{ $item->descricao }}</td><td>{{ $item->preco }}</td>
-                                        <td>
-                                            <a href="{{ url('/produto/produtos/' . $item->id) }}" title="View Produto"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Visualizar</button></a>
-                                            <a href="{{ url('/produto/produtos/' . $item->id . '/edit') }}" title="Edit Produto"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
-                                            {!! Form::open([
-                                                'method'=>'DELETE',
-                                                'url' => ['/produto/produtos', $item->id],
-                                                'style' => 'display:inline'
-                                            ]) !!}
-                                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Deletar Produto',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
-                                            {!! Form::close() !!}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="pagination-wrapper"> {!! $produtos->appends(['search' => Request::get('search')])->render() !!} </div>
+                        <hr>
+                           <h2 class="relatorio">Relatório</h2>
+                        <hr>
+                           @foreach($produtos as $p)
+                           <div class="col-md-12 relatorio_produtos">
+                              <div class="col-md-2">
+                                 <p>Codigo: <span>{{$p->id}}</span></p>
+                              </div>
+                              <div class="col-md-4">
+                                 <p>Produto: <span>{{$p->nome}}</span></p>
+                              </div>
+                              <div class="col-md-4">
+                                 <p>Categoria: <span>{{$p->categoria->nome}}</span></p>
+                              </div>
+                              <div class="col-md-4">
+                                 <p>fornecedor: <span>{{$p->fornecedor->nome}}</span></p>
+                              </div>
+                              <div class="col-md-3">
+                                 <p>Preco Venda: <span>R$:{{$p->preco}}</span></p>
+                              </div>
+                              <div class="col-md-2">
+                                 <p>Estoque: <span>{{$p->quantidade}}</span></p>
+                              </div>
+                              <div class="col-md-2">
+                                 <p>Estoque Min: <span>{{$p->estoque_min}}</span></p>
+                              </div>
+                           </div>
+                           <br>
+                           @endforeach
+                        <div class="pagination-wrapper"> {!! $produtos->appends(Request::except('page'))->links() !!} </div>
                         </div>
 
                     </div>

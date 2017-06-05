@@ -1,3 +1,29 @@
 .table-responsive.table_relatorio{
    overflow-x: inherit !important;
 }
+.relatorio{
+   text-transform: uppercase;
+   text-align: center;
+   font-family: -webkit-pictograph;
+}
+.pesquisa{
+   text-align: center;
+   margin-bottom: 10px;
+}
+.relatorio_produtos{
+   border-style: solid;
+   border-width: thin;
+   border-radius: 30px;
+   font-family: -webkit-pictograph;
+   text-transform: uppercase;
+   margin-bottom: 5px;
+}
+.relatorio_produtos p{
+   font-weight: bold;
+}
+.relatorio_produtos span{
+   font-weight: 100;
+}
+.cabecalho_relatorio{
+   text-align: right;   
+}
