@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Produto as Produto;
+use DB;
 
 class RelatorioController extends Controller
 {
@@ -14,6 +15,9 @@ class RelatorioController extends Controller
    public function index(Request $request)
    {
       $keyword = $request->get('search');
+      $fornecedor = $request->get('fornecedor');
+      $categoria = $request->get('categoria');      
+
       $perPage = 25;
       //selecionando categorias
       $cats = \App\Categoria::orderBy('nome')->get();;
@@ -29,39 +33,53 @@ class RelatorioController extends Controller
       foreach ($forns as $forn) {
          $fornecedores[$forn->id] = $forn->nome;
       }
-      if (!empty($request->input('fornecedor'))) {
-         $fornecedor_selecionado = $request->input('fornecedor');
+      if (!empty($fornecedor)) {
+         $fornecedor_selecionado = $fornecedor;
+      }else{
+         $fornecedor_selecionado = null;
       }
-      if (!empty($request->input('categoria'))) {
-         $categoria_selecionada = $request->input('categoria');
-      }      
-
-      //escolhas 'and' ou 'or' para a estrutura do sql
-      $escolha = array('e','ou');
-      if (!empty($keyword) or !empty($request->input('fornecedor')) or !empty($request->input('categoria'))) {
-         //escolha == 1 == 'ou' or
-         if($request->input('escolha') == 1){
-            $produtos = Produto::whereIn('fornecedor_id',$request->input('fornecedor'))
-            ->orWhereIn('categoria_id', $request->input('categoria'))
-            ->where('nome', 'LIKE', "%$keyword%")
-            ->where('descricao', 'LIKE', "%$keyword%")
-            ->where('preco', 'LIKE', "%$keyword%")
-            ->where('estoque_min', 'LIKE', "%$keyword%")
-                ->paginate($perPage);
-         }else{
-            $produtos = Produto::whereIn('fornecedor_id',$request->input('fornecedor'))
-            ->whereIn('categoria_id', $request->input('categoria'))
-            ->where('nome', 'LIKE', "%$keyword%")
-            ->where('descricao', 'LIKE', "%$keyword%")
-            ->where('preco', 'LIKE', "%$keyword%")
-            ->where('estoque_min', 'LIKE', "%$keyword%")
-                ->paginate($perPage);
-         }
-      } else {
-           $produtos = Produto::paginate($perPage);
+      if (!empty($categoria)) {
+         $categoria_selecionada = $categoria;
+      }else{
+         $categoria_selecionada = null;
       }
 
+
+      $escolhas = array('e','ou');
+      $escolha = $request->input('escolha');
+      //igual a 1 == 'ou'
+      if($escolha == 1){
+         $produtos = DB::table('produtos')
+         ->when($keyword, function($query) use ($keyword){
+            return $query->where('nome', 'LIKE', "%$keyword%");
+         })
+         ->when($keyword, function($query) use ($keyword){
+            return $query->orWhere('descricao', 'LIKE', "%$keyword%");
+         })
+         ->when($fornecedor, function($query) use($fornecedor){
+            return $query->whereIn('fornecedor_id',$fornecedor);
+         })
+         ->when($categoria, function($query) use($categoria){
+            return $query->orWhereIn('categoria_id',$categoria);
+         })
+             ->paginate($perPage);
+      }else{
+         $produtos = DB::table('produtos')
+         ->when($keyword, function($query) use ($keyword){
+            return $query->where('nome', 'LIKE', "%$keyword%");
+         })
+         ->when($keyword, function($query) use ($keyword){
+            return $query->orWhere('descricao', 'LIKE', "%$keyword%");
+         })
+         ->when($fornecedor, function($query) use($fornecedor){
+            return $query->whereIn('fornecedor_id',$fornecedor);
+         })
+         ->when($categoria, function($query) use($categoria){
+            return $query->whereIn('categoria_id',$categoria);
+         })
+             ->paginate($perPage);
+      }
       return view('relatorios.produtos', compact('produtos','fornecedores','categorias',
-         'categoria_selecionada','fornecedor_selecionado','escolha'));
+         'categoria_selecionada','fornecedor_selecionado','escolha','escolhas'));
    }
 }

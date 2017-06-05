@@ -8,24 +8,7 @@
                     <div class="panel-body">
                         {!! Form::open(['method' => 'GET', 'url' => '/relatorio/produto', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}
                         <div class="col-md-12">
-                           <div class="col-md-4">
-                               {!! Form::label('fornecedor', 'Fornecedor', ['class' => 'col-md-4 control-label']) !!}
-                               <div class="col-md-8">
-                                   {!! Form::select('fornecedor[]', $fornecedores, $fornecedor_selecionado, ['id'=>'select_fornecedor','multiple' => 'multiple']); !!}
-                                   {!! $errors->first('fornecedor', '<p class="help-block">:message</p>') !!}
-                               </div>
-                           </div>
-                           <div class="col-md-1">
-                                   {!! Form::select( 'escolha', $escolha); !!}
-                           </div>
-                           <div class="col-md-4">
-                               {!! Form::label('categoria', 'Categoria', ['class' => 'col-md-5 control-label']) !!}
-                               <div class="col-md-6">
-                                   {!! Form::select( 'categoria[]', $categorias,$categoria_selecionada, ['id'=>'select_categoria','multiple' => 'multiple']); !!}
-                                   {!! $errors->first('categoria', '<p class="help-block">:message</p>') !!}
-                               </div>
-                           </div>
-                           <div class="col-md-4">
+                           <div class="col-md-12">
                               <div class="input-group">
                                   <input type="text" class="form-control" name="search" placeholder="Search...">
                                   <span class="input-group-btn">
@@ -35,6 +18,24 @@
                                   </span>
                               </div>
                            </div>
+                           <div class="col-md-4">
+                               {!! Form::label('fornecedor', 'Fornecedor', ['class' => 'col-md-4 control-label']) !!}
+                               <div class="col-md-8">
+                                   {!! Form::select('fornecedor[]', $fornecedores, $fornecedor_selecionado, ['id'=>'select_fornecedor','multiple' => 'multiple']); !!}
+                                   {!! $errors->first('fornecedor', '<p class="help-block">:message</p>') !!}
+                               </div>
+                           </div>
+                           <div class="col-md-1">
+                                   {!! Form::select( 'escolha', $escolhas,$escolha); !!}
+                           </div>
+                           <div class="col-md-4">
+                               {!! Form::label('categoria', 'Categoria', ['class' => 'col-md-5 control-label']) !!}
+                               <div class="col-md-6">
+                                   {!! Form::select( 'categoria[]', $categorias,$categoria_selecionada, ['id'=>'select_categoria','multiple' => 'multiple']); !!}
+                                   {!! $errors->first('categoria', '<p class="help-block">:message</p>') !!}
+                               </div>
+                           </div>
+
                         </div>
                         {!! Form::close() !!}
 
