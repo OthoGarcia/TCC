@@ -1,4 +1,18 @@
 $(document).ready(function() {
+
+   var pressedAlt = false; //variável de controle
+	 $(document).keyup(function (e) {  //O evento Kyeup é acionado quando as teclas são soltas
+	 	if(e.which == 18) pressedAlt=false; //Quando qualuer tecla for solta é preciso informar que Crtl não está pressionada
+   });
+	$(document).keydown(function (e) { //Quando uma tecla é pressionada
+		if(e.which == 18) pressedAlt = true; //Informando que Crtl está acionado
+      if ((e.which == 50|| e.keyCode == 50)&& pressedAlt == true) {
+         $("#deletar")[0].click();
+      }else if((e.which == 49|| e.keyCode == 49) && pressedAlt == true) { //Reconhecendo tecla Enter
+			$("#finalizar").click();
+      }
+	});
+
    $('#autocomplete').focus();
    if($('#autocomplete').val() != ""){
       if (!submit()) {
@@ -10,6 +24,21 @@ $(document).ready(function() {
    }else{
       $("#div_peso").hide();
    }
+   $('#valor').change(function (e) {
+      var value = parseFloat($('#valor').val()) - parseFloat($('#total').val());
+      console.log(value.toFixed(2));
+    $('#troco').val(value.toFixed(2));
+   });
+   $('#valor').keyup(function (e) {
+      var value = parseFloat($('#valor').val()) - parseFloat($('#total').val());
+    $('#troco').val(value.toFixed(2));
+   });
+   $('#pagar').click(function (e) {
+      if($('#troco').val() < 0){
+         e.preventDefault();
+         alert("O troco não pode ser negativo");
+      }
+   });
 });
 var myvar;
 $.ui.autocomplete.prototype.options.autoSelect = true;
@@ -38,12 +67,12 @@ $( "#autocomplete" ).autocomplete({
         // prevent autocomplete from updating the textbox
         event.preventDefault();
         // manually update the textbox
-        $(this).val(ui.item.label);
+        $(this).val(ui.item.value);
      },select: function(event, ui) {
         $("#preco").val(ui.item.preco);
-        $("#autocomplete").val(ui.item.id);
+        $("#autocomplete").val(ui.item.value);
         $('#peso').focus();
-        console.log(ui.item.peso);
+        console.log(ui.item.preco);
         if (ui.item.peso == null) {
             $("#div_peso").hide();
             $('#pdv_form').submit();

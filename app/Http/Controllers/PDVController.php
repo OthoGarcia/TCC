@@ -17,12 +17,14 @@ class PDVController extends Controller
 
    public function index(){
       $pedido = \App\Pedido::where('estado','=','PDV_Aberto')->first();
+      $data = Carbon::now()->format('d/m/Y');
       if (!$pedido) {
-         return view('pedido.pdv.pdv');
+         return view('pedido.pdv.pdv',compact('data'));
       }else {
          //dd($pedido);
          $produtos = $pedido->produtos;
-         return view('pedido.pdv.pdv',compact('produtos','pedido'));
+         $sub_total = $pedido->total;
+         return view('pedido.pdv.pdv',compact('produtos','pedido','data','sub_total'));
       }
 
    }
@@ -32,8 +34,6 @@ class PDVController extends Controller
       return view('pedido.pdv.pdv',compact('produtos','pedido'));
       return view('pedido.pdv.pdv');
    }
-
-
    public function salvar(Request $request){
       $produto = \App\Produto::where('nome','=',$request->input('produto'))
       ->orwhere('id','=',$request->input('produto'))
@@ -56,36 +56,66 @@ class PDVController extends Controller
             $pedido->save();
          }
          if ($pedido->total == null) {
-            $pedido->total = $produto->preco * $request->input('quantidade');
+            if ($produto->peso == null) {
+               $pedido->total = $produto->preco * $request->input('quantidade');
+            }else{
+               $pedido->total = $produto->preco * ($request->input('peso')/1000);
+            }
          }else {
-            $pedido->total += $produto->preco * $request->input('quantidade');
+            if ($produto->peso == null) {
+               $pedido->total += $produto->preco * $request->input('quantidade');
+            }else {
+               $pedido->total += $produto->preco * ($request->input('peso')/1000);
+            }
          }
          $pedido->save();
          //verificando se o produto é vendido por peso
          if ($produto->peso == null) {
             $peso = null;
+            $quantidade = $request->input('quantidade');
+
          }else{
+            $quantidade = null;
             $peso = $request->input('peso');
          }
          //salvando novo produto no pedido ou acresentando quantidade
          if (!$pedido->produtos->contains($produto->id)) {
-            $pedido->produtos()->save($produto, [
-               'quantidade'=>$request->input('quantidade'),
-               'preco'=> $produto->preco,
-               'sub_total'=>$produto->preco * $request->input('quantidade'),
-               'peso'=>$peso
-            ]);
+            if ($peso == null) {
+               $pedido->produtos()->save($produto, [
+                  'quantidade'=>$quantidade,
+                  'preco'=> $produto->preco,
+                  'sub_total'=>$produto->preco * $request->input('quantidade'),
+                  'peso'=>$peso
+               ]);
+            }else {
+               $pedido->produtos()->save($produto, [
+                  'quantidade'=>$quantidade,
+                  'preco'=> $produto->preco,
+                  'sub_total'=>($peso/1000) * $produto->preco,
+                  'peso'=>$peso
+               ]);
+            }
+
          }else{
-            //dd($produto);
             $produto = $pedido->produtos()->where('produto_id',$produto->id)->first();
-            $pedido->produtos()->updateExistingPivot($produto->id, [
-               'quantidade'=>$request->input('quantidade') +
-               $produto->pivot->quantidade,
-               'sub_total'=> ($request->input('quantidade') +
-               $produto->pivot->quantidade) * $produto->preco,
-               'preco'=> $produto->preco,
-               'peso'=>$peso + $produto->pivot->peso
-            ]);
+            //verificando se a quatidade é nula para classificar por peso
+            if ($produto->pivot->quantidade ==null) {
+               $pedido->produtos()->updateExistingPivot($produto->id, [
+                  'quantidade'=>$quantidade,
+                  'sub_total'=>(($peso/1000) * $produto->preco)+$produto->sub_total,
+                  'preco'=> $produto->preco,
+                  'peso'=>$peso + $produto->pivot->peso
+               ]);
+            }else {
+               $pedido->produtos()->updateExistingPivot($produto->id, [
+                  'quantidade'=>$request->input('quantidade') +
+                  $produto->pivot->quantidade,
+                  'sub_total'=> (($quantidade +
+                  $produto->pivot->quantidade) * $produto->preco)+$produto->sub_total,
+                  'preco'=> $produto->preco,
+                  'peso'=>$peso + $produto->pivot->peso
+               ]);
+            }
          }
       }else{
          //error caso n ache o produto (Falta Fazer)
@@ -129,7 +159,11 @@ class PDVController extends Controller
       ->orderBy('pedido_produto.updated_at','desc')
       ->first();
       $pedido= \App\Pedido::findOrFail($id);
-      $pedido->total -= $produto->pivot->quantidade * $produto->pivot->preco;
+      if($produto->pivot->quantidade != null){
+         $pedido->total -= $produto->pivot->quantidade * $produto->pivot->preco;
+      }else{
+         $pedido->total -= (($produto->pivot->peso/1000) * $produto->preco);
+      }
       $pedido->produtos()->detach($produto->id);
       $pedido->save();
       return redirect()->action('PDVController@index');
