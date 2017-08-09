@@ -36,7 +36,7 @@ class PDVController extends Controller
    }
    public function salvar(Request $request){
       $produto = \App\Produto::where('nome','=',$request->input('produto'))
-      ->orwhere('id','=',$request->input('produto'))
+      ->orwhere('cod_barras','=',$request->input('produto'))
       ->first();
       //criando um novo pedido ou buscando o ja criado
       if ($produto) {
@@ -170,7 +170,7 @@ class PDVController extends Controller
    }
    public function autoComplete($query) {
       $produtos = \App\Produto::where('nome','like','%'.$query.'%')
-      ->orwhere('id','like','%'.$query.'%')
+      ->orwhere('cod_barras','like','%'.$query.'%')
       ->get();
       return $produtos->toJson();
    }

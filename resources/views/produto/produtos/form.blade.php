@@ -51,6 +51,13 @@
         {!! $errors->first('estoque_min', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
+<div id="peso" class="form-group {{ $errors->has('peso') ? 'has-error' : ''}}">
+    {!! Form::label('cod_barras', 'Codigo de Barras', ['class' => 'col-md-4 control-label']) !!}
+    <div class="col-md-6">
+        {!! Form::number('cod_barras', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('cod_barras', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 
 <div class="form-group">
     <div class="col-md-offset-4 col-md-4">

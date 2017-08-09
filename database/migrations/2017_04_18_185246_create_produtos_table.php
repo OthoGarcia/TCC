@@ -21,6 +21,7 @@ class CreateProdutosTable extends Migration
                $table->foreign('fornecedor_id')->references('id')->on('fornecedors')
                    ->onUpdate('cascade')->onDelete('cascade');
             $table->string('nome');
+            $table->string('cod_barras')->unique();
             $table->text('descricao');
             $table->float('preco');
             $table->integer('estoque_min');

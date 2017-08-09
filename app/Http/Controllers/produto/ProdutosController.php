@@ -53,7 +53,7 @@ class ProdutosController extends Controller
       }
       $categoria_selecionada = 1;
       $forns = \App\Fornecedor::orderBy('nome')->get();
-      $fornecedores = array();      
+      $fornecedores = array();
       foreach ($forns as $forn) {
          $fornecedores[$forn->id] = $forn->nome;
       }
@@ -77,10 +77,10 @@ class ProdutosController extends Controller
           'descricao' => 'required',
           'preco' => 'required',
           'estoque_min' => 'required',
-          'peso'=>'required_if:tipo,==,1'
+          'peso'=>'required_if:tipo,==,1',
+           'cod_barras'=>'required|unique:produtos,cod_barras'
       ]);
-        $requestData = $request->all();
-
+        $requestData = $request->all();        
         $produto = Produto::create($requestData);
         $categoria = $request->input('categoria');
         $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
@@ -154,7 +154,8 @@ class ProdutosController extends Controller
           'descricao' => 'required',
           'preco' => 'required',
           'estoque_min' => 'required',
-          'peso'=>'required_if:tipo,==,1'
+          'peso'=>'required_if:tipo,==,1',
+          'cod_barras'=>'required|unique:produto,cod_barras'
       ]);
         $requestData = $request->all();
         $produto = Produto::findOrFail($id);
