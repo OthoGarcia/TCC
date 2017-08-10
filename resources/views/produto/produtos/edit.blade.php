@@ -38,4 +38,10 @@
 @endsection
 @section('js')
   <script src="{{ asset('js/produto.js') }}"></script>
+     <script type="text/javascript">
+        $("#select_categorias").multipleSelect({
+          filter: true,
+          selectAll: false
+      });
+     </script>
 @endsection

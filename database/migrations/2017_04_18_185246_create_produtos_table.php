@@ -30,6 +30,15 @@ class CreateProdutosTable extends Migration
             $table->bigInteger('peso_quantidade')->nullable();
             $table->timestamps();
         });
+        Schema::create('categorias_produtos', function(Blueprint $table) {
+           $table->increments('id');
+           $table->integer('categoria_id')->unsigned()->nullable();
+          $table->foreign('categoria_id')->references('id')->on('categorias')
+             ->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('produto_id')->unsigned()->nullable();
+            $table->foreign('produto_id')->references('id')->on('produtos')
+                ->onUpdate('cascade')->onDelete('cascade');
+        });
     }
 
     /**
@@ -39,6 +48,7 @@ class CreateProdutosTable extends Migration
      */
     public function down()
     {
+      Schema::drop('categorias_produtos');
         Schema::drop('produtos');
     }
 }

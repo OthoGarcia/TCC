@@ -8,7 +8,7 @@ $(document).ready(function() {
 		if(e.which == 18) pressedAlt = true; //Informando que Crtl está acionado
       if ((e.which == 50|| e.keyCode == 50)&& pressedAlt == true) {
          $("#deletar")[0].click();
-      }else if((e.which == 49|| e.keyCode == 49) && pressedAlt == true) { //Reconhecendo tecla Enter
+      }else if((e.which == 51|| e.keyCode == 51) && pressedAlt == true) { //Reconhecendo tecla Enter
 			$("#finalizar").click();
       }
 	});

@@ -78,8 +78,8 @@ Scripts -->
                </div>
             {!! Form::close() !!}
             @if(isset($pedido) and (count($pedido->produtos) > 0))
-               <button id="finalizar" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Finalizar</button>
-               <a id="deletar" href="{{ url('/deletar/'.$pedido->id) }}" class="btn btn-danger btn-lg" title="Deletar Ultimo Item">
+               <button id="finalizar" type="button" class="btn btn-info btn-lg" data-toggle="modal" title='Finalizar Pedido (ALT+3)' data-target="#myModal">Finalizar</button>
+               <a id="deletar" href="{{ url('/deletar/'.$pedido->id) }}" class="btn btn-danger btn-lg" title="Deletar Ultimo Item Inserido (ALT+2)">
                   Deletar
                </a>
             @endif
@@ -132,7 +132,7 @@ Scripts -->
                      <tr class="ttu">
                         <td colspan="2">Sub-total</td>
                         <td align="right">{{$sub_total}}</td>
-                     </tr>                     
+                     </tr>
                      <tr class="sup">
                         <td colspan="3" align="center">
                            www.site.com

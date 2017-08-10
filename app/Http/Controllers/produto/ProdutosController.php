@@ -80,10 +80,12 @@ class ProdutosController extends Controller
           'peso'=>'required_if:tipo,==,1',
            'cod_barras'=>'required|unique:produtos,cod_barras'
       ]);
-        $requestData = $request->all();        
+        $requestData = $request->all();
         $produto = Produto::create($requestData);
+        //adicionando categorias ao produto
+
         $categoria = $request->input('categoria');
-        $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
+        $produto->categorias()->sync($categoria);
         $fornecedor = $request->input('fornecedor');
         $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));
         $produto->save();
@@ -122,7 +124,7 @@ class ProdutosController extends Controller
        foreach ($cats as $cat) {
           $categorias[$cat->id] = $cat->nome;
        }
-       $categoria_selecionada = $produto->categoria->id;
+       $categoria_selecionada = $produto->categorias->pluck('id');
        $forns = \App\Fornecedor::all();
        $fornecedores = array();
        foreach ($forns as $forn) {
@@ -155,7 +157,7 @@ class ProdutosController extends Controller
           'preco' => 'required',
           'estoque_min' => 'required',
           'peso'=>'required_if:tipo,==,1',
-          'cod_barras'=>'required|unique:produto,cod_barras'
+          'cod_barras'=>'required|unique:produtos,cod_barras,'.$id
       ]);
         $requestData = $request->all();
         $produto = Produto::findOrFail($id);
@@ -164,7 +166,7 @@ class ProdutosController extends Controller
           $produto->peso = null;
         }
         $categoria = $request->input('categoria');
-        $produto->categoria()->associate(\App\Categoria::findOrFail($categoria));
+        $produto->categorias()->sync($categoria);        
         $fornecedor = $request->input('fornecedor');
         $produto->fornecedor()->associate(\App\Fornecedor::findOrFail($fornecedor));
         $produto->save();

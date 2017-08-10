@@ -28,9 +28,9 @@ class Produto extends Model
     protected $fillable = ['nome', 'descricao', 'preco', 'estoque_min','peso',
     'quantidade','peso_quantidade','total','cod_barras'];
 
-    public function categoria()
+    public function categorias()
     {
-        return $this->belongsTo('App\Categoria');
+        return $this->belongsToMany('App\Categoria','categorias_produtos');
     }
    public function fornecedor()
    {

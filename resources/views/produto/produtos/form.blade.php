@@ -14,7 +14,7 @@
 <div class="form-group {{ $errors->has('categoria') ? 'has-error' : ''}}">
     {!! Form::label('categoria', 'Categoria', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::select('categoria', $categorias, $categoria_selecionada); !!}
+        {!! Form::select('categoria[]', $categorias, $categoria_selecionada,['id'=>'select_categorias','multiple'=>'multiple']); !!}
         {!! $errors->first('categoria', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
