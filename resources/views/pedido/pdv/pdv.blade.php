@@ -46,7 +46,7 @@ Scripts -->
          </div>
         <div class="col-md-12 caixa">
           <div class="col-md-6 pesquisa">
-            {!! Form::open(['url' => 'pdv/salvar', 'class' => 'form-horizontal', 'files' => true,'id'=>'pdv_form', "onSubmit"=>"return submit();"]) !!}
+            {!! Form::open(['url' => 'pdv/salvar', 'class' => 'form-horizontal', 'files' => true,'id'=>'pdv_form']) !!}<!--, "onSubmit"=>"return submit();" -->
                {!! Form::text('produto', null, ['class' => 'form-control autocomplete busca', 'id'=>'autocomplete','placeholder'=>'Buscar Produto']) !!}
                <div class="form-group {{ $errors->has('quantidade') ? 'has-error' : ''}}">
                    {!! Form::label('quantidade', 'Quantidade', ['class' => 'col-md-4 control-label']) !!}
@@ -106,20 +106,20 @@ Scripts -->
                         </th>
                      </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="cupom">
 
                      @foreach ($produtos as $p)
-                     <tr class="top">
+                     <tr id="n_{{$p->cod_barras}}" class="top">
                         <td colspan="3">{{$p->nome}}</td>
                      </tr>
-                     <tr>
-                        <td>R$: {{$p->preco}}</td>
+                     <tr id="{{$p->cod_barras}}">
+                        <td id="preco_cupom">R$: {{$p->preco}}</td>
                         @if($p->pivot->quantidade == null)
-                           <td>{{$p->pivot->peso}}g</td>
+                           <td >{{$p->pivot->peso}}g</td>
                         @else
-                           <td>{{$p->pivot->quantidade}}</td>
+                           <td id="quantidade_cupom">{{$p->pivot->quantidade}}</td>
                         @endif
-                        <td>R$: {{$p->pivot->sub_total}}</td>
+                        <td id="preco_subtotal">R$: {{$p->pivot->sub_total}}</td>
                      </tr>
                      @endforeach
                   </tbody>
@@ -131,7 +131,7 @@ Scripts -->
                      </tr>
                      <tr class="ttu">
                         <td colspan="2">Sub-total</td>
-                        <td align="right">{{$sub_total}}</td>
+                        <td id="cupom_subTotal" align="right">{{$sub_total}}</td>
                      </tr>
                      <tr class="sup">
                         <td colspan="3" align="center">

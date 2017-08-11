@@ -1,5 +1,47 @@
 $(document).ready(function() {
+   if($('#cupom').length){
+      $('#pdv_form').submit(function(e){
+      e.preventDefault();
+      var form = $('#pdv_form')[0];
+      var data = new FormData(form);
+      $("#autocomplete").val("");
+      $.ajax({
+       url: '/pdv/salvar',
+       type: "POST",
+        data: data,
+         enctype: 'multipart/form-data',
+         processData: false,  // Important!
+         contentType: false,
+         cache: false,
+       success: function(data){
+          console.log(data);
+          data = jQuery.parseJSON(data);
+          if($("#"+ data[0].cod_barras+"").length){
+            $("#"+ data[0].cod_barras+"").closest('tr').remove();
+            $("#n_"+ data[0].cod_barras+"").closest('tr').remove();
+          }
+             $('#cupom tr:first').before(
+               '<tr id=n_"'+ data[0].cod_barras+'" class="top">'+
+                 ' <td colspan="3">'+ data[0].nome+'</td>'+
+               '</tr>'+
+            '<tr id="'+ data[0].cod_barras+'">'+
+              '<td >R$:'+ data[0].preco+' </td>'+
+              '<td >'+ data[0].pivot.quantidade+'</td>'+
+              '<td >R$: '+ data[0].pivot.sub_total+'</td>'+
+            '</tr>'
+           );
+           $("#cupom_subTotal").html(data[1].total);
+       },
+         error: function (e) {
 
+             $("#result").text(e.responseText);
+             console.log("ERROR : ", e);
+             $("#btnSubmit").prop("disabled", false);
+
+         }
+      });
+   });
+   }
    var pressedAlt = false; //variável de controle
 	 $(document).keyup(function (e) {  //O evento Kyeup é acionado quando as teclas são soltas
 	 	if(e.which == 18) pressedAlt=false; //Quando qualuer tecla for solta é preciso informar que Crtl não está pressionada
@@ -37,6 +79,9 @@ $(document).ready(function() {
       if($('#troco').val() < 0){
          e.preventDefault();
          alert("O troco não pode ser negativo");
+      }else if ($('#troco').val() == "") {
+         e.preventDefault();
+         alert("O Campo Valor não pode estar vazio para este tipo de pagamento");
       }
    });
 });
@@ -58,7 +103,8 @@ $( "#autocomplete" ).autocomplete({
                    label: value.nome,
                    value: value.id,
                    preco: value.preco,
-                   peso: value.peso
+                   peso: value.peso,
+                   cod : value.cod_barras
                }
               }));
            }
@@ -67,10 +113,10 @@ $( "#autocomplete" ).autocomplete({
         // prevent autocomplete from updating the textbox
         event.preventDefault();
         // manually update the textbox
-        $(this).val(ui.item.value);
+        $(this).val(ui.item.cod);
      },select: function(event, ui) {
         $("#preco").val(ui.item.preco);
-        $("#autocomplete").val(ui.item.value);
+        $("#autocomplete").val(ui.item.cod);
         $('#peso').focus();
         console.log(ui.item.preco);
         if (ui.item.peso == null) {

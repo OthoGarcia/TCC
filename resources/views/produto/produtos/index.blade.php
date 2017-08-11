@@ -7,8 +7,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Produtos</div>
                     <div class="panel-body">
-                        <a href="{{ url('/produto/produtos/create') }}" class="btn btn-success btn-sm" title="Add New Produto">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                        <a href="{{ url('/produto/produtos/create') }}" class="btn btn-success btn-sm" title="Adicionar um novo Produto">
+                            <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
                         </a>
 
                         {!! Form::open(['method' => 'GET', 'url' => '/produto/produtos', 'class' => 'navbar-form navbar-right', 'role' => 'search'])  !!}

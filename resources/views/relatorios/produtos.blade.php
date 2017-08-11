@@ -54,7 +54,7 @@
                                  <p>Produto: <span>{{$p->nome}}</span></p>
                               </div>
                               <div class="col-md-4">
-                                 <p>Categoria: <span>{{$p->categoria->nome}}</span></p>
+                                 <p>Categoria: <span>{{$p->categorias->pluck('nome')}}</span></p>
                               </div>
                               <div class="col-md-4">
                                  <p>fornecedor: <span>{{$p->fornecedor->nome}}</span></p>

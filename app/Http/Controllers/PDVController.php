@@ -26,15 +26,14 @@ class PDVController extends Controller
          $sub_total = $pedido->total;
          return view('pedido.pdv.pdv',compact('produtos','pedido','data','sub_total'));
       }
-
    }
    public function index_produtos($id){
       $pedido = \App\Pedido::findOrFail($request->input('pedido'));
       $produtos = $pedido->produtos;
       return view('pedido.pdv.pdv',compact('produtos','pedido'));
-      return view('pedido.pdv.pdv');
    }
    public function salvar(Request $request){
+      $pedido;
       $produto = \App\Produto::where('nome','=',$request->input('produto'))
       ->orwhere('cod_barras','=',$request->input('produto'))
       ->first();
@@ -121,7 +120,21 @@ class PDVController extends Controller
          //error caso n ache o produto (Falta Fazer)
          Session::flash('flash_message', 'Pedido added!');
       }
-      return redirect()->action('PDVController@index');
+      $pedido = \App\Pedido::where('estado','=','PDV_Aberto')
+      ->where('user_id',Auth::user()->id)
+      ->first();
+      $prod = $pedido->produtos()->orderBy('pedido_produto.updated_at')->first();
+      //$prod = $prod->toJson();
+      //$pedido = $pedido->toJson();
+      $result[0] = $prod;
+      $result[1] = $pedido;
+      $result =json_encode($result);
+      if($request->ajax()){
+         return response()->json($result);
+      }
+         return redirect()->action('PDVController@index');
+
+
    }
    public function finalizar($id, $forma){
       $pedido = \App\Pedido::findOrFail($id);
@@ -153,8 +166,7 @@ class PDVController extends Controller
 
       return redirect()->action('PDVController@index');
    }
-   public function deletar($id)
-   {
+   public function deletar($id){
       $produto = \App\Pedido::findOrFail($id)->produtos()
       ->orderBy('pedido_produto.updated_at','desc')
       ->first();
