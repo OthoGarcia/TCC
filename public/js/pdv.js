@@ -16,32 +16,32 @@ $(document).ready(function() {
        success: function(data){
           console.log(data);
           data = jQuery.parseJSON(data);
-          if($("#"+ data[0].cod_barras+"").length){
-            $("#"+ data[0].cod_barras+"").closest('tr').remove();
-            $("#n_"+ data[0].cod_barras+"").closest('tr').remove();
+          if($("#"+ data[0].cod_barras).length){
+            $("#"+ data[0].cod_barras).closest('tr').remove();
+            $("#n_"+ data[0].cod_barras).closest('tr').remove();
           }
              $('#cupom tr:first').before(
-               '<tr id=n_"'+ data[0].cod_barras+'" class="top">'+
+               '<tr id=n_'+ data[0].cod_barras+' class="top">'+
                  ' <td colspan="3">'+ data[0].nome+'</td>'+
                '</tr>'+
-            '<tr id="'+ data[0].cod_barras+'">'+
+            '<tr id='+ data[0].cod_barras+'>'+
               '<td >R$:'+ data[0].preco+' </td>'+
               '<td >'+ data[0].pivot.quantidade+'</td>'+
               '<td >R$: '+ data[0].pivot.sub_total+'</td>'+
             '</tr>'
            );
            $("#cupom_subTotal").html(data[1].total);
+           $("#total").val(data[1].total);
        },
          error: function (e) {
-
              $("#result").text(e.responseText);
              console.log("ERROR : ", e);
              $("#btnSubmit").prop("disabled", false);
-
          }
       });
    });
    }
+   //atalhos para os botoes finalizar e deletar
    var pressedAlt = false; //variável de controle
 	 $(document).keyup(function (e) {  //O evento Kyeup é acionado quando as teclas são soltas
 	 	if(e.which == 18) pressedAlt=false; //Quando qualuer tecla for solta é preciso informar que Crtl não está pressionada
@@ -54,7 +54,7 @@ $(document).ready(function() {
 			$("#finalizar").click();
       }
 	});
-
+   //colocando peso quando o produto pedir
    $('#autocomplete').focus();
    if($('#autocomplete').val() != ""){
       if (!submit()) {
@@ -84,6 +84,10 @@ $(document).ready(function() {
          alert("O Campo Valor não pode estar vazio para este tipo de pagamento");
       }
    });
+   //add total na tela de pagamento
+   $( "#finalizar" ).click(function() {
+      $( "#total_pagamento" ).val($("#total").val());
+   });
 });
 var myvar;
 $.ui.autocomplete.prototype.options.autoSelect = true;
@@ -96,6 +100,7 @@ $( "#autocomplete" ).autocomplete({
             success: function(data) {
               myvar = data;
               if (data.length == 1) {
+                 $('#autocomplete').val(data[0].cod_barras);
                  $('#pdv_form').submit();
               }
               response($.map(data, function (value, key) {

@@ -169,6 +169,12 @@ Scripts -->
                      <div class="panel-body">
                         <div class="col-md-7">
                            <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
+                               {!! Form::label('total_pagamento', 'Total', ['class' => 'col-md-4 control-label']) !!}
+                               <div class="col-md-6">
+                                   {!! Form::number('total_pagamento', null, ['class' => 'form-control','id'=>'total_pagamento','step'=>"any",'readonly'=>'true' ]) !!}
+                               </div>
+                           </div>
+                           <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
                                {!! Form::label('valor', 'valor', ['class' => 'col-md-4 control-label']) !!}
                                <div class="col-md-6">
                                    {!! Form::number('valor', null, ['class' => 'form-control','id'=>'valor','step'=>"any" ]) !!}
@@ -199,7 +205,7 @@ Scripts -->
            </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
         </div>
       </div>
     </div>
