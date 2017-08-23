@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Editar Categoria {{ $categoria->nome }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/categoria/categorias') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/categoria/categorias') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</button></a>
                         <br />
                         <br />
 
@@ -26,7 +26,7 @@
                             'files' => true
                         ]) !!}
 
-                        @include ('categoria.categorias.form', ['submitButtonText' => 'Update'])
+                        @include ('categoria.categorias.form', ['submitButtonText' => 'Atualizar'])
 
                         {!! Form::close() !!}
 

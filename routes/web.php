@@ -62,3 +62,10 @@ route::post('pdv/salvar',['as'=>'pdv_salvar','uses'=> 'PDVController@salvar']);
 
 //relatorios
 route::get('relatorio/produto',['as'=>'relatorio_produto','uses'=> 'RelatorioController@index']);
+
+Route::resource('ingrediente/ingredientes', 'Ingrediente\\IngredientesController');
+route::post('ingrediente/ingredientes/adicionar',['as'=>'ingrediente_create_adicionar','uses'=> 'Ingrediente\\IngredientesController@adicionar']);
+route::get('ingrediente/criar/adicionar/{idIngrediante}',['as'=>'ingrediente_adicionar_criar','uses'=> 'Ingrediente\\IngredientesController@createAdicionar']);
+route::get('ingrediente/materiaPrima/{idIngrediante}',['as'=>'ingrediente_materiaPrima_criar','uses'=> 'Ingrediente\\IngredientesController@createMateriaPrima']);
+route::post('ingrediente/adicionar',['as'=>'ingrediente_adicionar','uses'=> 'Ingrediente\\IngredientesController@adicionar']);
+route::post('ingrediente/item/deletar/{id}/{idProduto}',['as'=>'ingrediente_deletar_item','uses'=> 'Ingrediente\\IngredientesController@deletarItem']);

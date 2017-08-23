@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Editar Fornecedor #{{ $fornecedor->nome }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/fornecedor/fornecedor') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/fornecedor/fornecedor') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar</button></a>
                         <br />
                         <br />
 
@@ -26,7 +26,7 @@
                             'files' => true
                         ]) !!}
 
-                        @include ('fornecedor.fornecedor.form', ['submitButtonText' => 'Update'])
+                        @include ('fornecedor.fornecedor.form', ['submitButtonText' => 'Atualizar'])
 
                         {!! Form::close() !!}
 

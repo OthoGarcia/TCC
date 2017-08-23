@@ -149,7 +149,7 @@ class PedidosController extends Controller
       $produtos = $pedido->produtos;
       $produtos_entregues = Input::get('produtos');
       $finalizado = false;
-      $i= 0;      
+      $i= 0;
       foreach ($produtos as $produto) {
          if (!empty($produtos_entregues)) {
             if (in_array($produto->id,$produtos_entregues)) {
@@ -166,13 +166,10 @@ class PedidosController extends Controller
                if ($produto->peso != null) {
                   $produto->peso_quantidade = $produto->peso * $produto->quantidade;
                }
-               $produto->preco = $produto->pivot->preco;
                $produto->save();
                $pedido->total = $pedido->total + $requestData['sub_total'][$i];
                $pedido->save();
-
             }
-
             $i++;
          }
       }

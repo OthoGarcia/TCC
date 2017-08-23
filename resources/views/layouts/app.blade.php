@@ -8,7 +8,7 @@
   <!-- CSRF Token -->
   <meta nome="csrf-token" content="{{ csrf_token() }}">
 
-  <title>Essential Technologies</title>
+  <title>Caderninho</title>
 
   <!-- Styles2 -->
 
@@ -45,7 +45,7 @@ Scripts -->
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="{{ url('/') }}">Essential Technologies</a>
+              <a class="navbar-brand" href="{{ url('/') }}">Caderninho</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
@@ -64,6 +64,7 @@ Scripts -->
                        <li><a href="{{ url('/categoria/categorias') }}">Tipo Produto</a></li>
                        <li><a href="{{ url('/produto/produtos') }}">Produto</a></li>
                        <li><a href="{{ url('/fornecedor/fornecedor') }}">Fornecedores</a></li>
+                       <li><a href="{{ url('/ingrediente/ingredientes/') }}">Produzidos</a></li>
                      </ul>
                    </li>
                    <li class="dropdown">

@@ -1,16 +1,32 @@
 @extends('layouts.app')
-
+@section('css')
+   <link href="{{ URL::asset('css/home.css') }}" rel="stylesheet">
+@endsection
 @section('content')
-<div class="container">
+<div class="container espaco-menu">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
+        <div class="col-md-12">
+           <div class="col-md-6 botoes">
+             <div class="row">
+                <div class="col-md-4 botao">
+                  <h1>B</h1>
+               </div>
+               <div class="col-md-4 botao">
+                  <h1>B</h1>
+               </div>
+             </div>
+             <div class="row">
+                <div class="col-md-4 botao">
+                  <h1>B</h1>
+               </div>
+               <div class="col-md-4 botao">
+                  <h1>B</h1>
+               </div>
+             </div>
+           </div>
+           <div class="col-md-6 avisos">
+             <h1>Teste</h1>
+           </div>
         </div>
     </div>
 </div>

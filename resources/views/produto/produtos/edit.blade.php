@@ -26,7 +26,7 @@
                             'files' => true
                         ]) !!}
 
-                        @include ('produto.produtos.form', ['submitButtonText' => 'Update'])
+                        @include ('produto.produtos.form', ['submitButtonText' => 'Atualizar'])
 
                         {!! Form::close() !!}
 

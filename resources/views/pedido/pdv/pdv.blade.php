@@ -48,6 +48,9 @@ Scripts -->
           <div class="col-md-6 pesquisa">
             {!! Form::open(['url' => 'pdv/salvar', 'class' => 'form-horizontal', 'files' => true,'id'=>'pdv_form']) !!}<!--, "onSubmit"=>"return submit();" -->
                {!! Form::text('produto', null, ['class' => 'form-control autocomplete busca', 'id'=>'autocomplete','placeholder'=>'Buscar Produto']) !!}
+               <ul>
+                  <li>Para adicionar mais de 1 quantidade do mesmo produto, alterar a quantidade antes da busca</li>
+               </ul>
                <div class="form-group {{ $errors->has('quantidade') ? 'has-error' : ''}}">
                    {!! Form::label('quantidade', 'Quantidade', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">

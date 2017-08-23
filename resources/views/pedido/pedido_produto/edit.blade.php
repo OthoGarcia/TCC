@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit pedido_produto #{{ $pedido_produto->id }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/pedido_produto/pedido_produto') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/pedido_produto/pedido_produto') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Votlar</button></a>
                         <br />
                         <br />
 
@@ -26,7 +26,7 @@
                             'files' => true
                         ]) !!}
 
-                        @include ('pedido.pedido_produto.form', ['submitButtonText' => 'Update'])
+                        @include ('pedido.pedido_produto.form', ['submitButtonText' => 'Atualizar'])
 
                         {!! Form::close() !!}
 

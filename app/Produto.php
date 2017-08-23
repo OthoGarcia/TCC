@@ -44,4 +44,10 @@ class Produto extends Model
          ->withTimestamps()
          ->orderBy('pedido_produto.updated_at','desc');
    }
+   public function ingredientes()
+   {
+      return $this->belongsToMany('App\Ingrediente', 'produto_ingrediante')
+         ->withPivot('quantidade','peso')
+         ->withTimestamps();
+   }
 }

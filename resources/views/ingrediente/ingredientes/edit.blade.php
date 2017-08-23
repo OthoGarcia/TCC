@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container  espaco-menu">
+    <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            @include('admin.sidebar')
+
+            <div class="col-md-9">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Edit Pedido Codigo:{{ $pedido->id }}</div>
+                    <div class="panel-heading">Edit Ingrediente #{{ $ingrediente->id }}</div>
                     <div class="panel-body">
-                        <a href="{{ url('/pedido/pedidos') }}" title="voltar"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> voltar</button></a>
+                        <a href="{{ url('/ingrediente/ingredientes') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -19,14 +21,14 @@
                             </ul>
                         @endif
 
-                        {!! Form::model($pedido, [
+                        {!! Form::model($ingrediente, [
                             'method' => 'PATCH',
-                            'url' => ['/pedido/pedidos', $pedido->id],
+                            'url' => ['/ingrediente/ingredientes', $ingrediente->id],
                             'class' => 'form-horizontal',
                             'files' => true
                         ]) !!}
 
-                        @include ('pedido.pedidos.form', ['submitButtonText' => 'Atualizar'])
+                        @include ('ingrediente.ingredientes.form', ['submitButtonText' => 'Update'])
 
                         {!! Form::close() !!}
 

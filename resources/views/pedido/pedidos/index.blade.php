@@ -74,7 +74,7 @@
                                             <a href="{{ route('pedido_estoque_view', $item->id ) }}" title="View Pedido"><button class="btn btn-info btn-xs"><i class="fa fa-exchange" aria-hidden="true"></i> Adicionar Estoque</button></a>
                                          @endif
                                             @if(($item->estado == 'Aberto') or ($item->estado == 'Lista') )
-                                               <a href="{{ url('/pedido/pedidos/' . $item->id . '/edit') }}" title="Edit Pedido"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                               <a href="{{ url('/pedido/pedidos/' . $item->id . '/edit') }}" title="Edit Pedido"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
                                                <a href="{{ url('/pedido_produto/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Produto</button></a>
                                                <a href="{{ url('pedido/efetuar/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-check" aria-hidden="true"></i> Efetuar</button></a>
                                              @endif
