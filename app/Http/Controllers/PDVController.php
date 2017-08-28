@@ -37,12 +37,17 @@ class PDVController extends Controller
       $produto = \App\Produto::where('nome','=',$request->input('produto'))
       ->orwhere('cod_barras','=',$request->input('produto'))
       ->first();
+
       //criando um novo pedido ou buscando o ja criado
       if ($produto) {
          if ($produto->peso != null) {
+            if($request->input('peso') == null && \App\Pedido::where('estado','=','PDV_Aberto')->first()){
+               return $produto->toJson();
+            }
             $this->validate($request, [
                'peso' => 'required',
             ]);
+
          }
          if (\App\Pedido::where('estado','=','PDV_Aberto')->first()) {
             $pedido = \App\Pedido::where('estado','=','PDV_Aberto')->first();
@@ -133,8 +138,6 @@ class PDVController extends Controller
          return response()->json($result);
       }
          return redirect()->action('PDVController@index');
-
-
    }
    public function finalizar($id, $forma){
       $pedido = \App\Pedido::findOrFail($id);
@@ -191,5 +194,6 @@ class PDVController extends Controller
       $produto = \App\Produto::findOrFail($id);
       return $produto->toJson();
    }
+
 
 }

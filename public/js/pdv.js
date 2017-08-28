@@ -16,20 +16,50 @@ $(document).ready(function() {
        success: function(data){
           console.log(data);
           data = jQuery.parseJSON(data);
+          if(data.peso != null){
+             $("#autocomplete").val(data.cod_barras);
+             $("#preco").val(data.preco);
+             $("#div_peso").show();
+             $('#peso').focus();
+          }else{
+             $("#div_peso").hide();
+             $('#autocomplete').focus();
+          }
           if($("#"+ data[0].cod_barras).length){
             $("#"+ data[0].cod_barras).closest('tr').remove();
             $("#n_"+ data[0].cod_barras).closest('tr').remove();
           }
+          var quantidade;
+          if (data[0].pivot.peso == null) {
+             quantidade = data[0].pivot.quantidade;
+          }else{
+             quantidade = data[0].pivot.peso;
+          }
+          console.log(quantidade);
+          if ($('#cupom tr:first').find('tr').length) {
              $('#cupom tr:first').before(
                '<tr id=n_'+ data[0].cod_barras+' class="top">'+
                  ' <td colspan="3">'+ data[0].nome+'</td>'+
                '</tr>'+
             '<tr id='+ data[0].cod_barras+'>'+
               '<td >R$:'+ data[0].preco+' </td>'+
-              '<td >'+ data[0].pivot.quantidade+'</td>'+
+              '<td >'+ quantidade +'</td>'+
               '<td >R$: '+ data[0].pivot.sub_total+'</td>'+
             '</tr>'
            );
+
+          }else {
+             $('#cupom').append(
+               '<tr id=n_'+ data[0].cod_barras+' class="top">'+
+                 ' <td colspan="3">'+ data[0].nome+'</td>'+
+               '</tr>'+
+            '<tr id='+ data[0].cod_barras+'>'+
+              '<td >R$:'+ data[0].preco+' </td>'+
+              '<td >'+quantidade+'</td>'+
+              '<td >R$: '+ data[0].pivot.sub_total+'</td>'+
+            '</tr>'
+           );
+          }
            $("#cupom_subTotal").html(data[1].total);
            $("#total").val(data[1].total);
        },
@@ -118,10 +148,10 @@ $( "#autocomplete" ).autocomplete({
         // prevent autocomplete from updating the textbox
         event.preventDefault();
         // manually update the textbox
-        $(this).val(ui.item.cod);
+        $(this).val(ui.item.cod_barras);
      },select: function(event, ui) {
         $("#preco").val(ui.item.preco);
-        $("#autocomplete").val(ui.item.cod);
+        $("#autocomplete").val(ui.item.cod_barras);
         $('#peso').focus();
         console.log(ui.item.preco);
         if (ui.item.peso == null) {
