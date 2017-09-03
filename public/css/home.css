@@ -1,10 +1,24 @@
 .botoes{
-   background-color: blue;
+   background-color: white;
 }
-.botao{
-   background-color: green;
+.botao{   
    margin: 15px;
 }
 .avisos{
    background-color: yellow;
+}
+.btn-lg{
+   font-size: 70px;
+   font-family: Arial;
+}
+.btn-success{
+   background-color: #6c77e8;
+   border-color: black;
+}
+.btn-success:hover{
+   color: black;
+   background-color: #f2e4a5;
+}
+.titulo{
+   text-align: center;
 }

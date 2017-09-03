@@ -45,7 +45,7 @@ Scripts -->
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="{{ url('/') }}">Caderninho</a>
+              <a class="navbar-brand" href="{{ url('/home') }}">Caderninho</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">

@@ -69,3 +69,6 @@ route::get('ingrediente/criar/adicionar/{idIngrediante}',['as'=>'ingrediente_adi
 route::get('ingrediente/materiaPrima/{idIngrediante}',['as'=>'ingrediente_materiaPrima_criar','uses'=> 'Ingrediente\\IngredientesController@createMateriaPrima']);
 route::post('ingrediente/adicionar',['as'=>'ingrediente_adicionar','uses'=> 'Ingrediente\\IngredientesController@adicionar']);
 route::post('ingrediente/item/deletar/{id}/{idProduto}',['as'=>'ingrediente_deletar_item','uses'=> 'Ingrediente\\IngredientesController@deletarItem']);
+
+//tela inicial
+route::get('home/listaEstoque',['as'=>'home_listaEstoque','uses'=> 'HomeController@listaEstoque']);

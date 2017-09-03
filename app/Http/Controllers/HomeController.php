@@ -23,6 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $produtos = \App\Produto::where('quantidade','<','estoque_min');
+        return view('home',compact('produtos'));
+    }
+    public function listaEstoque(){
+      $produtos = \App\Produto::get();
+      return $produtos->toJson();
     }
 }
