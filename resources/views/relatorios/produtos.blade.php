@@ -48,13 +48,13 @@
                            @foreach($produtos as $p)
                            <div class="col-md-12 relatorio_produtos">
                               <div class="col-md-2">
-                                 <p>Codigo: <span>{{$p->id}}</span></p>
+                                 <p>Codigo: <span>{{$p->cod_barras}}</span></p>
                               </div>
                               <div class="col-md-4">
                                  <p>Produto: <span>{{$p->nome}}</span></p>
                               </div>
                               <div class="col-md-4">
-                                 <p>Categoria: <span>{{$p->categorias->pluck('nome')}}</span></p>
+                                 <p>Categoria: <span>{{implode(',', $p->categorias->pluck('nome')->toArray())}}</span></p>
                               </div>
                               <div class="col-md-4">
                                  <p>fornecedor: <span>{{$p->fornecedor->nome}}</span></p>
