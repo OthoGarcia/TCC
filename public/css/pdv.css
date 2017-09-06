@@ -22,7 +22,7 @@ border-color: black;
 .printer-ticket {
   display: table !important;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   font-weight: light;
   line-height: 1.3em;
   margin: auto;
@@ -30,7 +30,7 @@ border-color: black;
 .printer-ticket,
 .printer-ticket * {
   font-family: Tahoma, Geneva, sans-serif;
-  font-size: 10px;
+  font-size: 17px;
 }
 .printer-ticket th:nth-child(2),
 .printer-ticket td:nth-child(2) {
@@ -68,13 +68,13 @@ border-color: black;
   padding-bottom: 10px;
 }
 body{
-  background: #636b6f;
+  background: #add5e8;
   color: black;
 }
 
 .ui-helper-hidden-accessible { display:none; }
 ul.ui-autocomplete.ui-menu{
-   background-color: white;
+   background-color: #d3e7b6;
    list-style-type: none;
    width: 37%;
 }
@@ -96,7 +96,7 @@ ul.ui-autocomplete.ui-menu{
     height: 100%;
   border-left: 3px solid black;
   overflow: auto;
-  background-color: white;
+  background-color: #f2e4a5;
 }
 .col-md-12.caixa{
   padding-right: 0px !important;
@@ -106,6 +106,13 @@ ul.ui-autocomplete.ui-menu{
   width: 50%;
     height: 100%;
     float: left;
-   background-color: #c1bfbf;
+   background-color: #f2e4a5;
 
+}
+.campo{
+   height: 50px;
+   font-size: -webkit-xxx-large;
+}
+.corpo_cupom{
+   overflow: scroll;
 }

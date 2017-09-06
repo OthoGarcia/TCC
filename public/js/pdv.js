@@ -30,12 +30,13 @@ $(document).ready(function() {
             $("#n_"+ data[0].cod_barras).closest('tr').remove();
           }
           var quantidade;
-          if (data[0].pivot.peso == null) {
+          console.log(data[0].pivot.peso);
+          if (data[0].pivot.peso == 0 || data[0].pivot.peso == null) {
              quantidade = data[0].pivot.quantidade;
           }else{
-             quantidade = data[0].pivot.peso;
+             quantidade = data[0].pivot.peso + 'g';
           }
-          console.log(quantidade);
+          $( "#autocomplete" ).autocomplete('close');
           if ($('#cupom tr:first').find('tr').length) {
              $('#cupom tr:first').before(
                '<tr id=n_'+ data[0].cod_barras+' class="top">'+

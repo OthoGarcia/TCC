@@ -35,7 +35,9 @@
                                 @foreach($produtos as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->nome }}</td><td>{{ $item->descricao }}</td><td>{{ $item->preco }}</td>
+                                        <td>{{ $item->nome }}</td>
+                                        <td>{{ $item->descricao }}</td>
+                                        <td>{{ number_format($item->preco,2) }}</td>
                                         <td>
                                             <a href="{{ url('/produto/produtos/' . $item->id) }}" title="View Produto"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> Visualizar</button></a>
                                             <a href="{{ url('/produto/produtos/' . $item->id . '/edit') }}" title="Edit Produto"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>

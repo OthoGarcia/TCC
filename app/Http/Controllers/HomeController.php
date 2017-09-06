@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use DB;
 class HomeController extends Controller
 {
     /**
@@ -21,9 +21,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-      $produtos = \App\Produto::where('quantidade','<','estoque_min');
+    public function index(){
+      $produtos = \App\Produto::whereRaw('quantidade < estoque_min')->get();      
         return view('home',compact('produtos'));
     }
     public function listaEstoque(){

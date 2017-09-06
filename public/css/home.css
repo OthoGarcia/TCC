@@ -1,11 +1,15 @@
 .botoes{
    background-color: white;
 }
-.botao{   
+.botao{
    margin: 15px;
 }
 .avisos{
-   background-color: yellow;
+   background-color: #ffffb4;
+
+}
+.exibindo_produtos{
+   overflow:auto; 
 }
 .btn-lg{
    font-size: 70px;

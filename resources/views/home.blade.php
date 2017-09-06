@@ -33,7 +33,23 @@
              </div>
            </div>
            <div class="col-md-6 avisos">
-             <h1>Teste</h1>
+             <h1 class="titulo">Alerta de Estoque</h1>
+             <div class="col-md-12 exibindo_produtos">
+                <table class="table">
+                   <tr>
+                      <th>Produto</th>
+                      <th>Estoque Minimo</th>
+                      <th>Estoque</th>
+                   </tr>
+                  @foreach($produtos as $p)
+                  <tr>
+                     <td>{{$p->nome}}</td>
+                     <td>{{$p->estoque_min}}</td>
+                     <td>{{$p->quantidade}}</td>
+                  </tr>
+                  @endforeach
+               </table>
+             </div>
            </div>
         </div>
     </div>

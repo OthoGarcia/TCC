@@ -52,30 +52,30 @@ Scripts -->
                   <li>Para adicionar mais de 1 quantidade do mesmo produto, alterar a quantidade antes da busca</li>
                </ul>
                <div class="form-group {{ $errors->has('quantidade') ? 'has-error' : ''}}">
-                   {!! Form::label('quantidade', 'Quantidade', ['class' => 'col-md-4 control-label']) !!}
+                   {!! Form::label('quantidade', 'QUANTIDADE', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
-                       {!! Form::number('quantidade', 1, ['class' => 'form-control','id'=>'quantidade1']) !!}
+                       {!! Form::number('quantidade', 1, ['class' => 'form-control campo','id'=>'quantidade1']) !!}
                        {!! $errors->first('quantidade', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
-                   {!! Form::label('preco', 'Preco', ['class' => 'col-md-4 control-label']) !!}
+                   {!! Form::label('preco', 'PREÇO', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
-                       {!! Form::number('preco', null, ['class' => 'form-control','id'=>'preco','step'=>"any", 'readonly' ]) !!}
+                       {!! Form::number('preco', null, ['class' => 'form-control campo','id'=>'preco','step'=>"any", 'readonly' ]) !!}
                        {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                <div id="div_peso" class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
                    {!! Form::label('peso', 'Peso', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
-                       {!! Form::number('peso', null, ['class' => 'form-control','id'=>'peso','step'=>"any" ]) !!}
+                       {!! Form::number('peso', null, ['class' => 'form-control campo','id'=>'peso','step'=>"any" ]) !!}
                        {!! $errors->first('peso', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
-                   {!! Form::label('total', 'Total', ['class' => 'col-md-4 control-label']) !!}
+                   {!! Form::label('total', 'TOTAL', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
-                       {!! Form::number('total', (isset($pedido)? $pedido->total : null), ['class' => 'form-control','id'=>'total','step'=>"any", 'readonly' ]) !!}
+                       {!! Form::number('total', (isset($pedido)? $pedido->total : null), ['class' => 'form-control  campo','id'=>'total','step'=>"any", 'readonly' ]) !!}
                        {!! $errors->first('Total', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
@@ -92,16 +92,10 @@ Scripts -->
                <table class="printer-ticket">
                   <thead>
                      <tr>
-                        <th class="title" colspan="3">Nome Siste</th>
+                        <th class="title" colspan="3">Padaria Pão Quentinho</th>
                      </tr>
                      <tr>
                         <th colspan="3">{{$data}}</th>
-                     </tr>
-                     <tr>
-                        <th colspan="3">
-                           Nome do cliente <br />
-                           000.000.000-00
-                        </th>
                      </tr>
                      <tr>
                         <th class="ttu" colspan="3">
@@ -109,7 +103,7 @@ Scripts -->
                         </th>
                      </tr>
                   </thead>
-                  <tbody id="cupom">
+                  <tbody class="corpo_cupom" id="cupom">
 
                      @foreach ($produtos as $p)
                      <tr id="n_{{$p->cod_barras}}" class="top">
@@ -122,7 +116,7 @@ Scripts -->
                         @else
                            <td id="quantidade_cupom">{{$p->pivot->quantidade}}</td>
                         @endif
-                        <td id="preco_subtotal">R$: {{$p->pivot->sub_total}}</td>
+                        <td id="preco_subtotal">R$: {{number_format($p->pivot->sub_total,2)}}</td>
                      </tr>
                      @endforeach
                   </tbody>
@@ -138,7 +132,7 @@ Scripts -->
                      </tr>
                      <tr class="sup">
                         <td colspan="3" align="center">
-                           www.site.com
+                           www.caderninho.com/NF-E
                         </td>
                      </tr>
                   </tfoot>

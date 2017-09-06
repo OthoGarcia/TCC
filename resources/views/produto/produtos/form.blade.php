@@ -41,7 +41,7 @@
 <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
     {!! Form::label('preco', 'Preco', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::number('preco', null, ['class' => 'form-control','step' => '0.1']) !!}
+        {!! Form::number('preco', null, ['class' => 'form-control','step' => 'any']) !!}
         {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}
     </div>
 </div><div class="form-group {{ $errors->has('estoque_min') ? 'has-error' : ''}}">
