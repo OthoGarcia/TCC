@@ -52,28 +52,28 @@ Scripts -->
                   <li>Para adicionar mais de 1 quantidade do mesmo produto, alterar a quantidade antes da busca</li>
                </ul>
                <div class="form-group {{ $errors->has('quantidade') ? 'has-error' : ''}}">
-                   {!! Form::label('quantidade', 'QUANTIDADE', ['class' => 'col-md-4 control-label']) !!}
+                   {!! Form::label('quantidade', 'QUANTIDADE (UN)', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
                        {!! Form::number('quantidade', 1, ['class' => 'form-control campo','id'=>'quantidade1']) !!}
                        {!! $errors->first('quantidade', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
-                   {!! Form::label('preco', 'PREÇO', ['class' => 'col-md-4 control-label']) !!}
+                   {!! Form::label('preco', 'PREÇO (R$)', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
                        {!! Form::number('preco', null, ['class' => 'form-control campo','id'=>'preco','step'=>"any", 'readonly' ]) !!}
                        {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                <div id="div_peso" class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
-                   {!! Form::label('peso', 'Peso', ['class' => 'col-md-4 control-label']) !!}
+                   {!! Form::label('peso', 'PESO (g)', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
                        {!! Form::number('peso', null, ['class' => 'form-control campo','id'=>'peso','step'=>"any" ]) !!}
                        {!! $errors->first('peso', '<p class="help-block">:message</p>') !!}
                    </div>
                </div>
                <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
-                   {!! Form::label('total', 'TOTAL', ['class' => 'col-md-4 control-label']) !!}
+                   {!! Form::label('total', 'TOTAL (R$)', ['class' => 'col-md-4 control-label']) !!}
                    <div class="col-md-6">
                        {!! Form::number('total', (isset($pedido)? $pedido->total : null), ['class' => 'form-control  campo','id'=>'total','step'=>"any", 'readonly' ]) !!}
                        {!! $errors->first('Total', '<p class="help-block">:message</p>') !!}
@@ -114,7 +114,7 @@ Scripts -->
                         @if($p->pivot->quantidade == null)
                            <td >{{$p->pivot->peso}}g</td>
                         @else
-                           <td id="quantidade_cupom">{{$p->pivot->quantidade}}</td>
+                           <td id="quantidade_cupom">{{$p->pivot->quantidade}}un</td>
                         @endif
                         <td id="preco_subtotal">R$: {{number_format($p->pivot->sub_total,2)}}</td>
                      </tr>

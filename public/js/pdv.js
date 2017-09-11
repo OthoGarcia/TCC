@@ -1,4 +1,9 @@
 $(document).ready(function() {
+   var formatter = new Intl.NumberFormat('pt-BR', {
+     style: 'currency',
+     currency: 'BRL',
+     minimumFractionDigits: 2,
+   });
    if($('#cupom').length){
       $('#pdv_form').submit(function(e){
       e.preventDefault();
@@ -37,6 +42,8 @@ $(document).ready(function() {
              quantidade = data[0].pivot.peso + 'g';
           }
           $( "#autocomplete" ).autocomplete('close');
+          $("#peso").val("");
+          $("#preco").val("");
           if ($('#cupom tr:first').find('tr').length) {
              $('#cupom tr:first').before(
                '<tr id=n_'+ data[0].cod_barras+' class="top">'+
@@ -55,7 +62,7 @@ $(document).ready(function() {
                  ' <td colspan="3">'+ data[0].nome+'</td>'+
                '</tr>'+
             '<tr id='+ data[0].cod_barras+'>'+
-              '<td >R$:'+ data[0].preco+' </td>'+
+              '<td >R$:'+ formatter.format(data[0].preco)+' </td>'+
               '<td >'+quantidade+'</td>'+
               '<td >R$: '+ data[0].pivot.sub_total+'</td>'+
             '</tr>'

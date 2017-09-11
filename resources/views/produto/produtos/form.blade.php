@@ -32,14 +32,14 @@
     </div>
 </div>
 <div id="peso" class="form-group {{ $errors->has('peso') ? 'has-error' : ''}}">
-    {!! Form::label('peso', 'Peso da Unidade(Gramas)', ['class' => 'col-md-4 control-label']) !!}
+    {!! Form::label('peso', 'Peso da Unidade(g)', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::number('peso', null, ['class' => 'form-control']) !!}
         {!! $errors->first('peso', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div class="form-group {{ $errors->has('preco') ? 'has-error' : ''}}">
-    {!! Form::label('preco', 'Preco', ['class' => 'col-md-4 control-label']) !!}
+    {!! Form::label('preco', 'Preco da Unidade (R$)', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::number('preco', null, ['class' => 'form-control','step' => 'any']) !!}
         {!! $errors->first('preco', '<p class="help-block">:message</p>') !!}

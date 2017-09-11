@@ -28,7 +28,11 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nome</th><th>Descricao</th><th>Telefone</th><th>Actions</th>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>Descricao</th>
+                                        <th>Telefone</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>

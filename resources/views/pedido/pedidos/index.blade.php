@@ -78,6 +78,7 @@
                                                <a href="{{ url('/pedido_produto/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-plus" aria-hidden="true"></i> Produto</button></a>
                                                <a href="{{ url('pedido/efetuar/' . $item->id) }}" title="Adicionar Produto"><button class="btn btn-success btn-xs"><i class="fa fa-check" aria-hidden="true"></i> Efetuar</button></a>
                                              @endif
+                                          @if ($item->estado == 'Aberto')
                                             {!! Form::open([
                                                 'method'=>'DELETE',
                                                 'url' => ['/pedido/pedidos', $item->id],
@@ -90,6 +91,7 @@
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 )) !!}
                                             {!! Form::close() !!}
+                                           @endif
                                         </td>
                                     </tr>
                                 @endforeach
